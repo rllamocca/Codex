@@ -2,7 +2,9 @@
 
 	<PropertyGroup>
 		<TargetFrameworks>
-			netstandard1.0
+			net35
+			;net40
+			;netstandard1.0
 			;netstandard1.1
 			;netstandard1.2
 			;netstandard1.3
@@ -18,7 +20,7 @@
 		<Description>Not so free tools.</Description>
 		<Copyright>© 1984 - 8888</Copyright>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
 </Project>
