@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	  <TargetFrameworks>
+		  netstandard2.0
+	  </TargetFrameworks>
+	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <Copyright>© 1984 - 8888</Copyright>
+	  <Version>0.0.0.1</Version>
+	  <Authors>rllamocca@outlook.com</Authors>
+	  <Company>imL</Company>
+	  <Description>Not so free tools.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Codex.ORM\Codex.ORM.csproj" />
+  </ItemGroup>
+
+</Project>
