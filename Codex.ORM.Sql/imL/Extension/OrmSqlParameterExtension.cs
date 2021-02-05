@@ -5,14 +5,27 @@ namespace Codex.ORM.Sql.Extension
 {
     public static class OrmSqlParameterExtension
     {
-        public static SqlParameter[] GetSqlParameters(this OrmSqlParameter _item)
+        public static OrmSqlParameter[] GetSqlParameters(this IOrmParameter[] _array)
+        {
+            if (_array == null)
+                return null;
+
+            List<OrmSqlParameter> _return = new List<OrmSqlParameter>();
+
+            foreach (OrmSqlParameter _item in _array)
+                _return.Add(_item);
+
+            return _return.ToArray();
+        }
+
+        public static SqlParameter[] GetParameters(this OrmSqlParameter _item)
         {
             if (_item == null)
                 return null;
 
             return new SqlParameter[] { _item.Parameter };
         }
-        public static SqlParameter[] GetSqlParameters(this OrmSqlParameter[] _array)
+        public static SqlParameter[] GetParameters(this OrmSqlParameter[] _array)
         {
             if (_array == null)
                 return null;

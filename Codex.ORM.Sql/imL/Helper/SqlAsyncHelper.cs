@@ -21,7 +21,7 @@ namespace Codex.ORM.Sql.Helper
             try
             {
                 OrmSqlConnection _conn_raw = (OrmSqlConnection)_conn;
-                SqlParameter[] _pmts_raw = ((OrmSqlParameter[])_pmts).GetSqlParameters();
+                SqlParameter[] _pmts_raw = _pmts.GetSqlParameters().GetParameters();
 
                 using (SqlCommand _cmd = new SqlCommand(_query, _conn_raw.Connection))
                 {
