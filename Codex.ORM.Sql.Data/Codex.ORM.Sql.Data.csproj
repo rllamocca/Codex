@@ -2,9 +2,7 @@
 
   <PropertyGroup>
 	  <TargetFrameworks>
-		  netstandard1.2
-		  ;netstandard1.3
-		  ;netstandard2.0
+		  netstandard2.0
 	  </TargetFrameworks>
 	  <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	  <Version>0.0.0.1</Version>
@@ -15,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Codex\Codex.csproj" />
+    <ProjectReference Include="..\Codex.ORM.Sql\Codex.ORM.Sql.csproj" />
   </ItemGroup>
 
 </Project>
