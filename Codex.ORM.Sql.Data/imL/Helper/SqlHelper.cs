@@ -1,6 +1,6 @@
 ﻿using Codex.Generic;
-
 using Codex.ORM.Enum;
+using Codex.ORM.Helper;
 
 using System;
 using System.Data;
@@ -8,17 +8,13 @@ using System.Data.SqlClient;
 
 namespace Codex.ORM.Sql.Data.Helper
 {
-    public static class SqlHelper
+    public class SqlHelper : Sql.Helper.SqlHelper, IOrmHelper
     {
-        public static Return Get_DataSet(
-            String _query,
-            OrmSqlConnection _conn,
-            SqlParameter[] _pmts = null
-            )
+        public override Return Get_DataSet(string _query, IOrmConnection _conn, object[] _pmts = null)
         {
             try
             {
-                Return _exe = Sql.Helper.SqlHelper.Execute(_query, _conn, EExecute.Reader, _pmts);
+                Return _exe = Execute(_query, _conn, EExecute.Reader, _pmts);
                 _exe.GatillarErrorExcepcion();
 
                 DataSet _return = new DataSet("DataSet_0");
@@ -41,15 +37,12 @@ namespace Codex.ORM.Sql.Data.Helper
                 return new Return(false, _ex);
             }
         }
-        public static Return Get_DataTable(
-            String _query,
-            OrmSqlConnection _conn,
-            SqlParameter[] _pmts = null
-            )
+
+        public override Return Get_DataTable(string _query, IOrmConnection _conn, object[] _pmts = null)
         {
             try
             {
-                Return _exe = Sql.Helper.SqlHelper.Execute(_query, _conn, EExecute.Reader, _pmts);
+                Return _exe = Execute(_query, _conn, EExecute.Reader, _pmts);
                 _exe.GatillarErrorExcepcion();
 
                 DataTable _return = new DataTable("DataTable_0");
@@ -62,52 +55,6 @@ namespace Codex.ORM.Sql.Data.Helper
             catch (Exception _ex)
             {
                 return new Return(false, _ex);
-            }
-        }
-
-        public static Return Set_DataSet(
-            DataSet _data,
-            OrmSqlConnection _conn
-            )
-        {
-            using (SqlBulkCopy _bulk = new SqlBulkCopy(_conn.Connection))
-            {
-                try
-                {
-                    foreach (DataTable _item in _data.Tables)
-                    {
-                        _bulk.DestinationTableName = _item.TableName;
-                        _bulk.BatchSize = 1000;
-                        _bulk.WriteToServer(_item);
-                    }
-
-                    return new Return(true);
-                }
-                catch (Exception _ex)
-                {
-                    return new Return(false, _ex);
-                }
-            }
-        }
-        public static Return Set_DataTable(
-            DataTable _data,
-            OrmSqlConnection _conn
-            )
-        {
-            using (SqlBulkCopy _bulk = new SqlBulkCopy(_conn.Connection))
-            {
-                try
-                {
-                    _bulk.DestinationTableName = _data.TableName;
-                    _bulk.BatchSize = 1000;
-                    _bulk.WriteToServer(_data);
-
-                    return new Return(true);
-                }
-                catch (Exception _ex)
-                {
-                    return new Return(false, _ex);
-                }
             }
         }
     }

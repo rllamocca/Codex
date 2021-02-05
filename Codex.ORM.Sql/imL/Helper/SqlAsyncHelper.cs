@@ -1,6 +1,6 @@
 ﻿using Codex.Generic;
-
 using Codex.ORM.Enum;
+using Codex.ORM.Helper;
 
 using System;
 using System.Data.SqlClient;
@@ -8,23 +8,26 @@ using System.Threading.Tasks;
 
 namespace Codex.ORM.Sql.Helper
 {
-    public static class SqlAsyncHelper
+    public class SqlAsyncHelper : IOrmAsyncHelper
     {
-        public static async Task<Return> Execute(
-            String _query,
-            OrmSqlConnection _conn,
-            EExecute _exe = EExecute.NonQuery,
-            SqlParameter[] _pmts = null
+        public async Task<Return> Execute(
+            string _query, 
+            IOrmConnection _conn, 
+            EExecute _exe = EExecute.NonQuery, 
+            object[] _pmts = null
             )
         {
             try
             {
-                using (SqlCommand _cmd = new SqlCommand(_query, _conn.Connection))
-                {
-                    if (_pmts != null && _pmts.Length > 0)
-                        _cmd.Parameters.AddRange(_pmts);
+                OrmSqlConnection _conn_raw = (OrmSqlConnection)_conn;
+                SqlParameter[] _pmts_raw = (SqlParameter[])_pmts;
 
-                    _cmd.Transaction = _conn.Transaction;
+                using (SqlCommand _cmd = new SqlCommand(_query, _conn_raw.Connection))
+                {
+                    if (_pmts_raw != null && _pmts_raw.Length > 0)
+                        _cmd.Parameters.AddRange(_pmts_raw);
+
+                    _cmd.Transaction = _conn_raw.Transaction;
                     _cmd.CommandTimeout = _conn.TimeOut;
 
                     if (_conn.Prepare)
@@ -49,6 +52,15 @@ namespace Codex.ORM.Sql.Helper
             {
                 return new Return(false, _ex);
             }
+        }
+
+        public virtual Task<Return> Get_DataSet(string _query, IOrmConnection _conn, object[] _pmts = null)
+        {
+            throw new NotImplementedException();
+        }
+        public virtual Task<Return> Get_DataTable(string _query, IOrmConnection _conn, object[] _pmts = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }
