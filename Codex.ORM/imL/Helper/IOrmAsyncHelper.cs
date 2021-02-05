@@ -11,18 +11,18 @@ namespace Codex.ORM.Helper
             string _query,
             IOrmConnection _conn,
             EExecute _exe = EExecute.NonQuery,
-            object[] _pmts = null
+            IOrmParameter[] _pmts = null
             );
 
         Task<Return> Get_DataSet(
             string _query,
             IOrmConnection _conn,
-            object[] _pmts = null
+            IOrmParameter[] _pmts = null
             );
         Task<Return> Get_DataTable(
             string _query,
             IOrmConnection _conn,
-            object[] _pmts = null
+            IOrmParameter[] _pmts = null
             );
     }
 }

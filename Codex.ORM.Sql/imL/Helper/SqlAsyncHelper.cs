@@ -1,6 +1,7 @@
 ﻿using Codex.Generic;
 using Codex.ORM.Enum;
 using Codex.ORM.Helper;
+using Codex.ORM.Sql.Extension;
 
 using System;
 using System.Data.SqlClient;
@@ -11,16 +12,16 @@ namespace Codex.ORM.Sql.Helper
     public class SqlAsyncHelper : IOrmAsyncHelper
     {
         public async Task<Return> Execute(
-            string _query, 
-            IOrmConnection _conn, 
-            EExecute _exe = EExecute.NonQuery, 
-            object[] _pmts = null
+            string _query,
+            IOrmConnection _conn,
+            EExecute _exe = EExecute.NonQuery,
+            IOrmParameter[] _pmts = null
             )
         {
             try
             {
                 OrmSqlConnection _conn_raw = (OrmSqlConnection)_conn;
-                SqlParameter[] _pmts_raw = (SqlParameter[])_pmts;
+                SqlParameter[] _pmts_raw = ((OrmSqlParameter[])_pmts).GetSqlParameters();
 
                 using (SqlCommand _cmd = new SqlCommand(_query, _conn_raw.Connection))
                 {
@@ -54,11 +55,11 @@ namespace Codex.ORM.Sql.Helper
             }
         }
 
-        public virtual Task<Return> Get_DataSet(string _query, IOrmConnection _conn, object[] _pmts = null)
+        public virtual Task<Return> Get_DataSet(string _query, IOrmConnection _conn, IOrmParameter[] _pmts = null)
         {
             throw new NotImplementedException();
         }
-        public virtual Task<Return> Get_DataTable(string _query, IOrmConnection _conn, object[] _pmts = null)
+        public virtual Task<Return> Get_DataTable(string _query, IOrmConnection _conn, IOrmParameter[] _pmts = null)
         {
             throw new NotImplementedException();
         }

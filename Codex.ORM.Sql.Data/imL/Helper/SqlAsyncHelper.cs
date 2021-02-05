@@ -15,7 +15,7 @@ namespace Codex.ORM.Sql.Data.Helper
         public override async Task<Return> Get_DataSet(
             string _query,
             IOrmConnection _conn,
-            object[] _pmts = null
+            IOrmParameter[] _pmts = null
             )
         {
             try
@@ -46,7 +46,7 @@ namespace Codex.ORM.Sql.Data.Helper
         public override async Task<Return> Get_DataTable(
             string _query,
             IOrmConnection _conn,
-            object[] _pmts = null
+            IOrmParameter[] _pmts = null
             )
         {
             try

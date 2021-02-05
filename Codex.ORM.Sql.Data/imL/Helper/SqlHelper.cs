@@ -10,7 +10,7 @@ namespace Codex.ORM.Sql.Data.Helper
 {
     public class SqlHelper : Sql.Helper.SqlHelper, IOrmHelper
     {
-        public override Return Get_DataSet(string _query, IOrmConnection _conn, object[] _pmts = null)
+        public override Return Get_DataSet(string _query, IOrmConnection _conn, IOrmParameter[] _pmts = null)
         {
             try
             {
@@ -38,7 +38,7 @@ namespace Codex.ORM.Sql.Data.Helper
             }
         }
 
-        public override Return Get_DataTable(string _query, IOrmConnection _conn, object[] _pmts = null)
+        public override Return Get_DataTable(string _query, IOrmConnection _conn, IOrmParameter[] _pmts = null)
         {
             try
             {

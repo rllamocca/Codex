@@ -5,6 +5,8 @@ using Codex.ORM.Helper;
 using System;
 using System.Data.SqlClient;
 
+using Codex.ORM.Sql.Extension;
+
 namespace Codex.ORM.Sql.Helper
 {
     public class SqlHelper : IOrmHelper
@@ -13,13 +15,13 @@ namespace Codex.ORM.Sql.Helper
             string _query,
             IOrmConnection _conn,
             EExecute _exe = EExecute.NonQuery,
-            object[] _pmts = null
+            IOrmParameter[] _pmts = null
             )
         {
             try
             {
                 OrmSqlConnection _conn_raw = (OrmSqlConnection)_conn;
-                SqlParameter[] _pmts_raw = (SqlParameter[])_pmts;
+                SqlParameter[] _pmts_raw = ((OrmSqlParameter[])_pmts).GetSqlParameters();
 
                 using (SqlCommand _cmd = new SqlCommand(_query, _conn_raw.Connection))
                 {
@@ -53,11 +55,11 @@ namespace Codex.ORM.Sql.Helper
             }
         }
 
-        public virtual Return Get_DataSet(string _query, IOrmConnection _conn, object[] _pmts = null)
+        public virtual Return Get_DataSet(string _query, IOrmConnection _conn, IOrmParameter[] _pmts = null)
         {
             throw new NotImplementedException();
         }
-        public virtual Return Get_DataTable(string _query, IOrmConnection _conn, object[] _pmts = null)
+        public virtual Return Get_DataTable(string _query, IOrmConnection _conn, IOrmParameter[] _pmts = null)
         {
             throw new NotImplementedException();
         }
