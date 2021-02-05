@@ -48,10 +48,10 @@ namespace Codex.ORM.Sql
         }
 
         //####
-        public int TimeOut { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool Constraints { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool Prepare { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public CancellationToken Token { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int TimeOut { set; get; } = 100;
+        public bool Constraints { set; get; } = false;
+        public bool Prepare { set; get; } = false;
+        public CancellationToken Token { set; get; } = default;
 
         public void Close()
         {
