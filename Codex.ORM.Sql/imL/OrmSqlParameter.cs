@@ -7,6 +7,7 @@ namespace Codex.ORM.Sql
     public class OrmSqlParameter : IOrmParameter
     {
         public string Affect { set; get; }
+        public object Value { set; get; }
         public string Name_Function { set; get; }
 
         public SqlParameter Parameter { get; }
@@ -17,6 +18,7 @@ namespace Codex.ORM.Sql
             )
         {
             this.Affect = _affect;
+            this.Value = DBNull.Value;
             this.Name_Function = _function;
 
             this.Parameter = null;
@@ -29,18 +31,14 @@ namespace Codex.ORM.Sql
             )
         {
             this.Affect = _affect;
+            this.Value = (_value == null) ? DBNull.Value : _value;
             this.Name_Function = string.Format("@_{0}_", this.Affect);
 
-            SqlParameter _return = new SqlParameter();
-            _return.Value = DBNull.Value;
-
-            _return.ParameterName = this.Name_Function;
-            if (_value != null)
-                _return.Value = _value;
-            _return.SqlDbType = _dbtype;
-            _return.Direction = _direction;
-
-            this.Parameter = _return;
+            this.Parameter = new SqlParameter();
+            this.Parameter.ParameterName = this.Name_Function;
+            this.Parameter.Value = _value;
+            this.Parameter.SqlDbType = _dbtype;
+            this.Parameter.Direction = _direction;
         }
         public OrmSqlParameter(
             string _affect,
