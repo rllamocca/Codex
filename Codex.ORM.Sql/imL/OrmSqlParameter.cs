@@ -36,7 +36,7 @@ namespace Codex.ORM.Sql
 
             this.Parameter = new SqlParameter();
             this.Parameter.ParameterName = this.Name_Function;
-            this.Parameter.Value = _value;
+            this.Parameter.Value = this.Value;
             this.Parameter.SqlDbType = _dbtype;
             this.Parameter.Direction = _direction;
         }
