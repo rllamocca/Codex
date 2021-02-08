@@ -8,13 +8,13 @@ namespace Codex.ORM.Helper
         Return Execute(
             string _query,
             IOrmConnection _conn,
-            EExecute _exe = EExecute.NonQuery,
-            IOrmParameter[] _pmts = null
+            IOrmParameter[] _pmts = null,
+            EExecute _exe = EExecute.NonQuery
             );
         Return[] Execute(
             string _query,
             IOrmConnection _conn,
-            IOrmParameter[][] _pmts = null,
+            IOrmParameter[][] _pmts,
             EExecute _exe = EExecute.NonQuery
             );
 

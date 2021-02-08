@@ -1,11 +1,10 @@
 ﻿using Codex.Generic;
 using Codex.ORM.Enum;
 using Codex.ORM.Helper;
+using Codex.ORM.Sql.Extension;
 
 using System;
 using System.Data.SqlClient;
-
-using Codex.ORM.Sql.Extension;
 
 namespace Codex.ORM.Sql.Helper
 {
@@ -14,8 +13,8 @@ namespace Codex.ORM.Sql.Helper
         public Return Execute(
             string _query,
             IOrmConnection _conn,
-            EExecute _exe = EExecute.NonQuery,
-            IOrmParameter[] _pmts = null
+            IOrmParameter[] _pmts = null,
+            EExecute _exe = EExecute.NonQuery
             )
         {
             try

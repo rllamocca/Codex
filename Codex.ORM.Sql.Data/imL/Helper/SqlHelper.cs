@@ -14,7 +14,7 @@ namespace Codex.ORM.Sql.Data.Helper
         {
             try
             {
-                Return _exe = Execute(_query, _conn, EExecute.Reader, _pmts);
+                Return _exe = Execute(_query, _conn, _pmts, EExecute.Reader);
                 _exe.GatillarErrorExcepcion();
 
                 DataSet _return = new DataSet("DataSet_0");
@@ -42,7 +42,7 @@ namespace Codex.ORM.Sql.Data.Helper
         {
             try
             {
-                Return _exe = Execute(_query, _conn, EExecute.Reader, _pmts);
+                Return _exe = Execute(_query, _conn, _pmts, EExecute.Reader);
                 _exe.GatillarErrorExcepcion();
 
                 DataTable _return = new DataTable("DataTable_0");

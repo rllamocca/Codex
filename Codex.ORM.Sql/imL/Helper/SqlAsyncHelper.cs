@@ -14,8 +14,8 @@ namespace Codex.ORM.Sql.Helper
         public async Task<Return> Execute(
             string _query,
             IOrmConnection _conn,
-            EExecute _exe = EExecute.NonQuery,
-            IOrmParameter[] _pmts = null
+            IOrmParameter[] _pmts = null,
+            EExecute _exe = EExecute.NonQuery
             )
         {
             try
