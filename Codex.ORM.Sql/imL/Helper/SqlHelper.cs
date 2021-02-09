@@ -24,14 +24,11 @@ namespace Codex.ORM.Sql.Helper
 
                 using (SqlCommand _cmd = new SqlCommand(_query, _conn_raw.Connection))
                 {
-                    if (_pmts_raw != null && _pmts_raw.Length > 0)
-                        _cmd.Parameters.AddRange(_pmts_raw);
-
                     _cmd.Transaction = _conn_raw.Transaction;
                     _cmd.CommandTimeout = _conn.TimeOut;
 
-                    if (_conn.Prepare)
-                        _cmd.Prepare();
+                    if (_pmts_raw != null)
+                        _cmd.Parameters.AddRange(_pmts_raw);
 
                     switch (_exe)
                     {
@@ -70,9 +67,9 @@ namespace Codex.ORM.Sql.Helper
 
                 using (SqlCommand _cmd = new SqlCommand(_query, _conn_raw.Connection))
                 {
-                    _cmd.Parameters.AddRange(_pmts_raw);
                     _cmd.Transaction = _conn_raw.Transaction;
                     _cmd.CommandTimeout = _conn.TimeOut;
+                    _cmd.Parameters.AddRange(_pmts_raw);
 
                     if (_conn.Prepare)
                         _cmd.Prepare();

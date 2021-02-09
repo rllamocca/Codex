@@ -13,6 +13,12 @@ namespace Codex.ORM.Helper
             IOrmParameter[] _pmts = null,
             EExecute _exe = EExecute.NonQuery
             );
+        Task<Return[]> Execute(
+            string _query,
+            IOrmConnection _conn,
+            IOrmParameter[][] _pmts,
+            EExecute _exe = EExecute.NonQuery
+            );
 
         Task<Return> Get_DataSet(
             string _query,
