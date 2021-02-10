@@ -4,19 +4,18 @@ namespace Codex.Generic
 {
     public class Return
     {
-        private readonly Boolean _EXI;
-        private readonly Object _RET = null;
-        private readonly Boolean _EXC = false;
-        private readonly String _MEN = "NO PROCESADO";
+        private readonly bool _EXI;
+        private readonly object _RET = null;
+        private readonly bool _EXC = false;
+        private readonly string _MEN = "NO PROCESADO";
 
-        public Boolean Exito { get { return this._EXI; } }
-        public Object Resultado { get { return this._RET; } }
-        public Boolean Excepcion { get { return this._EXC; } }
-        public Boolean ErrorExcepcion { get { return (this.Exito == false) || (this.Excepcion == true); } }
+        public bool Success { get { return this._EXI; } }
+        public object Result { get { return this._RET; } }
+        public bool Exception { get { return this._EXC; } }
 
-        public String Mensaje { get { return this._MEN; } }
+        public string Message { get { return this._MEN; } }
 
-        public Return(Boolean _exito, Object _resultado = null)
+        public Return(bool _exito, object _resultado = null)
         {
             this._RET = _resultado;
             this._EXC = (this._RET is Exception);
@@ -30,32 +29,30 @@ namespace Codex.Generic
                 }
                 else
                 {
-                    if (this._RET is String)
-                        this._MEN = (String)this._RET;
+                    if (this._RET is string)
+                        this._MEN = (string)this._RET;
                 }
             }
         }
         public void GatillarError()
         {
-            if (!this.Exito) 
-                throw new Exception(this.Mensaje);
+            if (this.Success == false)
+                throw new Exception(this.Message);
         }
         public void GatillarExcepcion()
         {
-            if (this.Excepcion)
-                throw (Exception)this.Resultado;
+            if (this.Exception)
+                throw (Exception)this.Result;
         }
         public void GatillarErrorExcepcion()
         {
-            if (!this.Exito)
-                this.GatillarError();
-            else 
-                this.GatillarExcepcion();
+            this.GatillarError();
+            this.GatillarExcepcion();
         }
 
-        public override String ToString()
+        public override string ToString()
         {
-            return String.Format("Exito: {0}, {1}", (this.Exito ? "SI" : "NO"), this.Mensaje);
+            return string.Format("Exito: {0}, {1}", (this.Success ? "SI" : "NO"), this.Message);
         }
     }
 }

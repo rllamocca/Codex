@@ -1,37 +1,35 @@
-﻿using System;
-
-using Codex.Generic;
+﻿using Codex.Generic;
 
 namespace Codex.Extension
 {
     public static class ReturnExtension
     {
-        public static Boolean Exito(this Return[] _array)
+        public static bool Exito(this Return[] _array)
         {
-            Boolean _return = true;
+            bool _return = true;
             foreach (Return _cr in _array)
-                _return = _return && _cr.Exito;
+                _return = _return && _cr.Success;
             return _return;
         }
-        public static Boolean Excepcion(this Return[] _array)
+        public static bool Excepcion(this Return[] _array)
         {
-            Boolean _return = false;
+            bool _return = false;
             foreach (Return _cr in _array)
-                _return = _return || _cr.Excepcion;
+                _return = _return || _cr.Exception;
             return _return;
         }
-        public static Boolean ErrorExcepcion(this Return[] _array)
+        public static bool ErrorExcepcion(this Return[] _array)
         {
-            Boolean _return = false;
+            bool _return = false;
             foreach (Return _cr in _array)
-                _return = _return || _cr.ErrorExcepcion;
+                _return = _return || (_cr.Success == false) || (_cr.Exception == true);
             return _return;
         }
         public static void GatillarError(this Return[] _array)
         {
             foreach (Return _cr in _array)
             {
-                if (_cr.Exito == false)
+                if (_cr.Success == false)
                 {
                     _cr.GatillarError();
                     break;
@@ -42,7 +40,7 @@ namespace Codex.Extension
         {
             foreach (Return _cr in _array)
             {
-                if (_cr.Excepcion == true)
+                if (_cr.Exception == true)
                 {
                     _cr.GatillarErrorExcepcion();
                     break;
@@ -53,7 +51,7 @@ namespace Codex.Extension
         {
             foreach (Return _cr in _array)
             {
-                if (_cr.ErrorExcepcion)
+                if ((_cr.Success == false) || (_cr.Exception == true))
                 {
                     _cr.GatillarErrorExcepcion();
                     break;

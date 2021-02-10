@@ -28,7 +28,7 @@ namespace Codex.Generic
         {
             DateTime _e = DateTime.Now;
             TimeSpan _diff = (_e - this._START);
-            _diff = TimeSpan.FromTicks(_diff.Ticks * (this._COUNT - _pro));
+            _diff = TimeSpan.FromTicks(_diff.Ticks * Convert.ToInt64(this._COUNT - _pro));
             this._START = _e;
 
             ConsoleHelper.Write(

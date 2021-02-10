@@ -20,7 +20,7 @@ namespace Codex.ORM.Sql.Data.Helper
                 DataSet _return = new DataSet("DataSet_0");
                 _return.EnforceConstraints = _conn.Constraints;
                 UInt16 _n = 0;
-                using (SqlDataReader _read = (SqlDataReader)_exe.Resultado)
+                using (SqlDataReader _read = (SqlDataReader)_exe.Result)
                 {
                     while (_read.IsClosed == false)
                     {
@@ -46,7 +46,7 @@ namespace Codex.ORM.Sql.Data.Helper
                 _exe.GatillarErrorExcepcion();
 
                 DataTable _return = new DataTable("DataTable_0");
-                using (SqlDataReader _read = (SqlDataReader)_exe.Resultado)
+                using (SqlDataReader _read = (SqlDataReader)_exe.Result)
                 {
                     _return.Load(_read, LoadOption.OverwriteChanges);
                 }
