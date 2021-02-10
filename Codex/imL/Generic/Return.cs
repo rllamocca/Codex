@@ -15,14 +15,14 @@ namespace Codex.Generic
 
         public string Message { get { return this._MEN; } }
 
-        public Return(bool _exito, object _resultado = null)
+        public Return(bool _suc, object _res = null)
         {
-            this._RET = _resultado;
+            this._RET = _res;
             this._EXC = (this._RET is Exception);
             if (this._EXC) this._MEN = ((Exception)this._RET).Message;
             else
             {
-                if (_exito)
+                if (_suc)
                 {
                     this._MEN = "PROCESADO";
                     this._EXI = true;
@@ -34,20 +34,20 @@ namespace Codex.Generic
                 }
             }
         }
-        public void GatillarError()
+        public void TriggerError()
         {
             if (this.Success == false)
                 throw new Exception(this.Message);
         }
-        public void GatillarExcepcion()
+        public void TriggerException()
         {
             if (this.Exception)
                 throw (Exception)this.Result;
         }
-        public void GatillarErrorExcepcion()
+        public void TriggerErrorException()
         {
-            this.GatillarError();
-            this.GatillarExcepcion();
+            this.TriggerError();
+            this.TriggerException();
         }
 
         public override string ToString()

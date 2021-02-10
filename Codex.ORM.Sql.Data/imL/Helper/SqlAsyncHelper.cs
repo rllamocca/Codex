@@ -21,7 +21,7 @@ namespace Codex.ORM.Sql.Data.Helper
             try
             {
                 Return _exe = await Execute(_query, _conn, _pmts, EExecute.Reader);
-                _exe.GatillarErrorExcepcion();
+                _exe.TriggerErrorException();
 
                 DataSet _return = new DataSet("DataSet_0");
                 _return.EnforceConstraints = _conn.Constraints;
@@ -52,7 +52,7 @@ namespace Codex.ORM.Sql.Data.Helper
             try
             {
                 Return _exe = await Execute(_query, _conn, _pmts, EExecute.Reader);
-                _exe.GatillarErrorExcepcion();
+                _exe.TriggerErrorException();
 
                 DataTable _return = new DataTable("DataTable_0");
                 using (SqlDataReader _read = (SqlDataReader)_exe.Result)
