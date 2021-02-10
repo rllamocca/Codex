@@ -1,4 +1,4 @@
-﻿namespace Codex.Generic
+﻿namespace Codex
 {
     public class UserState
     {

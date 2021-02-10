@@ -7,16 +7,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Timers;
 
-namespace Codex.Generic
+namespace Codex
 {
-    public class ProgressBar64 : IDisposable, IProgress<long>
+    public class ProgressBarU64 : IDisposable, IProgress<ulong>
     {
         private readonly Timer _TIMER;
-        private readonly ProgressBar64 _PARENT;
+        private readonly ProgressBarU64 _PARENT;
         private const string _ANIMATION = @"+\|/";
         private byte _ANIMATIONINDEX = 0;
         private byte _BLOCKS = 50;
-        private long _COUNT;
+        private ulong _COUNT;
         private Point _BAR_START;
         private Point _BAR_END;
         private List<decimal> _BAR = new List<decimal>();
@@ -24,11 +24,11 @@ namespace Codex.Generic
         private Point _NEW_LINE;
         private DateTime _START;
 
-        private void DrawProgress(decimal _per, long _pro)
+        private void DrawProgress(decimal _per, ulong _pro)
         {
             DateTime _e = DateTime.Now;
             TimeSpan _diff = (_e - this._START);
-            _diff = TimeSpan.FromTicks(_diff.Ticks * (this._COUNT - _pro));
+            _diff = TimeSpan.FromTicks(_diff.Ticks * Convert.ToInt64(this._COUNT - _pro));
             this._START = _e;
 
             ConsoleHelper.Write(
@@ -55,7 +55,7 @@ namespace Codex.Generic
             ConsoleHelper.Write(this._BAR_START, _text);
         }
 
-        public ProgressBar64(long _count, ProgressBar64 _parent = null)
+        public ProgressBarU64(ulong _count, ProgressBarU64 _parent = null)
         {
             this._COUNT = _count;
             this._PARENT = _parent;
@@ -104,7 +104,7 @@ namespace Codex.Generic
             }
         }
 
-        public void Report(long _progress)
+        public void Report(ulong _progress)
         {
             if (Console.IsOutputRedirected == false)
             {
