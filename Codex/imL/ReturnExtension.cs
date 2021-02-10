@@ -1,6 +1,4 @@
-﻿using Codex.Generic;
-
-namespace Codex.Extension
+﻿namespace Codex
 {
     public static class ReturnExtension
     {

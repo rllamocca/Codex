@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Codex.Generic
+namespace Codex
 {
     public class Return
     {
