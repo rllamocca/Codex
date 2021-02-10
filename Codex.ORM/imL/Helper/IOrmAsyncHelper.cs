@@ -1,4 +1,4 @@
-﻿using Codex.Generic;
+﻿using Codex;
 using Codex.ORM.Enum;
 
 using System.Threading.Tasks;

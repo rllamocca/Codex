@@ -1,15 +1,8 @@
-﻿using Codex.Generic;
-using Codex.ORM;
-using Codex.ORM.Pattern;
-using Codex.ORM.Sql;
-using Codex.Struct;
+﻿using Codex;
 
 
 using System;
-using System.Data;
-using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace Test_Console
 {
