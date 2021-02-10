@@ -50,7 +50,6 @@ namespace Codex.ORM.Sql
         //####
         public int TimeOut { set; get; } = 100;
         public bool Constraints { set; get; } = false;
-        public bool Prepare { set; get; } = false;
         public CancellationToken Token { set; get; } = default;
 
         public void Close()
@@ -90,7 +89,6 @@ namespace Codex.ORM.Sql
 
                 this.TimeOut = 0;
                 this.Constraints = false;
-                this.Prepare = false;
             }
 
             this._DISPOSED = true;

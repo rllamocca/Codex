@@ -8,7 +8,6 @@ namespace Codex.ORM
     {
         int TimeOut { set; get; }
         bool Constraints { set; get; }
-        bool Prepare { set; get; }
         CancellationToken Token { set; get; }
 
         void Open();

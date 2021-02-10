@@ -24,21 +24,32 @@ namespace Codex.Generic
         private Point _NEW_LINE;
         private DateTime _START;
 
-        private void PercentProgress(decimal _p, long _progress)
+        private void DrawProgress(decimal _per, long _pro)
         {
-            ConsoleHelper.Write(this._BAR_END, string.Format("{0} : {1} / {2}"
-                            , _p.ToString("P")
-                            , _progress
-                            , this._COUNT));
+            DateTime _e = DateTime.Now;
+            TimeSpan _diff = (_e - this._START);
+            _diff = TimeSpan.FromTicks(_diff.Ticks * (this._COUNT - _pro));
+            this._START = _e;
+
+            ConsoleHelper.Write(
+                this._BAR_END,
+                string.Format("{0} : {1} / {2} <-> {3}",
+                _per.ToString("P"),
+                _pro,
+                this._COUNT,
+                _diff.ToString("hh':'mm':'ss'.'fff"))
+                );
         }
 
         private void OnElapsedEvent(object _source, ElapsedEventArgs _e)
         {
+            TimeSpan _diff = _e.SignalTime - this._START;
+
             string _text = string.Format(
                 "[{0}] {1} <-> {2}",
                 _ANIMATION[this._ANIMATIONINDEX++ % 4],
                 _e.SignalTime.ToString("HH:mm:ss.fff"),
-                (_e.SignalTime - this._START).ToString("hh':'mm':'ss'.'fff")
+                _diff.ToString("hh':'mm':'ss'.'fff")
                 );
             ConsoleHelper.Write(this._BAR_START, new String(' ', 40));
             ConsoleHelper.Write(this._BAR_START, _text);
@@ -48,6 +59,7 @@ namespace Codex.Generic
         {
             this._COUNT = _count;
             this._PARENT = _parent;
+            this._START = DateTime.Now;
             //#####
             if (Console.IsOutputRedirected == false)
             {
@@ -71,7 +83,6 @@ namespace Codex.Generic
                 {
                     this._TIMER = new Timer(200);
                     this._TIMER.Elapsed += this.OnElapsedEvent;
-                    this._START = DateTime.Now;
                     this._TIMER.Start();
                 }
                 else
@@ -88,7 +99,7 @@ namespace Codex.Generic
                     this._BAR_START.X += 1;
                     this._BAR_END.X += 2;
 
-                    this.PercentProgress(0, 0);
+                    this.DrawProgress(0, 0);
                 }
             }
         }
@@ -100,7 +111,7 @@ namespace Codex.Generic
                 if (this._COUNT > 0)
                 {
                     decimal _p = (1.0m * _progress / this._COUNT);
-                    this.PercentProgress(_p, _progress);
+                    this.DrawProgress(_p, _progress);
 
                     if (0 <= _p && _p <= 1)
                     {
@@ -142,6 +153,7 @@ namespace Codex.Generic
             }
             this._LINE = new Point(0, 0);
             this._NEW_LINE = new Point(0, 0);
+            this._START = new DateTime();
         }
     }
 }

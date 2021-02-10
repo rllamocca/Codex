@@ -72,11 +72,10 @@ namespace Codex.ORM.Sql.Helper
                     _cmd.CommandTimeout = _conn.TimeOut;
                     _cmd.Parameters.AddRange(_pmts_raw);
 
-                    if (_conn.Prepare)
-                        _cmd.Prepare();
-
                     int _c_p = _cmd.Parameters.Count;
                     int _c_r = _returns.Length;
+
+                    _cmd.Prepare();
                     do
                     {
                         try
