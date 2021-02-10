@@ -2,18 +2,18 @@
 {
     public class UserState
     {
-        public int Distancia { get; set; } = 0;
-        public int Posicion { get; set; } = 0;
-        public string Mensaje { get; set; }
+        public int Distance { get; set; } = 0;
+        public int Position { get; set; } = 0;
+        public string Message { get; set; }
 
-        public decimal Porcentaje()
+        public decimal Percentage()
         {
-            if (this.Distancia != 0.0m) return 1.0m * this.Posicion / this.Distancia;
+            if (this.Distance != 0.0m) return 1.0m * this.Position / this.Distance;
             return 0.0m;
         }
-        public string Proporcion()
+        public string Proportion()
         {
-            return string.Format("{0} / {1}", this.Posicion, this.Distancia);
+            return string.Format("{0} / {1}", this.Position, this.Distance);
         }
     }
 }

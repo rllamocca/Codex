@@ -45,7 +45,46 @@ namespace Test_Console
                     Thread.Sleep(500);
             }
 
+
+            //CachedTimeSource _time = new CachedTimeSource();
+            //for (int _n0 = 1; _n0 <= _max2; _n0++)
+            //{
+            //    Thread.Sleep(10);
+            //    Console.WriteLine(_time.Last.ToString("HH:mm:ss.fff"));
+            //}
+            //Console.WriteLine("...");
+            //for (int _n0 = 1; _n0 <= _max2; _n0++)
+            //{
+            //    Thread.Sleep(10);
+            //    Console.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff"));
+            //}
+            
+
             Console.ReadKey();
+        }
+    }
+
+    public class CachedTimeSource
+    {
+        private int _LTC = -1;
+        private DateTime _LDT = DateTime.MinValue;
+
+        public DateTime FreshTime { get { return DateTime.Now; } }
+        public DateTime Last
+        {
+            get
+            {
+                int _tc = Environment.TickCount;
+                if (_tc == this._LTC)
+                    return this._LDT;
+                else
+                {
+                    DateTime _return = this.FreshTime;
+                    this._LTC = _tc;
+                    this._LDT = _return;
+                    return _return;
+                }
+            }
         }
     }
 }
