@@ -1,6 +1,4 @@
-﻿using Codex.Generic;
-
-using Codex.ORM.Enum;
+﻿using Codex.ORM.Enum;
 using Codex.ORM.Helper;
 
 using System;
@@ -25,7 +23,7 @@ namespace Codex.ORM.Sql.Data.Helper
 
                 DataSet _return = new DataSet("DataSet_0");
                 _return.EnforceConstraints = _conn.Constraints;
-                UInt16 _n = 0;
+                byte _n = 0;
                 using (SqlDataReader _read = (SqlDataReader)_exe.Result)
                 {
                     while (_read.IsClosed == false)

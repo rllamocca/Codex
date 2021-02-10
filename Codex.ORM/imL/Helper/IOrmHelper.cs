@@ -1,5 +1,4 @@
-﻿using Codex;
-using Codex.ORM.Enum;
+﻿using Codex.ORM.Enum;
 
 namespace Codex.ORM.Helper
 {

@@ -1,7 +1,5 @@
-﻿using Codex;
-using Codex.ORM.Enum;
+﻿using Codex.ORM.Enum;
 using Codex.ORM.Helper;
-using Codex.ORM.Sql.Extension;
 
 using System;
 using System.Data.SqlClient;

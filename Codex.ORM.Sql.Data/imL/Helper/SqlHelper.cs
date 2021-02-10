@@ -1,5 +1,4 @@
-﻿using Codex.Generic;
-using Codex.ORM.Enum;
+﻿using Codex.ORM.Enum;
 using Codex.ORM.Helper;
 
 using System;
@@ -10,7 +9,10 @@ namespace Codex.ORM.Sql.Data.Helper
 {
     public class SqlHelper : Sql.Helper.SqlHelper, IOrmHelper
     {
-        public override Return Get_DataSet(string _query, IOrmConnection _conn, IOrmParameter[] _pmts = null)
+        public override Return Get_DataSet(
+            string _query, 
+            IOrmConnection _conn, 
+            IOrmParameter[] _pmts = null)
         {
             try
             {
@@ -19,7 +21,7 @@ namespace Codex.ORM.Sql.Data.Helper
 
                 DataSet _return = new DataSet("DataSet_0");
                 _return.EnforceConstraints = _conn.Constraints;
-                UInt16 _n = 0;
+                byte _n = 0;
                 using (SqlDataReader _read = (SqlDataReader)_exe.Result)
                 {
                     while (_read.IsClosed == false)
@@ -38,7 +40,11 @@ namespace Codex.ORM.Sql.Data.Helper
             }
         }
 
-        public override Return Get_DataTable(string _query, IOrmConnection _conn, IOrmParameter[] _pmts = null)
+        public override Return Get_DataTable(
+            string _query, 
+            IOrmConnection _conn, 
+            IOrmParameter[] _pmts = null
+            )
         {
             try
             {

@@ -1,5 +1,5 @@
 ﻿using Codex;
-
+using Codex.Helper;
 
 using System;
 using System.Threading;
@@ -10,6 +10,8 @@ namespace Test_Console
     {
         static void Main(string[] args)
         {
+            ConsoleHelper.InitEncoding();
+
             Console.WriteLine("Hello World!");
 
             long _max0 = 5;
@@ -28,7 +30,7 @@ namespace Test_Console
                             {
                                 for (long _n2 = 1; _n2 <= _max2; _n2++)
                                 {
-                                    Thread.Sleep(10);
+                                    Thread.Sleep(100);
                                     _pb2.Report(_n2);
                                 }
                             }
