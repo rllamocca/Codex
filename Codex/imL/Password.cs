@@ -1,13 +1,13 @@
 ﻿#if (NETSTANDARD2_0 || NETSTANDARD2_1)
 
+using Codex.Enum;
+using Codex.Helper;
+
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-using Codex.Enum;
-using Codex.Helper;
-
-namespace Codex.Generic
+namespace Codex
 {
     public class Password : IDisposable
     {

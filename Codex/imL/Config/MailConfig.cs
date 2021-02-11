@@ -1,19 +1,17 @@
-﻿using System;
-
-namespace Codex.Config
+﻿namespace Codex.Config
 {
     public class MailConfig
     {
-        public Boolean IsBodyHtml { set; get; }
+        public bool IsBodyHtml { set; get; }
 
-        public String FromAddress { set; get; }
-        public String FromDisplayName { set; get; }
+        public string FromAddress { set; get; }
+        public string FromDisplayName { set; get; }
 
-        public String[] TO { set; get; }
-        public String[] CC { set; get; }
-        public String[] CCO { set; get; }
-        public String[] Attachments { set; get; }
-        public String Subject { set; get; }
-        public String Body { set; get; }
+        public string[] TO { set; get; }
+        public string[] CC { set; get; }
+        public string[] CCO { set; get; }
+        public string[] Attachments { set; get; }
+        public string Subject { set; get; }
+        public string Body { set; get; }
     }
 }

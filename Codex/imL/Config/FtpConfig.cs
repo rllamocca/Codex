@@ -1,17 +1,15 @@
-﻿using System;
-
-namespace Codex.Config
+﻿namespace Codex.Config
 {
     public class FtpConfig
     {
-        public String Uri { set; get; }
-        public String FileName { set; get; }
-        public Boolean UseBinary { set; get; }
-        public Boolean KeepAlive { set; get; }
-        public Boolean UsePassive { set; get; }
-        public Boolean EnableSsl { set; get; }
+        public string Uri { set; get; }
+        public string FileName { set; get; }
+        public bool UseBinary { set; get; }
+        public bool KeepAlive { set; get; }
+        public bool UsePassive { set; get; }
+        public bool EnableSsl { set; get; }
 
-        public String UserName { set; get; }
-        public String Password { set; get; }
+        public string UserName { set; get; }
+        public string Password { set; get; }
     }
 }

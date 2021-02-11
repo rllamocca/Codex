@@ -24,7 +24,7 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Codex.AsyncHelper
+namespace Codex.Helper
 {
 
     public static class VoidAsyncHelper
