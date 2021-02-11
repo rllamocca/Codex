@@ -12,38 +12,21 @@ namespace Codex.Helper
 {
     public static class StringHelper
     {
-        public static String Clean_TBLFCR(String _a)
-        {
-            if (_a == null) return null;
+        //public static String Clean_Sql(String _a)
+        //{
+        //    if (_a == null) return null;
 
-            if (_a.Length > 0)
-            {
-                Char _tb = (Char)9;
-                Char _lf = (Char)10;
-                Char _cr = (Char)13;
-                Char _sp = (Char)32;
-                _a = _a.Replace(_tb, _sp);
-                _a = _a.Replace(_lf, _sp);
-                _a = _a.Replace(_cr, _sp);
-            }
-            return _a;
-        }
-
-        public static String Clean_Sql(String _a)
-        {
-            if (_a == null) return null;
-
-            while (_a.Contains("[["))
-            {
-                _a = _a.Replace("[[", "[");
-            }
-            while (_a.Contains("]]"))
-            {
-                _a = _a.Replace("]]", "]");
-            }
-            _a = StringHelper.Clean_TBLFCR(_a);
-            return _a.Trim();
-        }
+        //    while (_a.Contains("[["))
+        //    {
+        //        _a = _a.Replace("[[", "[");
+        //    }
+        //    while (_a.Contains("]]"))
+        //    {
+        //        _a = _a.Replace("]]", "]");
+        //    }
+        //    _a = StringHelper.Clean_TBLFCR(_a);
+        //    return _a.Trim();
+        //}
 
         public static String To_Xml(Object _a, Encoding _b)
         {

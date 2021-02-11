@@ -2,8 +2,8 @@
 {
     public interface IOrmParameter
     {
-        string Affect { set; get; }
+        string Source { set; get; }
         object Value { set; get; }
-        string Name_Function { set; get; }
+        string Affect { set; get; }
     }
 }

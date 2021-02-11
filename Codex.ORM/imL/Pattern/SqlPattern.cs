@@ -7,7 +7,10 @@ namespace Codex.ORM.Pattern
         public static string Insert(string _table, IOrmParameter[] _a, bool _scope_identity = false)
         {
             string _pattern = @"
- INSERT INTO {0} ({1}) VALUES ({2});
+ INSERT INTO {0}
+ ({1})
+ VALUES
+ ({2});
  {3}
 ";
             string _0 = null;
@@ -17,9 +20,9 @@ namespace Codex.ORM.Pattern
 
 
             _0 = string.Format("[{0}]", _table);
-            string[] _tmp = _a.Select(_s => string.Format("[{0}]", _s.Affect)).ToArray();
+            string[] _tmp = _a.Select(_s => string.Format("[{0}]", _s.Source)).ToArray();
             _1 = string.Join(",", _tmp);
-            _tmp = _a.Select(_s => _s.Name_Function).ToArray();
+            _tmp = _a.Select(_s => _s.Affect).ToArray();
             _2 = string.Join(",", _tmp);
 
             if (_scope_identity)

@@ -17,7 +17,7 @@ namespace Codex
         private const String _ES = " |°¬#$%&=',;.:¨*+~-_^`´()[]{}<>¡!¿?/\\\"";
         //؟
 
-#region PROPIEDADES
+        #region PROPIEDADES
         private Char[] _BASE;
         private String _CONT = String.Empty;
 
@@ -30,9 +30,9 @@ namespace Codex
         public Char[] Base { get { return this._BASE; } }
         public ERandomSort ReOrdenamiento { set; get; } = ERandomSort.Fisher_Yates;
         public String Contrasena { get { return this._CONT; } }
-#endregion
+        #endregion
 
-#region METODOS OBJETO
+        #region METODOS OBJETO
         public Return Generar(UInt16 _largo = 8)
         {
             try
@@ -47,9 +47,9 @@ namespace Codex
                 return new Return(false, _ex);
             }
         }
-#endregion
+        #endregion
 
-#region METODOS ESTATICOS
+        #region METODOS ESTATICOS
         public static Char[] PrepararBase(Boolean _mi, Boolean _ma, Boolean _nu, Boolean _es, String _otros = "")
         {
             String _return = String.Empty;
@@ -58,7 +58,7 @@ namespace Codex
             if (_nu) _return += Password._NU;
             if (_es) _return += Password._ES;
             if (_otros.Length > 0) _return += _otros;
-            _return = StringHelper.Clean_TBLFCR(_return);
+            _return = _return.Clean_TBLFCR();
             return _return.ToArray().Distinct().ToArray();
         }
         public static Char[] ReOrdenar(Char[] _data, ERandomSort _s = ERandomSort.Fisher_Yates)
@@ -174,7 +174,7 @@ namespace Codex
             this.Otros = null;
             this.ReOrdenamiento = ERandomSort.None;
         }
-#endregion
+        #endregion
     }
 }
 

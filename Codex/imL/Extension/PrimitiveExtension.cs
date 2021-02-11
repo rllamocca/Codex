@@ -1,21 +1,86 @@
 ﻿using System;
 
-namespace Codex.Extension
+namespace Codex
 {
     public static class PrimitiveExtension
     {
-        public static bool HasValue(this string _a)
+        public static bool HasValue(this string _item)
         {
-            return (_a != null);
+            return (_item != null);
         }
-        public static bool HasValueAndLength(this string _a)
+        public static bool HasValueLength(this string _item)
         {
-            return (_a != null && _a.Length > 0);
+            return (_item != null && _item.Length > 0);
         }
-        public static bool HasValueAndTrimLength(this string _a)
+        public static bool HasValueTrimLength(this string _item)
         {
-            return (_a != null && _a.Trim().Length > 0);
+            return (_item != null && _item.Trim().Length > 0);
         }
+        public static string Clean_TB(this string _item)
+        {
+            if (_item == null)
+                return null;
+
+            if (_item.Length > 0)
+            {
+                char _sp = (char)32;
+
+                char _tb = (char)9;
+
+                _item = _item.Replace(_tb, _sp);
+            }
+            return _item;
+        }
+        public static string Clean_LF(this string _item)
+        {
+            if (_item == null)
+                return null;
+
+            if (_item.Length > 0)
+            {
+                char _sp = (char)32;
+
+                char _lf = (char)10;
+
+                _item = _item.Replace(_lf, _sp);
+            }
+            return _item;
+        }
+        public static string Clean_CR(this string _item)
+        {
+            if (_item == null)
+                return null;
+
+            if (_item.Length > 0)
+            {
+                char _sp = (char)32;
+
+                char _cr = (char)13;
+
+                _item = _item.Replace(_cr, _sp);
+            }
+            return _item;
+        }
+        public static string Clean_TBLFCR(this string _item)
+        {
+            if (_item == null) 
+                return null;
+
+            if (_item.Length > 0)
+            {
+                char _sp = (char)32;
+
+                char _tb = (char)9;
+                char _lf = (char)10;
+                char _cr = (char)13;
+                
+                _item = _item.Replace(_tb, _sp);
+                _item = _item.Replace(_lf, _sp);
+                _item = _item.Replace(_cr, _sp);
+            }
+            return _item;
+        }
+
 
         public static DateTime ToExcelDateTime(this TimeSpan _a)
         {
