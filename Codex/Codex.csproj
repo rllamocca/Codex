@@ -23,8 +23,4 @@
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <Folder Include="imL\Generic\" />
-	</ItemGroup>
-
 </Project>

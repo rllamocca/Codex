@@ -11,7 +11,7 @@ namespace Codex.Helper
 {
     public static class FtpHelper
     {
-        private static FtpWebRequest NewFTP(FtpConfig _config)
+        private static FtpWebRequest Create(FtpConfig _config)
         {
             FtpWebRequest _create = (FtpWebRequest)FtpWebRequest.Create(_config.Uri + "/" + _config.FileName);
             _create.UseBinary = _config.UseBinary;
@@ -23,9 +23,9 @@ namespace Codex.Helper
             return _create;
         }
 
-        public static FtpStatusCode From_Ftp(ref String[] _from, FtpConfig _config)
+        public static FtpStatusCode From_ListDirectory(ref String[] _from, FtpConfig _config)
         {
-            FtpWebRequest _ftp = FtpHelper.NewFTP(_config);
+            FtpWebRequest _ftp = FtpHelper.Create(_config);
             _ftp.Method = WebRequestMethods.Ftp.ListDirectory;
 
             List<String> _return = new List<String>();
@@ -42,9 +42,9 @@ namespace Codex.Helper
             }
         }
 
-        public static FtpStatusCode From_Ftp(ref Stream _from, FtpConfig _config)
+        public static FtpStatusCode From_DownloadFile(ref Stream _from, FtpConfig _config)
         {
-            FtpWebRequest _ftp = FtpHelper.NewFTP(_config);
+            FtpWebRequest _ftp = FtpHelper.Create(_config);
             _ftp.Method = WebRequestMethods.Ftp.DownloadFile;
 
             using (FtpWebResponse _response = (FtpWebResponse)_ftp.GetResponse())
@@ -61,9 +61,9 @@ namespace Codex.Helper
             }
         }
 
-        public static FtpStatusCode To_Ftp226(Stream _to, FtpConfig _config)
+        public static FtpStatusCode To_UploadFile(Stream _to, FtpConfig _config)
         {
-            FtpWebRequest _ftp = FtpHelper.NewFTP(_config);
+            FtpWebRequest _ftp = FtpHelper.Create(_config);
             _ftp.Method = WebRequestMethods.Ftp.UploadFile;
 
             using (Stream _s = _ftp.GetRequestStream())
@@ -77,9 +77,9 @@ namespace Codex.Helper
             }
         }
 
-        public static FtpStatusCode To_Ftp(FtpConfig _config)
+        public static FtpStatusCode To_DeleteFile(FtpConfig _config)
         {
-            FtpWebRequest _ftp = FtpHelper.NewFTP(_config);
+            FtpWebRequest _ftp = FtpHelper.Create(_config);
             _ftp.Method = WebRequestMethods.Ftp.DeleteFile;
 
             using (FtpWebResponse _response = (FtpWebResponse)_ftp.GetResponse())
