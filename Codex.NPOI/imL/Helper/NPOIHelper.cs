@@ -279,7 +279,7 @@ namespace Codex.NPOI.Helper
                     DataRow _newrow = _table.NewRow();
                     _newrow.ItemArray = _table.Columns
                         .Cast<DataColumn>()
-                        .Select(_s => DBCellValue(_row.GetCell(_s.Ordinal), _datetime.Contains(_s.Ordinal)))
+                        .Select(_s => Get_DBCellValue(_row.GetCell(_s.Ordinal), _datetime.Contains(_s.Ordinal)))
                         .ToArray();
                     _table.Rows.Add(_newrow);
                 }
@@ -290,7 +290,7 @@ namespace Codex.NPOI.Helper
             return _return;
         }
 
-        public static object CellValue(ICell _cell, bool _datetime = false)
+        public static object Get_CellValue(ICell _cell, bool _datetime = false)
         {
             object _return = null;
 
@@ -323,7 +323,7 @@ namespace Codex.NPOI.Helper
 
             return _return;
         }
-        public static object DBCellValue(ICell _cell, bool _datetime = false)
+        public static object Get_DBCellValue(ICell _cell, bool _datetime = false)
         {
             object _return = DBNull.Value;
 
