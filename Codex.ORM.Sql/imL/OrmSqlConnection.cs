@@ -67,7 +67,7 @@ namespace Codex.ORM.Sql
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-        protected virtual void Dispose(Boolean _managed)
+        protected virtual void Dispose(bool _managed)
         {
             if (this._DISPOSED)
                 return;

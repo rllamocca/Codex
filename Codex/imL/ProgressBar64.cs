@@ -11,6 +11,8 @@ namespace Codex
 {
     public class ProgressBar64 : IDisposable, IProgress<long>
     {
+        private bool _DISPOSED = false;
+
         private readonly Timer _TIMER;
         private readonly ProgressBar64 _PARENT;
         private const string _ANIMATION = @"+\|/";
@@ -122,37 +124,53 @@ namespace Codex
             }
         }
 
-        public void Report(long _pro)
+        public void Report(long _value)
         {
             if (this._COUNT > 0)
             {
-                decimal _per = (1.0m * _pro / this._COUNT);
-                this.DrawReport(_per, _pro);
+                decimal _per = (1.0m * _value / this._COUNT);
+                this.DrawReport(_per, _value);
             }
         }
 
+        ~ProgressBar64()
+        {
+            this.Dispose(false);
+        }
         public void Dispose()
         {
-            if (this._TIMER != null)
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool _managed)
+        {
+            if (this._DISPOSED)
+                return;
+
+            if (_managed)
             {
-                this._TIMER.Stop();
-                this._TIMER.Dispose();
+                if (this._TIMER != null)
+                {
+                    this._TIMER.Stop();
+                    this._TIMER.Dispose();
+                }
+                this._ANIMATIONINDEX = 0;
+                this._BLOCKS = 0;
+                this._COUNT = 0;
+                this._BAR_START = new Point(0, 0);
+                this._BAR_END = new Point(0, 0);
+                this._BAR.Clear();
+                this._BAR = null;
+                if (this._PARENT == null)
+                {
+                    ConsoleHelper.WriteLine(this._NEW_LINE, "");
+                    Console.CursorVisible = true;
+                }
+                this._LINE = new Point(0, 0);
+                this._NEW_LINE = new Point(0, 0);
+                this._START = DateTime.MinValue;
             }
-            this._ANIMATIONINDEX = 0;
-            this._BLOCKS = 0;
-            this._COUNT = 0;
-            this._BAR_START = new Point(0, 0);
-            this._BAR_END = new Point(0, 0);
-            this._BAR.Clear();
-            this._BAR = null;
-            if (this._PARENT == null)
-            {
-                ConsoleHelper.WriteLine(this._NEW_LINE, "");
-                Console.CursorVisible = true;
-            }
-            this._LINE = new Point(0, 0);
-            this._NEW_LINE = new Point(0, 0);
-            this._START = DateTime.MinValue;
+            this._DISPOSED = true;
         }
     }
 }
