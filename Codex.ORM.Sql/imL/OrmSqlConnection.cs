@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Data;
 using System.Data.SqlClient;
+#if (NET35 == false && NET40 == false)
 using System.Threading;
 using System.Threading.Tasks;
+#endif
 
 namespace Codex.ORM.Sql
 {
@@ -50,7 +52,9 @@ namespace Codex.ORM.Sql
         //####
         public int TimeOut { set; get; } = 100;
         public bool Constraints { set; get; } = false;
+#if (NET35 == false && NET40 == false)
         public CancellationToken Token { set; get; } = default;
+#endif
 
         public void Close()
         {
@@ -107,7 +111,7 @@ namespace Codex.ORM.Sql
                     break;
             }
         }
-
+#if (NET35 == false && NET40 == false)
         public async Task OpenAsync()
         {
             switch (this._CN.State)
@@ -121,5 +125,6 @@ namespace Codex.ORM.Sql
                     break;
             }
         }
+#endif
     }
 }

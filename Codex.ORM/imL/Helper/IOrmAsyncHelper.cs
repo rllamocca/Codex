@@ -1,4 +1,6 @@
-﻿using Codex.ORM.Enum;
+﻿#if (NET35 == false && NET40 == false)
+
+using Codex.ORM.Enum;
 
 using System.Threading.Tasks;
 
@@ -31,3 +33,4 @@ namespace Codex.ORM.Helper
             );
     }
 }
+#endif
