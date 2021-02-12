@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Codex.ORM\Codex.ORM.csproj" />
-    <ProjectReference Include="..\Codex\Codex.csproj" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.2'">

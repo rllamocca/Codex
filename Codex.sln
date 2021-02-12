@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.ORM.Sql.Data", "Codex
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_Console", "Test_Console\Test_Console.csproj", "{9007E7CD-2E3B-4A01-B26E-AEC971BFE564}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codex.NPOI", "Codex.NPOI\Codex.NPOI.csproj", "{8291A790-7413-4D71-ABB6-1F9FC9C171B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.NPOI", "Codex.NPOI\Codex.NPOI.csproj", "{8291A790-7413-4D71-ABB6-1F9FC9C171B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
