@@ -1,4 +1,5 @@
-﻿using Codex.ORM.Enum;
+﻿#if (NET35 == false && NET40 == false)
+using Codex.ORM.Enum;
 using Codex.ORM.Helper;
 
 using System;
@@ -66,3 +67,4 @@ namespace Codex.ORM.Sql.Data.Helper
         }
     }
 }
+#endif

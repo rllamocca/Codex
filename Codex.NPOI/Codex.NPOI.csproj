@@ -12,6 +12,7 @@
 		<Company>imL</Company>
 		<Description>Not so free tools.</Description>
 		<Copyright>© 1984 - 8888</Copyright>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
 	</PropertyGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net35'">
