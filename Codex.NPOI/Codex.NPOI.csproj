@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>
+			net35
+			;net40
+			;net45
+			;netstandard2.0
+		</TargetFrameworks>
+		<Version>0.0.0.1</Version>
+		<Authors>rllamocca@outlook.com</Authors>
+		<Company>imL</Company>
+		<Description>Not so free tools.</Description>
+		<Copyright>© 1984 - 8888</Copyright>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net35'">
+		<PackageReference Include="NPOI">
+			<Version>2.3.0</Version>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+		<PackageReference Include="NPOI">
+			<Version>2.5.1</Version>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+		<PackageReference Include="NPOI">
+			<Version>2.5.2</Version>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReference Include="NPOI">
+			<Version>2.5.2</Version>
+		</PackageReference>
+	</ItemGroup>
+
+</Project>
