@@ -8,61 +8,60 @@ using System.Data;
 using System.IO;
 using System.Linq;
 
-
 namespace Codex.NPOI.Helper
 {
-    class NPOIHelper
+    public static class NPOIHelper
     {
-        public static void To_xls(out Stream _out, DataSet _a, Boolean _b = true, KeyValuePair<String, String>[] _c = null)
+        public static void To_xls(out Stream _out, DataSet _ds, bool __xls = true, KeyValuePair<string, string>[] _formats = null)
         {
             IWorkbook _wb;
-            if (_b) _wb = new HSSFWorkbook();
+            if (__xls) _wb = new HSSFWorkbook();
             else _wb = new XSSFWorkbook();
 
-            IFont _font = _wb.CreateFont();
-            _font.FontHeightInPoints = 10;
-            _font.FontName = "Consolas";
+            IFont _fbasic = _wb.CreateFont();
+            _fbasic.FontHeightInPoints = 10;
+            _fbasic.FontName = "Consolas";
 
-            IFont _font2 = _wb.CreateFont();
-            _font2.FontHeightInPoints = 11;
-            _font2.FontName = "Consolas";
-            _font2.IsBold = true;
+            IFont _fbold = _wb.CreateFont();
+            _fbold.FontHeightInPoints = 11;
+            _fbold.FontName = "Consolas";
+            _fbold.IsBold = true;
 
-            ICellStyle _style = _wb.CreateCellStyle();
-            _style.VerticalAlignment = VerticalAlignment.Center;
-            _style.SetFont(_font);
+            ICellStyle _sbasic = _wb.CreateCellStyle();
+            _sbasic.VerticalAlignment = VerticalAlignment.Center;
+            _sbasic.SetFont(_fbasic);
 
-            ICellStyle _style2 = _wb.CreateCellStyle();
-            _style2.Alignment = HorizontalAlignment.Center;
-            _style2.VerticalAlignment = VerticalAlignment.Center;
-            _style2.SetFont(_font2);
+            ICellStyle _sbold = _wb.CreateCellStyle();
+            _sbold.Alignment = HorizontalAlignment.Center;
+            _sbold.VerticalAlignment = VerticalAlignment.Center;
+            _sbold.SetFont(_fbold);
 
-            ICellStyle _s_time = _wb.CreateCellStyle();
-            _s_time.VerticalAlignment = VerticalAlignment.Center;
-            _s_time.DataFormat = _wb.CreateDataFormat().GetFormat("H:mm:ss");
-            _s_time.SetFont(_font);
+            ICellStyle _stime = _wb.CreateCellStyle();
+            _stime.VerticalAlignment = VerticalAlignment.Center;
+            _stime.DataFormat = _wb.CreateDataFormat().GetFormat("H:mm:ss");
+            _stime.SetFont(_fbasic);
 
-            ICellStyle _s_time_acum = _wb.CreateCellStyle();
-            _s_time_acum.VerticalAlignment = VerticalAlignment.Center;
-            _s_time_acum.DataFormat = _wb.CreateDataFormat().GetFormat("[H]:mm:ss");
-            _s_time_acum.SetFont(_font);
+            ICellStyle _stime_acum = _wb.CreateCellStyle();
+            _stime_acum.VerticalAlignment = VerticalAlignment.Center;
+            _stime_acum.DataFormat = _wb.CreateDataFormat().GetFormat("[H]:mm:ss");
+            _stime_acum.SetFont(_fbasic);
 
-            ICellStyle _s_date = _wb.CreateCellStyle();
-            _s_date.VerticalAlignment = VerticalAlignment.Center;
-            _s_date.DataFormat = _wb.CreateDataFormat().GetFormat("yyyyMMdd");
-            _s_date.SetFont(_font);
+            ICellStyle _sdate = _wb.CreateCellStyle();
+            _sdate.VerticalAlignment = VerticalAlignment.Center;
+            _sdate.DataFormat = _wb.CreateDataFormat().GetFormat("yyyyMMdd");
+            _sdate.SetFont(_fbasic);
 
-            ICellStyle _s_datetime = _wb.CreateCellStyle();
-            _s_datetime.VerticalAlignment = VerticalAlignment.Center;
-            _s_datetime.DataFormat = _wb.CreateDataFormat().GetFormat("yyyyMMdd H:mm:ss");
-            _s_datetime.SetFont(_font);
+            ICellStyle _sdatetime = _wb.CreateCellStyle();
+            _sdatetime.VerticalAlignment = VerticalAlignment.Center;
+            _sdatetime.DataFormat = _wb.CreateDataFormat().GetFormat("yyyyMMdd H:mm:ss");
+            _sdatetime.SetFont(_fbasic);
 
-            if (_c == null)
+            if (_formats == null)
             {
-                foreach (DataTable _item in _a.Tables)
+                foreach (DataTable _item in _ds.Tables)
                 {
-                    Int32 _row = 0;
-                    Int32 _col = 0;
+                    int _row = 0;
+                    int _col = 0;
 
                     ISheet _wbs = _wb.CreateSheet(_item.TableName);
                     _wbs.DefaultColumnWidth = 17;
@@ -71,7 +70,7 @@ namespace Codex.NPOI.Helper
                     foreach (DataColumn _dc in _item.Columns)
                     {
                         ICell _wbsrc = _wbsr.CreateCell(_col);
-                        _wbsrc.CellStyle = _style2;
+                        _wbsrc.CellStyle = _sbold;
                         _wbsrc.SetCellType(CellType.String);
 
                         if (_dc.Caption == null) _wbsrc.SetCellValue(_dc.ColumnName);
@@ -88,8 +87,8 @@ namespace Codex.NPOI.Helper
                         foreach (DataColumn _dc in _item.Columns)
                         {
                             ICell _wbsrc = _wbsr.CreateCell(_col);
-                            Object _obj = _dr[_dc.ColumnName];
-                            if (_obj != DBNull.Value)
+                            object _obj = _dr[_dc.ColumnName];
+                            if (_obj != DBNull.Value && _obj != null)
                             {
                                 switch (Convert.ToString(_dc.DataType))
                                 {
@@ -100,7 +99,7 @@ namespace Codex.NPOI.Helper
                                     case "System.UInt32":
                                     case "System.UInt64":
                                     case "System.Decimal":
-                                        _wbsrc.CellStyle = _style;
+                                        _wbsrc.CellStyle = _sbasic;
                                         _wbsrc.SetCellType(CellType.Numeric);
                                         _wbsrc.SetCellValue(Convert.ToDouble(_obj));
                                         break;
@@ -111,23 +110,23 @@ namespace Codex.NPOI.Helper
                                         {
                                             TimeSpan _tmp2 = _tmp - new DateTime(1899, 12, 31);
                                             _tmp = new DateTime(_tmp2.Ticks);
-                                            _wbsrc.CellStyle = _s_time;
+                                            _wbsrc.CellStyle = _stime;
                                             _wbsrc.SetCellValue(_tmp.ToOADate());
                                         }
                                         else
                                         {
                                             if (_tmp.Year == 1900)
-                                                _wbsrc.CellStyle = _s_time_acum;
+                                                _wbsrc.CellStyle = _stime_acum;
                                             else if (_tmp.Hour > 0 || _tmp.Minute > 0 || _tmp.Second > 0 || _tmp.Millisecond > 0)
-                                                _wbsrc.CellStyle = _s_datetime;
+                                                _wbsrc.CellStyle = _sdatetime;
                                             else
-                                                _wbsrc.CellStyle = _s_date;
+                                                _wbsrc.CellStyle = _sdate;
 
                                             _wbsrc.SetCellValue(_tmp);
                                         }
                                         break;
                                     default:
-                                        _wbsrc.CellStyle = _style;
+                                        _wbsrc.CellStyle = _sbasic;
                                         _wbsrc.SetCellType(CellType.String);
                                         _wbsrc.SetCellValue(Convert.ToString(_obj));
                                         break;
@@ -148,10 +147,10 @@ namespace Codex.NPOI.Helper
             }
             else
             {
-                foreach (DataTable _item in _a.Tables)
+                foreach (DataTable _item in _ds.Tables)
                 {
-                    Int32 _row = 0;
-                    Int32 _col = 0;
+                    int _row = 0;
+                    int _col = 0;
 
                     ISheet _wbs = _wb.CreateSheet(_item.TableName);
                     _wbs.DefaultColumnWidth = 17;
@@ -162,22 +161,22 @@ namespace Codex.NPOI.Helper
                     foreach (DataColumn _dc in _item.Columns)
                     {
                         ICell _wbsrc = _wbsr.CreateCell(_col);
-                        _wbsrc.CellStyle = _style2;
+                        _wbsrc.CellStyle = _sbold;
                         _wbsrc.SetCellType(CellType.String);
 
                         if (_dc.Caption == null) _wbsrc.SetCellValue(_dc.ColumnName);
                         else _wbsrc.SetCellValue(_dc.Caption);
 
-                        KeyValuePair<String, String> _f = _c.Where(_w => _w.Key == _dc.ColumnName).FirstOrDefault();
+                        KeyValuePair<string, string> _f = _formats.Where(_w => _w.Key == _dc.ColumnName).FirstOrDefault();
 
-                        if (_f.Equals(default(KeyValuePair<String, String>)))
-                            _t_styles[_col] = _style;
+                        if (_f.Equals(default(KeyValuePair<string, string>)))
+                            _t_styles[_col] = _sbasic;
                         else
                         {
                             _t_styles[_col] = _wb.CreateCellStyle();
                             _t_styles[_col].VerticalAlignment = VerticalAlignment.Center;
                             _t_styles[_col].DataFormat = _wb.CreateDataFormat().GetFormat(_f.Value);
-                            _t_styles[_col].SetFont(_font);
+                            _t_styles[_col].SetFont(_fbasic);
                         }
 
                         _col++;
@@ -192,9 +191,8 @@ namespace Codex.NPOI.Helper
                         {
                             ICell _wbsrc = _wbsr.CreateCell(_col);
                             _wbsrc.CellStyle = _t_styles[_col];
-                            Object _obj = _dr[_dc.ColumnName];
-
-                            if (_obj != DBNull.Value)
+                            object _obj = _dr[_dc.ColumnName];
+                            if (_obj != DBNull.Value && _obj != null)
                             {
                                 switch (Convert.ToString(_dc.DataType))
                                 {
@@ -237,35 +235,123 @@ namespace Codex.NPOI.Helper
             _wb.Write(_out);
         }
 
-        public static DataTable Xls_to_DataTable(String _path, Boolean _b = true)
+        public static DataSet To_DataSet(string _path, bool __xls = true, bool _columnnames = true, int[] _datetime = null)
         {
             IWorkbook _wb;
             using (FileStream _s = new FileStream(_path, FileMode.Open, FileAccess.Read))
             {
-                if (_b)
+                if (__xls)
                     _wb = new HSSFWorkbook(_s);
                 else
-                    _wb = new HSSFWorkbook(_s);
+                    _wb = new XSSFWorkbook(_s);
             }
-            ISheet _sheet = _wb.GetSheetAt(0);
-            DataTable _return = new DataTable(_sheet.SheetName);
+            if (_datetime == null)
+                _datetime = new int[] { -8 };
 
-            IRow _row = _sheet.GetRow(0);
-            foreach (ICell _cell in _row)
+            DataSet _return = new DataSet("NPOI");
+            for (int _i = 0; _i < _wb.NumberOfSheets; _i++)
             {
-                _return.Columns.Add(_cell.ToString());
+                ISheet _sheet = _wb.GetSheetAt(_i);
+
+                DataTable _table = new DataTable(_sheet.SheetName);
+
+                int _n = 0;
+                IRow _row = _sheet.GetRow(_n);
+                if (_columnnames)
+                {
+                    foreach (ICell _irem in _row)
+                        _table.Columns.Add(_irem.StringCellValue, typeof(object));
+                    _n++;
+                }
+                else
+                {
+                    foreach (ICell _cell in _row)
+                    {
+                        _table.Columns.Add("Column_" + Convert.ToString(_n), typeof(object));
+                        _n++;
+                    }
+                    _n = 0;
+                }
+
+                for (int _j = _n; _j < _sheet.PhysicalNumberOfRows; _j++)
+                {
+                    _row = _sheet.GetRow(_j);
+                    DataRow _newrow = _table.NewRow();
+                    _newrow.ItemArray = _table.Columns
+                        .Cast<DataColumn>()
+                        .Select(_s => DBCellValue(_row.GetCell(_s.Ordinal), _datetime.Contains(_s.Ordinal)))
+                        .ToArray();
+                    _table.Rows.Add(_newrow);
+                }
+
+                _return.Tables.Add(_table);
             }
 
-            // write the rest
-            for (int _i = 1; _i < _sheet.PhysicalNumberOfRows; _i++)
+            return _return;
+        }
+
+        public static object CellValue(ICell _cell, bool _datetime = false)
+        {
+            object _return = null;
+
+            switch (_cell.CellType)
             {
-                var sheetRow = _sheet.GetRow(_i);
-                var dtRow = _return.NewRow();
-                dtRow.ItemArray = _return.Columns
-                    .Cast<DataColumn>()
-                    .Select(c => sheetRow.GetCell(c.Ordinal, MissingCellPolicy.CREATE_NULL_AS_BLANK).ToString())
-                    .ToArray();
-                _return.Rows.Add(dtRow);
+                case CellType.Unknown:
+                    _return = Convert.ToString(_cell);
+                    break;
+                case CellType.Numeric:
+                    if (_datetime)
+                        _return = _cell.DateCellValue;
+                    else
+                        _return = _cell.NumericCellValue;
+                    break;
+                case CellType.String:
+                    _return = _cell.StringCellValue;
+                    break;
+                case CellType.Formula:
+                    break;
+                case CellType.Blank:
+                    break;
+                case CellType.Boolean:
+                    _return = _cell.BooleanCellValue;
+                    break;
+                case CellType.Error:
+                    break;
+                default:
+                    break;
+            }
+
+            return _return;
+        }
+        public static object DBCellValue(ICell _cell, bool _datetime = false)
+        {
+            object _return = DBNull.Value;
+
+            switch (_cell.CellType)
+            {
+                case CellType.Unknown:
+                    _return = Convert.ToString(_cell);
+                    break;
+                case CellType.Numeric:
+                    if (_datetime)
+                        _return = _cell.DateCellValue;
+                    else
+                        _return = _cell.NumericCellValue;
+                    break;
+                case CellType.String:
+                    _return = _cell.StringCellValue;
+                    break;
+                case CellType.Formula:
+                    break;
+                case CellType.Blank:
+                    break;
+                case CellType.Boolean:
+                    _return = _cell.BooleanCellValue;
+                    break;
+                case CellType.Error:
+                    break;
+                default:
+                    break;
             }
 
             return _return;
