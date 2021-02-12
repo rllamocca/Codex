@@ -24,42 +24,57 @@ namespace Codex
         private Point _NEW_LINE;
         private DateTime _START;
 
-        private void DrawProgress(decimal _per, long _pro)
+        private void DrawReport(decimal _per, long _pro)
         {
-            DateTime _e = DateTime.Now;
-            TimeSpan _diff = (_e - this._START);
-            _diff = TimeSpan.FromTicks(_diff.Ticks * (this._COUNT - _pro));
-            this._START = _e;
+            if (Console.IsOutputRedirected == false)
+            {
+                string _text = string.Format(
+                    "{0}  {1}/{2}",
+                    _per.ToString("P"),
+                    _pro,
+                    this._COUNT
+                    );
 
-            ConsoleHelper.Write(
-                this._BAR_END,
-                string.Format("{0} : {1} / {2} <-> {3}",
-                _per.ToString("P"),
-                _pro,
-                this._COUNT,
-                _diff.ToString("hh':'mm':'ss'.'fff"))
-                );
+                ConsoleHelper.Write(this._BAR_END, _text);
+
+                if (0 < _per && _per <= 1)
+                {
+                    decimal _f = Math.Round(_per * this._BLOCKS);
+
+                    if (this._BAR.Contains(_f) == false)
+                    {
+                        this._BAR.Add(_f);
+
+                        if (_f > 0)
+                        {
+                            ConsoleHelper.Write(this._BAR_START, '■');
+                            this._BAR_START.X += 1;
+                        }
+                    }
+                }
+            }
         }
 
         private void OnElapsedEvent(object _source, ElapsedEventArgs _e)
         {
-            TimeSpan _diff = _e.SignalTime - this._START;
+            if (Console.IsOutputRedirected == false)
+            {
+                TimeSpan _diff = _e.SignalTime - this._START;
 
-            string _text = string.Format(
-                "[{0}] {1} <-> {2}",
-                _ANIMATION[this._ANIMATIONINDEX++ % 4],
-                _e.SignalTime.ToString("HH:mm:ss.fff"),
-                _diff.ToString("hh':'mm':'ss'.'fff")
-                );
-            ConsoleHelper.Write(this._BAR_START, new String(' ', 40));
-            ConsoleHelper.Write(this._BAR_START, _text);
+                string _text = string.Format(
+                    "[{0}]  {1}",
+                    _ANIMATION[this._ANIMATIONINDEX++ % 4],
+                    _diff.ToString("hh':'mm':'ss'.'fff")
+                    );
+                ConsoleHelper.Write(this._BAR_START, new String(' ', 40));
+                ConsoleHelper.Write(this._BAR_START, _text);
+            }
         }
 
         public ProgressBar64(long _count, ProgressBar64 _parent = null)
         {
             this._COUNT = _count;
             this._PARENT = _parent;
-            this._START = DateTime.Now;
             //#####
             if (Console.IsOutputRedirected == false)
             {
@@ -81,12 +96,15 @@ namespace Codex
 
                 if (this._COUNT <= 0)
                 {
+                    this._START = DateTime.Now;
                     this._TIMER = new Timer(200);
                     this._TIMER.Elapsed += this.OnElapsedEvent;
                     this._TIMER.Start();
                 }
                 else
                 {
+                    this._BAR.Add(0);
+
                     if (this._COUNT < this._BLOCKS)
                         this._BLOCKS = Convert.ToByte(this._COUNT);
 
@@ -99,36 +117,17 @@ namespace Codex
                     this._BAR_START.X += 1;
                     this._BAR_END.X += 2;
 
-                    this.DrawProgress(0, 0);
+                    this.DrawReport(0, 0);
                 }
             }
         }
 
-        public void Report(long _progress)
+        public void Report(long _pro)
         {
-            if (Console.IsOutputRedirected == false)
+            if (this._COUNT > 0)
             {
-                if (this._COUNT > 0)
-                {
-                    decimal _p = (1.0m * _progress / this._COUNT);
-                    this.DrawProgress(_p, _progress);
-
-                    if (0 <= _p && _p <= 1)
-                    {
-                        decimal _f = Math.Round(_p * this._BLOCKS);
-
-                        if (this._BAR.Contains(_f) == false)
-                        {
-                            this._BAR.Add(_f);
-
-                            if (_f > 0)
-                            {
-                                ConsoleHelper.Write(this._BAR_START, '■');
-                                this._BAR_START.X += 1;
-                            }
-                        }
-                    }
-                }
+                decimal _per = (1.0m * _pro / this._COUNT);
+                this.DrawReport(_per, _pro);
             }
         }
 
@@ -153,7 +152,7 @@ namespace Codex
             }
             this._LINE = new Point(0, 0);
             this._NEW_LINE = new Point(0, 0);
-            this._START = new DateTime();
+            this._START = DateTime.MinValue;
         }
     }
 }

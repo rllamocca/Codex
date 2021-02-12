@@ -30,7 +30,7 @@ namespace Test_Console
                             {
                                 for (long _n2 = 1; _n2 <= _max2; _n2++)
                                 {
-                                    Thread.Sleep(100);
+                                    Thread.Sleep(20);
                                     _pb2.Report(_n2);
                                 }
                             }
