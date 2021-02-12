@@ -255,25 +255,30 @@ namespace Codex.NPOI.Helper
 
                 DataTable _table = new DataTable(_sheet.SheetName);
 
-                int _n = 0;
-                IRow _row = _sheet.GetRow(_n);
-                if (_columnnames)
+                int _ordinal = 0;
+                IRow _row = _sheet.GetRow(_ordinal);
+                DataColumn _dc = null;
+
+                foreach (ICell _item in _row)
                 {
-                    foreach (ICell _irem in _row)
-                        _table.Columns.Add(_irem.StringCellValue, typeof(object));
-                    _n++;
-                }
-                else
-                {
-                    foreach (ICell _cell in _row)
-                    {
-                        _table.Columns.Add("Column_" + Convert.ToString(_n), typeof(object));
-                        _n++;
-                    }
-                    _n = 0;
+                    Type _type = _datetime.Contains(_ordinal) ? typeof(DateTime) : typeof(object);
+                    if (_columnnames)
+                        _dc = new DataColumn(_item.StringCellValue, _type);
+                    else
+                        _dc = new DataColumn("Column_" + Convert.ToString(_ordinal), _type);
+
+                    _dc.DefaultValue = DBNull.Value;
+                    _table.Columns.Add(_dc);
+
+                    _ordinal++;
                 }
 
-                for (int _j = _n; _j < _sheet.PhysicalNumberOfRows; _j++)
+                if (_columnnames)
+                    _ordinal = 1;
+                else
+                    _ordinal = 0;
+
+                for (int _j = _ordinal; _j < _sheet.PhysicalNumberOfRows; _j++)
                 {
                     _row = _sheet.GetRow(_j);
                     DataRow _newrow = _table.NewRow();
