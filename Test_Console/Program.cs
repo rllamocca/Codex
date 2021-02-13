@@ -41,7 +41,7 @@ namespace Test_Console
                 }
             }
 
-            using (ProgressBar64 _pb = new ProgressBar64(0))
+            using (ElapsedTime _pb = new ElapsedTime())
             {
                 for (int _n0 = 1; _n0 <= _max2; _n0++)
                     Thread.Sleep(500);
