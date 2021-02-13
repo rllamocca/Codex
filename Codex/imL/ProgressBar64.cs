@@ -28,14 +28,50 @@ namespace Codex
         private Point _LINE;
         private Point _NEW_LINE;
 
-        private void DrawReport(decimal _per, long _pro)
+        public ProgressBar64(long _count, ProgressBar64 _parent = null)
         {
+            this._COUNT = _count;
+            this._PARENT = _parent;
+
+            if (this._PARENT == null)
+            {
+                Console.CursorVisible = false;
+                this._LINE = new Point(Console.CursorLeft, Console.CursorTop);
+                this._NEW_LINE = new Point(this._LINE.X, this._LINE.Y + 1);
+            }
+            else
+            {
+                this._LINE = new Point(this._PARENT._LINE.X, this._PARENT._LINE.Y + 1);
+                this._PARENT._NEW_LINE = new Point(this._LINE.X, this._LINE.Y + 1);
+            }
+
+            this._BAR_START = new Point(this._LINE.X, this._LINE.Y);
+
+            if (this._COUNT < this._BLOCKS)
+                this._BLOCKS = Convert.ToByte(this._COUNT);
+
+            this._BAR_END = new Point(this._BAR_START.X + this._BLOCKS + 1, this._BAR_START.Y);
+
+            ConsoleHelper.Write(this._BAR_START, new string(' ', 100));
+            ConsoleHelper.Write(this._BAR_START, '[');
+            ConsoleHelper.Write(this._BAR_END, ']');
+
+            this._BAR_START.X += 1;
+            this._BAR_END.X += 2;
+
+            this._BAR.Add(0);
+            this.Report(0);
+        }
+
+        public void Report(long _value)
+        {
+            decimal _per = (1.0m * _value / this._COUNT);
             string _text = string.Format(
-                                "{0}  {1}/{2}",
-                                _per.ToString("P"),
-                                _pro,
-                                this._COUNT
-                                );
+                            "{0}  {1}/{2}",
+                            _per.ToString("P"),
+                            _value,
+                            this._COUNT
+                            );
 
             ConsoleHelper.Write(this._BAR_END, _text);
 
@@ -53,53 +89,6 @@ namespace Codex
                         this._BAR_START.X += 1;
                     }
                 }
-            }
-        }
-
-        public ProgressBar64(long _count, ProgressBar64 _parent = null)
-        {
-            this._COUNT = _count;
-            this._PARENT = _parent;
-            //#####
-            if (this._PARENT == null)
-            {
-                this._LINE = new Point(Console.CursorLeft, Console.CursorTop);
-                this._NEW_LINE = new Point(this._LINE.X, this._LINE.Y + 1);
-            }
-            else
-            {
-                this._LINE = new Point(this._PARENT._LINE.X, this._PARENT._LINE.Y + 1);
-                this._PARENT._NEW_LINE = new Point(this._LINE.X, this._LINE.Y + 1);
-            }
-
-            this._BAR_START = new Point(this._LINE.X, this._LINE.Y);
-
-            if (this._PARENT == null)
-                Console.CursorVisible = false;
-
-            this._BAR.Add(0);
-
-            if (this._COUNT < this._BLOCKS)
-                this._BLOCKS = Convert.ToByte(this._COUNT);
-
-            this._BAR_END = new Point(this._BAR_START.X + this._BLOCKS + 1, this._BAR_START.Y);
-
-            ConsoleHelper.Write(this._BAR_START, new string(' ', 100));
-            ConsoleHelper.Write(this._BAR_START, '[');
-            ConsoleHelper.Write(this._BAR_END, ']');
-
-            this._BAR_START.X += 1;
-            this._BAR_END.X += 2;
-
-            this.DrawReport(0, 0);
-        }
-
-        public void Report(long _value)
-        {
-            if (this._COUNT > 0)
-            {
-                decimal _per = (1.0m * _value / this._COUNT);
-                this.DrawReport(_per, _value);
             }
         }
 
