@@ -1,4 +1,4 @@
-﻿#if (NETSTANDARD2_0 || NETSTANDARD2_1)
+﻿#if (NETSTANDARD1_0 == false && NETSTANDARD1_1 == false)
 
 using Codex.Enum;
 using Codex.Helper;
@@ -11,29 +11,26 @@ namespace Codex
 {
     public class Password : IDisposable
     {
-        private const String _MI = "abcdefghijklmnñopqrstuvwxyz";
-        private const String _MA = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-        private const String _NU = "1234567890";
-        private const String _ES = " |°¬#$%&=',;.:¨*+~-_^`´()[]{}<>¡!¿?/\\\"";
+        private const string _MI = "abcdefghijklmnñopqrstuvwxyz";
+        private const string _MA = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+        private const string _NU = "1234567890";
+        private const string _ES = " |°¬#$%&=',;.:¨*+~-_^`´()[]{}<>¡!¿?/\\\"";
         //؟
 
-        #region PROPIEDADES
-        private Char[] _BASE;
-        private String _CONT = String.Empty;
+        private char[] _BASE;
+        private string _CONT = string.Empty;
 
-        public Boolean Minusculas { set; get; } = true;
-        public Boolean Mayusculas { set; get; } = true;
-        public Boolean Numeros { set; get; } = true;
-        public Boolean Especiales { set; get; } = true;
-        public String Otros { set; get; } = "";
+        public bool Minusculas { set; get; } = true;
+        public bool Mayusculas { set; get; } = true;
+        public bool Numeros { set; get; } = true;
+        public bool Especiales { set; get; } = true;
+        public string Otros { set; get; } = "";
 
-        public Char[] Base { get { return this._BASE; } }
+        public char[] Base { get { return this._BASE; } }
         public ERandomSort ReOrdenamiento { set; get; } = ERandomSort.Fisher_Yates;
-        public String Contrasena { get { return this._CONT; } }
-        #endregion
+        public string Contrasena { get { return this._CONT; } }
 
-        #region METODOS OBJETO
-        public Return Generar(UInt16 _largo = 8)
+        public Return Generar(byte _largo = 8)
         {
             try
             {
@@ -47,12 +44,10 @@ namespace Codex
                 return new Return(false, _ex);
             }
         }
-        #endregion
 
-        #region METODOS ESTATICOS
-        public static Char[] PrepararBase(Boolean _mi, Boolean _ma, Boolean _nu, Boolean _es, String _otros = "")
+        public static char[] PrepararBase(bool _mi, bool _ma, bool _nu, bool _es, string _otros = "")
         {
-            String _return = String.Empty;
+            string _return = string.Empty;
             if (_mi) _return += Password._MI;
             if (_ma) _return += Password._MA;
             if (_nu) _return += Password._NU;
@@ -61,7 +56,7 @@ namespace Codex
             _return = _return.Clean_TBLFCR();
             return _return.ToArray().Distinct().ToArray();
         }
-        public static Char[] ReOrdenar(Char[] _data, ERandomSort _s = ERandomSort.Fisher_Yates)
+        public static char[] ReOrdenar(char[] _data, ERandomSort _s = ERandomSort.Fisher_Yates)
         {
             switch (_s)
             {
@@ -73,20 +68,20 @@ namespace Codex
             }
             return _data;
         }
-        public static String Generar(Char[] _base, UInt16 _largo = 8)
+        public static string Generar(char[] _base, byte _largo = 8)
         {
-            Char[] _tmp = new Char[_largo];
+            char[] _tmp = new char[_largo];
             Random _rdm = new Random();
-            for (UInt16 _i = 0; _i < _largo; _i++)
+            for (byte _i = 0; _i < _largo; _i++)
                 _tmp[_i] = _base[_rdm.Next(0, _base.Length)];
 
-            String[] _return = new String[_largo];
-            for (UInt16 _i = 0; _i < _largo; _i++)
+            string[] _return = new string[_largo];
+            for (byte _i = 0; _i < _largo; _i++)
                 _return[_i] = Convert.ToString(_tmp[_i]);
 
-            return String.Join("", _return);
+            return string.Join("", _return);
         }
-        private static Double aparicion(UInt16 napa, UInt16 nmax)
+        private static double aparicion(byte napa, byte nmax)
         {
             if (napa > nmax)
                 napa = nmax;
@@ -97,14 +92,14 @@ namespace Codex
         /// </summary>
         /// <param name="password">Contraseña.</param>
         /// <returns></returns>
-        public static Byte valorar(String password)
+        public static byte valorar(string password)
         {
-            Double score = 0.0;
+            double score = 0.0;
             if (password.Length != 0)
             {
                 Match m;
-                UInt16 con = 0;
-                UInt16 por = (UInt16)(password.Length * 0.25 + 0.5);
+                byte con = 0;
+                byte por = (byte)(password.Length * 0.25 + 0.5);
                 if (por == 0)
                     por = 1;
 
@@ -119,28 +114,28 @@ namespace Codex
                 else
                     score += 20;
                 con = 0;
-                foreach (Char item in _MI)
+                foreach (char item in _MI)
                 {
                     if (password.Contains(item))
                         con++;
                 }
                 score += Password.aparicion(con, por);
                 con = 0;
-                foreach (Char item in _MA)
+                foreach (char item in _MA)
                 {
                     if (password.Contains(item))
                         con++;
                 }
                 score += Password.aparicion(con, por);
                 con = 0;
-                foreach (Char item in _NU)
+                foreach (char item in _NU)
                 {
                     if (password.Contains(item))
                         con++;
                 }
                 score += Password.aparicion(con, por);
                 con = 0;
-                foreach (Char item in _ES)
+                foreach (char item in _ES)
                 {
                     if (password.Contains(item))
                         con++;
@@ -174,7 +169,6 @@ namespace Codex
             this.Otros = null;
             this.ReOrdenamiento = ERandomSort.None;
         }
-        #endregion
     }
 }
 

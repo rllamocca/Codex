@@ -1,36 +1,48 @@
-﻿using System;
+﻿/*
+NET35
+NET40
+NETSTANDARD1_0
+NETSTANDARD1_1
+NETSTANDARD1_2
+NETSTANDARD1_3
+NETSTANDARD1_4
+NETSTANDARD1_5
+NETSTANDARD1_6
+NETSTANDARD2_0
+NETSTANDARD2_1
+*/
+
+using System;
 
 namespace Codex
 {
     public class Return
     {
-        private readonly bool _EXI;
-        private readonly object _RET = null;
-        private readonly bool _EXC = false;
-        private readonly string _MEN = "NO PROCESADO";
+        private readonly bool _SUC;
+        private readonly object _RES = null;
+        private readonly bool _EXC;
+        private readonly string _MES = "NO PROCESADO";
 
-        public bool Success { get { return this._EXI; } }
-        public object Result { get { return this._RET; } }
+        public bool Success { get { return this._SUC; } }
+        public object Result { get { return this._RES; } }
         public bool Exception { get { return this._EXC; } }
-
-        public string Message { get { return this._MEN; } }
+        public string Message { get { return this._MES; } }
 
         public Return(bool _suc, object _res = null)
         {
-            this._RET = _res;
-            this._EXC = (this._RET is Exception);
-            if (this._EXC) this._MEN = ((Exception)this._RET).Message;
+            this._SUC = _suc;
+            this._RES = _res;
+            this._EXC = (this._RES is Exception);
+            if (this._EXC)
+                this._MES = ((Exception)this._RES).Message;
             else
             {
-                if (_suc)
-                {
-                    this._MEN = "PROCESADO";
-                    this._EXI = true;
-                }
+                if (this._SUC)
+                    this._MES = "PROCESADO";
                 else
                 {
-                    if (this._RET is string)
-                        this._MEN = (string)this._RET;
+                    if (this._RES is string)
+                        this._MES = (string)this._RES;
                 }
             }
         }
