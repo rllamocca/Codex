@@ -53,7 +53,7 @@ namespace Codex
             if (_nu) _return += Password._NU;
             if (_es) _return += Password._ES;
             if (_otros.Length > 0) _return += _otros;
-            _return = _return.Clean_TBLFCR();
+            _return = _return.CleanTBLFCR();
             return _return.ToArray().Distinct().ToArray();
         }
         public static char[] ReOrdenar(char[] _data, ERandomSort _s = ERandomSort.Fisher_Yates)

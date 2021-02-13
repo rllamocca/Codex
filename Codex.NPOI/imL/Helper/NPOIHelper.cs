@@ -164,8 +164,10 @@ namespace Codex.NPOI.Helper
                         _wbsrc.CellStyle = _sbold;
                         _wbsrc.SetCellType(CellType.String);
 
-                        if (_dc.Caption == null) _wbsrc.SetCellValue(_dc.ColumnName);
-                        else _wbsrc.SetCellValue(_dc.Caption);
+                        if (_dc.Caption == null) 
+                            _wbsrc.SetCellValue(_dc.ColumnName);
+                        else 
+                            _wbsrc.SetCellValue(_dc.Caption);
 
                         KeyValuePair<string, string> _f = _formats.Where(_w => _w.Key == _dc.ColumnName).FirstOrDefault();
 

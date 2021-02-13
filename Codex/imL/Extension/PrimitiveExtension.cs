@@ -1,4 +1,8 @@
-﻿using System;
+﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0 || NETSTANDARD2_1)
+using System.Net.Mail;
+#endif
+
+using System;
 
 namespace Codex
 {
@@ -16,7 +20,24 @@ namespace Codex
         {
             return (_item != null && _item.Trim().Length > 0);
         }
-        public static string Clean_TB(this string _item)
+#if (NET35 || NET40 || NET45 || NETSTANDARD2_0 || NETSTANDARD2_1)
+        public static bool IsMail(this string _item)
+        {
+            if (_item == null)
+                return false;
+            try
+            {
+                new MailAddress(_item);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+#endif
+
+        public static string CleanTB(this string _item)
         {
             if (_item == null)
                 return null;
@@ -31,7 +52,7 @@ namespace Codex
             }
             return _item;
         }
-        public static string Clean_LF(this string _item)
+        public static string CleanLF(this string _item)
         {
             if (_item == null)
                 return null;
@@ -46,7 +67,7 @@ namespace Codex
             }
             return _item;
         }
-        public static string Clean_CR(this string _item)
+        public static string CleanCR(this string _item)
         {
             if (_item == null)
                 return null;
@@ -61,9 +82,9 @@ namespace Codex
             }
             return _item;
         }
-        public static string Clean_TBLFCR(this string _item)
+        public static string CleanTBLFCR(this string _item)
         {
-            if (_item == null) 
+            if (_item == null)
                 return null;
 
             if (_item.Length > 0)
@@ -73,14 +94,13 @@ namespace Codex
                 char _tb = (char)9;
                 char _lf = (char)10;
                 char _cr = (char)13;
-                
+
                 _item = _item.Replace(_tb, _sp);
                 _item = _item.Replace(_lf, _sp);
                 _item = _item.Replace(_cr, _sp);
             }
             return _item;
         }
-
 
         public static DateTime ToExcelDateTime(this TimeSpan _a)
         {
