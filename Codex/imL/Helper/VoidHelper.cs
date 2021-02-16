@@ -1,4 +1,4 @@
-﻿#if (NETSTANDARD2_0 || NETSTANDARD2_1)
+﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0 || NETSTANDARD2_1)
 
 using System;
 using System.Collections.Generic;
@@ -9,46 +9,47 @@ namespace Codex.Helper
 {
     public static class VoidHelper
     {
-        public static void Write(ref Stream _a, String _b)
-        {
-            using (FileStream _sw = File.Create(_b))
-            {
-                _a.Seek(0, SeekOrigin.Begin);
-                _a.CopyTo(_sw);
-            }
-        }
-
-        public static void To_plain(DataTable _data, String _path, Char _separator = '\0', Boolean _fistrow = true)
+        public static void To_plain(DataTable _data, string _path, char _separator = '\0', bool _columnnames = true)
         {
             using (StreamWriter _sw = new StreamWriter(_path, false))
             {
-                List<String> _line = new List<String>();
+                List<string> _line = new List<string>();
 
-                if (_fistrow == true)
+                if (_columnnames)
                 {
-                    foreach (DataColumn _dc in _data.Columns)
+                    foreach (DataColumn _item in _data.Columns)
                     {
-                        if (_dc.Caption == null) _line.Add(_dc.ColumnName);
-                        else _line.Add(_dc.Caption);
+                        if (_item.Caption == null) 
+                            _line.Add(_item.ColumnName);
+                        else 
+                            _line.Add(_item.Caption);
                     }
-#if (NETSTANDARD2_1)
-                    _sw.WriteLine(String.Join(_separator, _line));
+#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
+#if (NET35)
+                    _sw.WriteLine(string.Join(Convert.ToString(_separator), _line.ToArray()));
 #else
-                    _sw.WriteLine(String.Join(Convert.ToString(_separator), _line));
+                    _sw.WriteLine(string.Join(Convert.ToString(_separator), _line));
+#endif
+#else
+                    _sw.WriteLine(string.Join(_separator, _line));
 #endif
 
                 }
 
-                foreach (DataRow _dr in _data.Rows)
+                foreach (DataRow _item in _data.Rows)
                 {
                     _line.Clear();
-                    foreach (Object _o in _dr.ItemArray)
-                        _line.Add(Convert.ToString(_o));
+                    foreach (object _item2 in _item.ItemArray)
+                        _line.Add(Convert.ToString(_item2));
 
-#if (NETSTANDARD2_1)
-                    _sw.WriteLine(String.Join(_separator, _line));
+#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
+#if (NET35)
+                    _sw.WriteLine(string.Join(Convert.ToString(_separator), _line.ToArray()));
 #else
-                    _sw.WriteLine(String.Join(Convert.ToString(_separator), _line));
+                    _sw.WriteLine(string.Join(Convert.ToString(_separator), _line));
+#endif
+#else
+                    _sw.WriteLine(string.Join(_separator, _line));
 #endif
                 }
                 _line.Clear();
@@ -56,5 +57,4 @@ namespace Codex.Helper
         }
     }
 }
-
 #endif

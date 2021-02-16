@@ -1,8 +1,8 @@
-﻿#if (NETSTANDARD2_0 || NETSTANDARD2_1)
+﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0 || NETSTANDARD2_1)
 
 using Codex.Config;
+using Codex.Extension;
 
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Net;
@@ -23,12 +23,12 @@ namespace Codex.Helper
             return _create;
         }
 
-        public static FtpStatusCode From_ListDirectory(ref String[] _from, FtpConfig _config)
+        public static FtpStatusCode From_ListDirectory(ref string[] _from, FtpConfig _config)
         {
             FtpWebRequest _ftp = FtpHelper.Create(_config);
             _ftp.Method = WebRequestMethods.Ftp.ListDirectory;
 
-            List<String> _return = new List<String>();
+            List<string> _return = new List<string>();
             using (FtpWebResponse _response = (FtpWebResponse)_ftp.GetResponse())
             {
                 using (StreamReader _sr = new StreamReader(_response.GetResponseStream()))
@@ -42,7 +42,7 @@ namespace Codex.Helper
             }
         }
 
-        public static FtpStatusCode From_DownloadFile(ref Stream _from, FtpConfig _config)
+        public static FtpStatusCode From_DownloadFile(ref Stream _rec, FtpConfig _config)
         {
             FtpWebRequest _ftp = FtpHelper.Create(_config);
             _ftp.Method = WebRequestMethods.Ftp.DownloadFile;
@@ -51,7 +51,7 @@ namespace Codex.Helper
             {
                 using (StreamReader _sr = new StreamReader(_response.GetResponseStream()))
                 {
-                    using (StreamWriter _sw = new StreamWriter(_from))
+                    using (StreamWriter _sw = new StreamWriter(_rec))
                     {
                         _sw.Write(_sr.ReadToEnd());
                         _sw.Flush();
@@ -61,14 +61,19 @@ namespace Codex.Helper
             }
         }
 
-        public static FtpStatusCode To_UploadFile(Stream _to, FtpConfig _config)
+        public static FtpStatusCode To_UploadFile(Stream _sub, FtpConfig _config)
         {
             FtpWebRequest _ftp = FtpHelper.Create(_config);
             _ftp.Method = WebRequestMethods.Ftp.UploadFile;
 
             using (Stream _s = _ftp.GetRequestStream())
             {
-                _to.CopyTo(_s);
+#if (NET35)
+                _sub.OldCopy(_s);
+#else
+                _sub.CopyTo(_s);
+#endif
+
             }
 
             using (FtpWebResponse _response = (FtpWebResponse)_ftp.GetResponse())
@@ -89,5 +94,4 @@ namespace Codex.Helper
         }
     }
 }
-
 #endif

@@ -101,10 +101,5 @@ namespace Codex
             }
             return _item;
         }
-
-        public static DateTime ToExcelDateTime(this TimeSpan _a)
-        {
-            return new DateTime(1899, 12, 31).AddTicks(_a.Ticks);
-        }
     }
 }
