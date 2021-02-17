@@ -1,5 +1,5 @@
 ﻿#if (NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6)
-using Codex.Terminal.Struct;
+using Codex.Struct;
 #else
 using System.Drawing;
 #endif

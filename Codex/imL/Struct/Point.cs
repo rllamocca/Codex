@@ -1,6 +1,4 @@
-﻿#if (NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6)
-
-namespace Codex.Terminal.Struct
+﻿namespace Codex.Struct
 {
     public struct Point
     {
@@ -14,4 +12,3 @@ namespace Codex.Terminal.Struct
         }
     }
 }
-#endif

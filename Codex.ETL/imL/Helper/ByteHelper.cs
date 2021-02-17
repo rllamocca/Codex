@@ -1,12 +1,10 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0 || NETSTANDARD2_1)
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Text;
 
-namespace Codex.Helper
+namespace Codex.ETL.Helper
 {
     public static class ByteHelper
     {
@@ -70,4 +68,3 @@ namespace Codex.Helper
         }
     }
 }
-#endif
