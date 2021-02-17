@@ -1,4 +1,4 @@
-﻿#if (NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6)
+﻿#if (NETSTANDARD1_3)
 using Codex.Struct;
 #else
 using System.Drawing;
@@ -12,7 +12,7 @@ using System.Collections.Generic;
 namespace Codex.Terminal
 {
     public class ProgressBar64 : IDisposable
-#if (NET45 || NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6 || NETSTANDARD2_0 || NETSTANDARD2_1)
+#if (NET45 || NETSTANDARD1_3 || NETSTANDARD2_0)
         , IProgress<long>
 #endif
     {

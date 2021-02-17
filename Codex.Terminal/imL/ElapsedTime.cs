@@ -1,4 +1,4 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0 || NETSTANDARD2_1)
+﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
 
 using Codex.Terminal.Helper;
 
