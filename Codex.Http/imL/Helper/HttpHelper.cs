@@ -11,9 +11,9 @@ namespace Codex.Http.Helper
 {
     public static class HttpHelper
     {
-        public static async Task CompressContent(HttpResponseMessage _r, HttpHeaderValueCollection<StringWithQualityHeaderValue> _ae)
+        public static async Task CompressContent(HttpResponseMessage _res, HttpHeaderValueCollection<StringWithQualityHeaderValue> _ae)
         {
-            if (_r.Content != null)
+            if (_res.Content != null)
             {
                 ECompress _compress = ECompress.None;
                 if (_ae.Contains(new StringWithQualityHeaderValue("deflate"))) _compress = ECompress.Deflate;
@@ -23,15 +23,17 @@ namespace Codex.Http.Helper
                 {
                     case ECompress.Gzip:
                     case ECompress.Deflate:
-                        using (Stream _content = await _r.Content.ReadAsStreamAsync())
+                        using (Stream _content = await _res.Content.ReadAsStreamAsync())
                         {
                             StreamContent _response = new StreamContent(StreamHelper.Compress(_content, _compress));
-                            foreach (KeyValuePair<string, IEnumerable<string>> _item in _r.Content.Headers)
+
+                            foreach (KeyValuePair<string, IEnumerable<string>> _item in _res.Content.Headers)
                                 if (_item.Key != "Content-Length")
                                     _response.Headers.TryAddWithoutValidation(_item.Key, _item.Value);
+
                             _response.Headers.ContentEncoding.Add((_compress == ECompress.Gzip) ? "gzip" : "deflate");
 
-                            _r.Content = _response;
+                            _res.Content = _response;
                         }
                         break;
                     default:
@@ -39,11 +41,11 @@ namespace Codex.Http.Helper
                 }
             }
         }
-        public static async Task DecompressContent(HttpRequestMessage _r)
+        public static async Task DecompressContent(HttpRequestMessage _req)
         {
-            if (_r.Content != null)
+            if (_req.Content != null)
             {
-                ICollection<string> _ce = _r.Content.Headers.ContentEncoding;
+                ICollection<string> _ce = _req.Content.Headers.ContentEncoding;
                 ECompress _decompress = ECompress.None;
                 if (_ce.Contains("deflate")) _decompress = ECompress.Deflate;
                 if (_ce.Contains("gzip")) _decompress = ECompress.Gzip;
@@ -52,17 +54,17 @@ namespace Codex.Http.Helper
                 {
                     case ECompress.Gzip:
                     case ECompress.Deflate:
-                        using (Stream _content = await _r.Content.ReadAsStreamAsync())
+                        using (Stream _content = await _req.Content.ReadAsStreamAsync())
                         {
                             StreamContent _request = new StreamContent(StreamHelper.Decompress(_content, _decompress));
-                            foreach (KeyValuePair<string, IEnumerable<string>> _item in _r.Content.Headers)
-                            {
+
+                            foreach (KeyValuePair<string, IEnumerable<string>> _item in _req.Content.Headers)
                                 if (_item.Key != "Content-Length")
                                     _request.Headers.TryAddWithoutValidation(_item.Key, _item.Value);
-                            }
+
                             _request.Headers.ContentEncoding.Remove((_decompress == ECompress.Gzip) ? "gzip" : "deflate");
 
-                            _r.Content = _request;
+                            _req.Content = _request;
                         }
                         break;
                     default:
