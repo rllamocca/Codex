@@ -1,10 +1,12 @@
-﻿using System.Linq;
+﻿using Codex.Contract;
+
+using System.Linq;
 
 namespace Codex.Pattern
 {
     public static class SqlPattern
     {
-        public static string Insert(string _table, IOrmParameter[] _a, bool _scope_identity = false)
+        public static string Insert(string _table, IParameter[] _a, bool _scope_identity = false)
         {
             string _pattern = @"
  INSERT INTO {0}

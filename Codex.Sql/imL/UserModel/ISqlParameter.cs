@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Codex.Contract;
+
+using System;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Codex.Sql
+namespace Codex.Sql.UserModel
 {
-    public class OrmSqlParameter : IOrmParameter
+    public class ISqlParameter : IParameter
     {
         public string Source { set; get; }
         public object Value { set; get; }
@@ -12,7 +14,7 @@ namespace Codex.Sql
 
         public SqlParameter Parameter { get; }
 
-        public OrmSqlParameter(
+        public ISqlParameter(
             string _affect,
             string _function
             )
@@ -23,7 +25,7 @@ namespace Codex.Sql
 
             this.Parameter = null;
         }
-        public OrmSqlParameter(
+        public ISqlParameter(
             string _source,
             object _value,
             SqlDbType _dbtype,
@@ -40,7 +42,7 @@ namespace Codex.Sql
             this.Parameter.SqlDbType = _dbtype;
             this.Parameter.Direction = _direction;
         }
-        public OrmSqlParameter(
+        public ISqlParameter(
             string _source,
             object _value,
             SqlDbType _dbtype,
@@ -50,7 +52,7 @@ namespace Codex.Sql
         {
             this.Parameter.Size = _size;
         }
-        public OrmSqlParameter(
+        public ISqlParameter(
             string _source,
             object _value,
             SqlDbType _dbtype,

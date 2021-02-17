@@ -1,15 +1,18 @@
-﻿using System;
-using System.Collections;
-using System.Data;
-using System.Data.SqlClient;
-#if (NET35 == false && NET40 == false)
+﻿#if (NET45 || NETSTANDARD1_3 || NETSTANDARD2_0)
 using System.Threading;
 using System.Threading.Tasks;
 #endif
 
-namespace Codex.Sql
+using Codex.Contract;
+
+using System;
+using System.Collections;
+using System.Data;
+using System.Data.SqlClient;
+
+namespace Codex.Sql.UserModel
 {
-    public class OrmSqlConnection : IOrmConnection
+    public class ISqlConnection : IConnection
     {
         private bool _DISPOSED = false;
         private bool _STATISTICS = false;
@@ -27,12 +30,12 @@ namespace Codex.Sql
             get { return this._CN; }
         }
 
-        public OrmSqlConnection(SqlConnection _conn)
+        public ISqlConnection(SqlConnection _conn)
         {
             this._STATISTICS = this._CN.StatisticsEnabled;
             this._CN = _conn;
         }
-        public OrmSqlConnection(String _conn, Boolean _stat = false)
+        public ISqlConnection(String _conn, Boolean _stat = false)
         {
             this._STATISTICS = _stat;
             this._CN = new SqlConnection(_conn)
@@ -52,7 +55,7 @@ namespace Codex.Sql
         //####
         public int TimeOut { set; get; } = 100;
         public bool Constraints { set; get; } = false;
-#if (NET35 == false && NET40 == false)
+#if (NET45 || NETSTANDARD1_3 || NETSTANDARD2_0)
         public CancellationToken Token { set; get; } = default;
 #endif
 
@@ -62,7 +65,7 @@ namespace Codex.Sql
                 this._CN.Close();
         }
 
-        ~OrmSqlConnection()
+        ~ISqlConnection()
         {
             this.Dispose(false);
         }
@@ -111,7 +114,7 @@ namespace Codex.Sql
                     break;
             }
         }
-#if (NET35 == false && NET40 == false)
+#if (NET45 || NETSTANDARD1_3 || NETSTANDARD2_0)
         public async Task OpenAsync()
         {
             switch (this._CN.State)

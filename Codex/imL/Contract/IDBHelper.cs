@@ -1,31 +1,31 @@
 ﻿using Codex.Enum;
 
-namespace Codex.Helper
+namespace Codex.Contract
 {
-    public interface IOrmHelper
+    public interface IDBHelper
     {
         Return Execute(
             string _query,
-            IOrmConnection _conn,
-            IOrmParameter[] _pmts = null,
+            IConnection _conn,
+            IParameter[] _pmts = null,
             EExecute _exe = EExecute.NonQuery
             );
         Return[] Execute(
             string _query,
-            IOrmConnection _conn,
-            IOrmParameter[][] _pmts,
+            IConnection _conn,
+            IParameter[][] _pmts,
             EExecute _exe = EExecute.NonQuery
             );
 
         Return Get_DataSet(
             string _query,
-            IOrmConnection _conn,
-            IOrmParameter[] _pmts = null
+            IConnection _conn,
+            IParameter[] _pmts = null
             );
         Return Get_DataTable(
             string _query,
-            IOrmConnection _conn,
-            IOrmParameter[] _pmts = null
+            IConnection _conn,
+            IParameter[] _pmts = null
             );
     }
 }

@@ -12,7 +12,7 @@ namespace Codex.NPOI.Helper
 {
     public static class NPOIHelper
     {
-        public static void To_xls(out Stream _out, DataSet _ds, bool __xls = true, KeyValuePair<string, string>[] _formats = null)
+        public static void To_Excel(out Stream _out, DataSet _ds, bool __xls = true, KeyValuePair<string, string>[] _formats = null)
         {
             IWorkbook _wb;
             if (__xls) _wb = new HSSFWorkbook();

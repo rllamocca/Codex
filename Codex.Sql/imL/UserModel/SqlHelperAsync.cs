@@ -1,27 +1,30 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
+﻿#if (NET45 || NETSTANDARD1_3 || NETSTANDARD2_0)
+
+#if (NET45 || NETSTANDARD2_0)
 using System.Data;
 #endif
 
 using Codex.Enum;
-using Codex.Helper;
+using Codex.Contract;
 
 using System;
 using System.Data.SqlClient;
+using System.Threading.Tasks;
 
-namespace Codex.Sql.Helper
+namespace Codex.Sql.UserModel
 {
-    public class SqlHelper : IOrmHelper
+    public class SqlHelperAsync : IDBHelperAsync
     {
-        public Return Execute(
+        public async Task<Return> Execute(
             string _query,
-            IOrmConnection _conn,
-            IOrmParameter[] _pmts = null,
+            IConnection _conn,
+            IParameter[] _pmts = null,
             EExecute _exe = EExecute.NonQuery
             )
         {
             try
             {
-                OrmSqlConnection _conn_raw = (OrmSqlConnection)_conn;
+                ISqlConnection _conn_raw = (ISqlConnection)_conn;
                 SqlParameter[] _pmts_raw = _pmts.GetSqlParameters().GetParameters();
 
                 using (SqlCommand _cmd = new SqlCommand(_query, _conn_raw.Connection))
@@ -35,13 +38,13 @@ namespace Codex.Sql.Helper
                     switch (_exe)
                     {
                         case EExecute.NonQuery:
-                            return new Return(true, _cmd.ExecuteNonQuery());
+                            return new Return(true, await _cmd.ExecuteNonQueryAsync(_conn.Token));
                         case EExecute.Scalar:
-                            return new Return(true, _cmd.ExecuteScalar());
+                            return new Return(true, await _cmd.ExecuteScalarAsync(_conn.Token));
                         case EExecute.Reader:
-                            return new Return(true, _cmd.ExecuteReader());
+                            return new Return(true, await _cmd.ExecuteReaderAsync(_conn.Token));
                         case EExecute.XmlReader:
-                            return new Return(true, _cmd.ExecuteXmlReader());
+                            return new Return(true, await _cmd.ExecuteXmlReaderAsync(_conn.Token));
                         default:
                             return new Return(false);
                     }
@@ -52,16 +55,16 @@ namespace Codex.Sql.Helper
                 return new Return(false, _ex);
             }
         }
-        public Return[] Execute(
+        public async Task<Return[]> Execute(
             string _query,
-            IOrmConnection _conn,
-            IOrmParameter[][] _pmts,
+            IConnection _conn,
+            IParameter[][] _pmts,
             EExecute _exe = EExecute.NonQuery
             )
         {
             try
             {
-                OrmSqlConnection _conn_raw = (OrmSqlConnection)_conn;
+                ISqlConnection _conn_raw = (ISqlConnection)_conn;
 
                 int _r = 0;
                 Return[] _returns = new Return[_pmts.Length];
@@ -88,16 +91,16 @@ namespace Codex.Sql.Helper
                             switch (_exe)
                             {
                                 case EExecute.NonQuery:
-                                    _returns[_r] = new Return(true, _cmd.ExecuteNonQuery());
+                                    _returns[_r] = new Return(true, await _cmd.ExecuteNonQueryAsync(_conn.Token));
                                     break;
                                 case EExecute.Scalar:
-                                    _returns[_r] = new Return(true, _cmd.ExecuteScalar());
+                                    _returns[_r] = new Return(true, await _cmd.ExecuteScalarAsync(_conn.Token));
                                     break;
                                 case EExecute.Reader:
-                                    _returns[_r] = new Return(true, _cmd.ExecuteReader());
+                                    _returns[_r] = new Return(true, await _cmd.ExecuteReaderAsync(_conn.Token));
                                     break;
                                 case EExecute.XmlReader:
-                                    _returns[_r] = new Return(true, _cmd.ExecuteXmlReader());
+                                    _returns[_r] = new Return(true, await _cmd.ExecuteXmlReaderAsync(_conn.Token));
                                     break;
                                 default:
                                     _returns[_r] = new Return(false);
@@ -119,12 +122,12 @@ namespace Codex.Sql.Helper
             }
         }
 
-        public virtual Return Get_DataSet(string _query, IOrmConnection _conn, IOrmParameter[] _pmts = null)
+        public async Task<Return> Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null)
         {
-#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
+#if (NET45 || NETSTANDARD2_0)
             try
             {
-                Return _exe = Execute(_query, _conn, _pmts, EExecute.Reader);
+                Return _exe = await Execute(_query, _conn, _pmts, EExecute.Reader);
                 _exe.TriggerErrorException();
 
                 DataSet _return = new DataSet("DataSet_0");
@@ -150,12 +153,12 @@ namespace Codex.Sql.Helper
             throw new NotImplementedException();
 #endif
         }
-        public virtual Return Get_DataTable(string _query, IOrmConnection _conn, IOrmParameter[] _pmts = null)
+        public async Task<Return> Get_DataTable(string _query, IConnection _conn, IParameter[] _pmts = null)
         {
-#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
+#if (NET45 || NETSTANDARD2_0)
             try
             {
-                Return _exe = Execute(_query, _conn, _pmts, EExecute.Reader);
+                Return _exe = await Execute(_query, _conn, _pmts, EExecute.Reader);
                 _exe.TriggerErrorException();
 
                 DataTable _return = new DataTable("DataTable_0");
@@ -175,3 +178,4 @@ namespace Codex.Sql.Helper
         }
     }
 }
+#endif

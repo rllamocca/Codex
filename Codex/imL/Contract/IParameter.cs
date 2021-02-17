@@ -1,6 +1,6 @@
-﻿namespace Codex
+﻿namespace Codex.Contract
 {
-    public interface IOrmParameter
+    public interface IParameter
     {
         string Source { set; get; }
         object Value { set; get; }
