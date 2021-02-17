@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Codex.ORM.Sql.Data\Codex.ORM.Sql.Data.csproj" />
+    <ProjectReference Include="..\Codex.Terminal\Codex.Terminal.csproj" />
   </ItemGroup>
 
 </Project>

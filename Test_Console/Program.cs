@@ -1,5 +1,5 @@
-﻿using Codex;
-using Codex.Helper;
+﻿using Codex.Terminal;
+using Codex.Terminal.Helper;
 
 using System;
 using System.Threading;
@@ -60,7 +60,7 @@ namespace Test_Console
             //    Thread.Sleep(10);
             //    Console.WriteLine(DateTime.Now.ToString("HH:mm:ss.fff"));
             //}
-            
+
 
             Console.ReadKey();
         }

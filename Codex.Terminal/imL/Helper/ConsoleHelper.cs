@@ -1,6 +1,5 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6 || NETSTANDARD2_0 || NETSTANDARD2_1)
-#if (NETSTANDARD1_0 || NETSTANDARD1_1 || NETSTANDARD1_2 || NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6)
-using Codex.Struct;
+﻿#if (NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6)
+using Codex.Terminal.Struct;
 #else
 using System.Drawing;
 #endif
@@ -8,7 +7,7 @@ using System.Drawing;
 using System;
 using System.Text;
 
-namespace Codex.Helper
+namespace Codex.Terminal.Helper
 {
     public static class ConsoleHelper
     {
@@ -44,4 +43,3 @@ namespace Codex.Helper
         }
     }
 }
-#endif

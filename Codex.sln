@@ -15,6 +15,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_Console", "Test_Consol
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.NPOI", "Codex.NPOI\Codex.NPOI.csproj", "{8291A790-7413-4D71-ABB6-1F9FC9C171B6}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.ETL", "Codex.ETL\Codex.ETL.csproj", "{D4332674-7183-4FA9-B163-B69517B19F34}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.Terminal", "Codex.Terminal\Codex.Terminal.csproj", "{FE16E24D-6693-4FD9-9BE9-81ADA940B1FB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,14 @@ Global
 		{8291A790-7413-4D71-ABB6-1F9FC9C171B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8291A790-7413-4D71-ABB6-1F9FC9C171B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8291A790-7413-4D71-ABB6-1F9FC9C171B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4332674-7183-4FA9-B163-B69517B19F34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4332674-7183-4FA9-B163-B69517B19F34}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4332674-7183-4FA9-B163-B69517B19F34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4332674-7183-4FA9-B163-B69517B19F34}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE16E24D-6693-4FD9-9BE9-81ADA940B1FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE16E24D-6693-4FD9-9BE9-81ADA940B1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE16E24D-6693-4FD9-9BE9-81ADA940B1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE16E24D-6693-4FD9-9BE9-81ADA940B1FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

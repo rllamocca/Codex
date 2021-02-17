@@ -1,12 +1,12 @@
 ﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0 || NETSTANDARD2_1)
 
-using Codex.Helper;
+using Codex.Terminal.Helper;
 
 using System;
 using System.Drawing;
 using System.Timers;
 
-namespace Codex
+namespace Codex.Terminal
 {
     public class ElapsedTime : IDisposable
     {

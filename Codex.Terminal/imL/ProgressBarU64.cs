@@ -1,34 +1,33 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6 || NETSTANDARD2_0 || NETSTANDARD2_1)
-#if (NETSTANDARD1_0 || NETSTANDARD1_1 || NETSTANDARD1_2 || NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6)
-using Codex.Struct;
+﻿#if (NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6)
+using Codex.Terminal.Struct;
 #else
 using System.Drawing;
 #endif
 
-using Codex.Helper;
+using Codex.Terminal.Helper;
 
 using System;
 using System.Collections.Generic;
 
-namespace Codex
+namespace Codex.Terminal
 {
-    public class ProgressBar64 : IDisposable
+    public class ProgressBarU64 : IDisposable
 #if (NET45 || NETSTANDARD1_3 || NETSTANDARD1_4 || NETSTANDARD1_5 || NETSTANDARD1_6 || NETSTANDARD2_0 || NETSTANDARD2_1)
-        , IProgress<long>
+        , IProgress<ulong>
 #endif
     {
         private bool _DISPOSED = false;
 
-        private readonly ProgressBar64 _PARENT;
+        private readonly ProgressBarU64 _PARENT;
         private byte _BLOCKS = 50;
-        private long _COUNT;
+        private ulong _COUNT;
         private Point _BAR_START;
         private Point _BAR_END;
         private List<decimal> _BAR = new List<decimal>();
         private Point _LINE;
         private Point _NEW_LINE;
 
-        public ProgressBar64(long _count, ProgressBar64 _parent = null)
+        public ProgressBarU64(ulong _count, ProgressBarU64 _parent = null)
         {
             this._COUNT = _count;
             this._PARENT = _parent;
@@ -63,7 +62,7 @@ namespace Codex
             this.Report(0);
         }
 
-        public void Report(long _value)
+        public void Report(ulong _value)
         {
             decimal _per = (1.0m * _value / this._COUNT);
             string _text = string.Format(
@@ -92,7 +91,7 @@ namespace Codex
             }
         }
 
-        ~ProgressBar64()
+        ~ProgressBarU64()
         {
             this.Dispose(false);
         }
@@ -126,4 +125,3 @@ namespace Codex
         }
     }
 }
-#endif

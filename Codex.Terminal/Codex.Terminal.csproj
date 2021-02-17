@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>
+			net35
+			;net40
+			;net45
+			;netstandard1.3
+			;netstandard1.4
+			;netstandard1.5
+			;netstandard1.6
+			;netstandard2.0
+			;netstandard2.1
+		</TargetFrameworks>
+		<Version>0.0.0.1</Version>
+		<Authors>rllamocca@outlook.com</Authors>
+		<Company>imL</Company>
+		<Description>Not so free tools.</Description>
+		<Copyright>© 1984 - 8888</Copyright>
+	</PropertyGroup>
+
+</Project>
