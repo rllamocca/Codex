@@ -41,7 +41,7 @@ namespace Codex.Helper
             }
             return _ms;
         }
-        public static Stream DeCompress(Stream _s, ECompress _compress = ECompress.Gzip)
+        public static Stream Decompress(Stream _s, ECompress _compress = ECompress.Gzip)
         {
             Stream _ms = new MemoryStream();
             Stream _dec = null;

@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.ETL", "Codex.ETL\Code
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.Terminal", "Codex.Terminal\Codex.Terminal.csproj", "{FE16E24D-6693-4FD9-9BE9-81ADA940B1FB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Codex.Http", "Codex.Http\Codex.Http.csproj", "{CE0F06A8-E555-443F-8B78-CBAF52FA3808}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{FE16E24D-6693-4FD9-9BE9-81ADA940B1FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE16E24D-6693-4FD9-9BE9-81ADA940B1FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE16E24D-6693-4FD9-9BE9-81ADA940B1FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE0F06A8-E555-443F-8B78-CBAF52FA3808}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE0F06A8-E555-443F-8B78-CBAF52FA3808}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE0F06A8-E555-443F-8B78-CBAF52FA3808}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE0F06A8-E555-443F-8B78-CBAF52FA3808}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
