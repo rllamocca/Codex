@@ -4,14 +4,20 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Text;
 
 namespace Codex.Helper
 {
     public static class VoidHelper
     {
-        public static void To_plain(DataTable _data, string _path, char _separator = '\0', bool _columnnames = true)
+        public static void To_Plain(DataTable _data, string _path, char _separator = '\0', bool _columnnames = true, Encoding _enc = null)
         {
-            using (StreamWriter _sw = new StreamWriter(_path, false))
+            if (_enc == null)
+                _enc = Encoding.UTF8;
+
+            string _sep = Convert.ToString(_separator);
+
+            using (StreamWriter _sw = new StreamWriter(_path, false, _enc))
             {
                 List<string> _line = new List<string>();
 
@@ -19,19 +25,15 @@ namespace Codex.Helper
                 {
                     foreach (DataColumn _item in _data.Columns)
                     {
-                        if (_item.Caption == null) 
+                        if (_item.Caption == null)
                             _line.Add(_item.ColumnName);
-                        else 
+                        else
                             _line.Add(_item.Caption);
                     }
-#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
 #if (NET35)
-                    _sw.WriteLine(string.Join(Convert.ToString(_separator), _line.ToArray()));
+                    _sw.WriteLine(string.Join(_sep, _line.ToArray()));
 #else
-                    _sw.WriteLine(string.Join(Convert.ToString(_separator), _line));
-#endif
-#else
-                    _sw.WriteLine(string.Join(_separator, _line));
+                    _sw.WriteLine(string.Join(_sep, _line));
 #endif
 
                 }
@@ -40,16 +42,12 @@ namespace Codex.Helper
                 {
                     _line.Clear();
                     foreach (object _item2 in _item.ItemArray)
-                        _line.Add(Convert.ToString(_item2));
+                        _line.Add((_item2 == DBNull.Value || _item2 == null) ? null : Convert.ToString(_item2));
 
-#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
 #if (NET35)
-                    _sw.WriteLine(string.Join(Convert.ToString(_separator), _line.ToArray()));
+                    _sw.WriteLine(string.Join(_sep, _line.ToArray()));
 #else
-                    _sw.WriteLine(string.Join(Convert.ToString(_separator), _line));
-#endif
-#else
-                    _sw.WriteLine(string.Join(_separator, _line));
+                    _sw.WriteLine(string.Join(_sep, _line));
 #endif
                 }
                 _line.Clear();
