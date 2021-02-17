@@ -2,7 +2,7 @@
 using System.Data;
 using System.Data.SqlClient;
 
-namespace Codex.ORM.Sql
+namespace Codex.Sql
 {
     public class OrmSqlParameter : IOrmParameter
     {

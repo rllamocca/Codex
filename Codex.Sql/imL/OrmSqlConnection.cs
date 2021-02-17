@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 #endif
 
-namespace Codex.ORM.Sql
+namespace Codex.Sql
 {
     public class OrmSqlConnection : IOrmConnection
     {

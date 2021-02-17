@@ -1,4 +1,4 @@
-﻿namespace Codex.ORM
+﻿namespace Codex
 {
     public interface IOrmParameter
     {

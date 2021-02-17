@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
 		<TargetFrameworks>
@@ -14,10 +14,23 @@
 		<Company>imL</Company>
 		<Description>Not so free tools.</Description>
 		<Copyright>© 1984 - 8888</Copyright>
+
 	</PropertyGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Codex\Codex.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+		<PackageReference Include="System.Data.SqlClient">
+			<Version>4.8.2</Version>
+		</PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReference Include="System.Data.SqlClient">
+			<Version>4.8.2</Version>
+		</PackageReference>
 	</ItemGroup>
 
 </Project>

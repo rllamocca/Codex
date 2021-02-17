@@ -1,4 +1,4 @@
-﻿namespace Codex.ORM.Enum
+﻿namespace Codex.Enum
 {
     public enum EExecute
     {

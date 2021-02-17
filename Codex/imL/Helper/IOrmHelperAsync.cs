@@ -1,12 +1,12 @@
-﻿#if (NET35 == false && NET40 == false)
+﻿#if (NET45 || NETSTANDARD1_0 || NETSTANDARD1_1 || NETSTANDARD1_2 || NETSTANDARD1_3 || NETSTANDARD2_0)
 
-using Codex.ORM.Enum;
+using Codex.Enum;
 
 using System.Threading.Tasks;
 
-namespace Codex.ORM.Helper
+namespace Codex.Helper
 {
-    public interface IOrmAsyncHelper
+    public interface IOrmHelperAsync
     {
         Task<Return> Execute(
             string _query,

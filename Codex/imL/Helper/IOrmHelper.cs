@@ -1,6 +1,6 @@
-﻿using Codex.ORM.Enum;
+﻿using Codex.Enum;
 
-namespace Codex.ORM.Helper
+namespace Codex.Helper
 {
     public interface IOrmHelper
     {

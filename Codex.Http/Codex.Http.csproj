@@ -10,10 +10,11 @@
 		<Company>imL</Company>
 		<Description>Not so free tools.</Description>
 		<Copyright>© 1984 - 8888</Copyright>
+
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\Codex\Codex.csproj" />
+		<ProjectReference Include="..\Codex\Codex.csproj" />
 	</ItemGroup>
 
 </Project>

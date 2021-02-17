@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Codex.ORM.Pattern
+namespace Codex.Pattern
 {
     public static class SqlPattern
     {

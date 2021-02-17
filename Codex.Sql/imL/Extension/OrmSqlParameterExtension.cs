@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace Codex.ORM.Sql
+namespace Codex.Sql
 {
     public static class OrmSqlParameterExtension
     {
