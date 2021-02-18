@@ -1,9 +1,10 @@
-﻿using NPOI.HSSF.UserModel;
+﻿using Codex.Struct;
+
+using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 
 using System;
-using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Linq;
@@ -12,10 +13,10 @@ namespace Codex.NPOI.Helper
 {
     public static class NPOIHelper
     {
-        public static void To_Excel(out Stream _out, DataSet _ds, bool __xls = true, KeyValuePair<string, string>[] _formats = null)
+        public static void To_Excel(out Stream _out, DataSet _ds, bool _xls = true, SArray3<string, string, string>[] _formats = null)
         {
             IWorkbook _wb;
-            if (__xls) _wb = new HSSFWorkbook();
+            if (_xls) _wb = new HSSFWorkbook();
             else _wb = new XSSFWorkbook();
 
             IFont _fbasic = _wb.CreateFont();
@@ -23,11 +24,17 @@ namespace Codex.NPOI.Helper
             _fbasic.FontName = "Consolas";
 
             IFont _fbold = _wb.CreateFont();
-            _fbold.FontHeightInPoints = 11;
+            _fbold.FontHeightInPoints = 12;
             _fbold.FontName = "Consolas";
             _fbold.IsBold = true;
 
             ICellStyle _sbasic = _wb.CreateCellStyle();
+            _sbasic.Alignment = HorizontalAlignment.Left;
+            _sbasic.VerticalAlignment = VerticalAlignment.Center;
+            _sbasic.SetFont(_fbasic);
+
+            ICellStyle _sbasic_number = _wb.CreateCellStyle();
+            _sbasic.Alignment = HorizontalAlignment.Right;
             _sbasic.VerticalAlignment = VerticalAlignment.Center;
             _sbasic.SetFont(_fbasic);
 
@@ -99,7 +106,7 @@ namespace Codex.NPOI.Helper
                                     case "System.UInt32":
                                     case "System.UInt64":
                                     case "System.Decimal":
-                                        _wbsrc.CellStyle = _sbasic;
+                                        _wbsrc.CellStyle = _sbasic_number;
                                         _wbsrc.SetCellType(CellType.Numeric);
                                         _wbsrc.SetCellValue(Convert.ToDouble(_obj));
                                         break;
@@ -164,18 +171,19 @@ namespace Codex.NPOI.Helper
                         _wbsrc.CellStyle = _sbold;
                         _wbsrc.SetCellType(CellType.String);
 
-                        if (_dc.Caption == null) 
+                        if (_dc.Caption == null)
                             _wbsrc.SetCellValue(_dc.ColumnName);
-                        else 
+                        else
                             _wbsrc.SetCellValue(_dc.Caption);
 
-                        KeyValuePair<string, string> _f = _formats.Where(_w => _w.Key == _dc.ColumnName).FirstOrDefault();
+                        SArray3<string, string, string> _f = _formats.Where(_w => _w.A == _item.TableName && _w.B == _dc.ColumnName).FirstOrDefault();
 
-                        if (_f.Equals(default(KeyValuePair<string, string>)))
+                        if (_f.Equals(default(SArray3<string, string, string>)))
                             _t_styles[_col] = _sbasic;
                         else
                         {
                             _t_styles[_col] = _wb.CreateCellStyle();
+                            _t_styles[_col].Alignment = HorizontalAlignment.Center;
                             _t_styles[_col].VerticalAlignment = VerticalAlignment.Center;
                             _t_styles[_col].DataFormat = _wb.CreateDataFormat().GetFormat(_f.Value);
                             _t_styles[_col].SetFont(_fbasic);
@@ -237,18 +245,18 @@ namespace Codex.NPOI.Helper
             _wb.Write(_out);
         }
 
-        public static DataSet To_DataSet(string _path, bool __xls = true, bool _columnnames = true, int[] _datetime = null)
+        public static DataSet To_DataSet(string _path, bool _xls = true, bool _columnnames = true, SArray2<int, int>[] _datetime = null)
         {
             IWorkbook _wb;
             using (FileStream _s = new FileStream(_path, FileMode.Open, FileAccess.Read))
             {
-                if (__xls)
+                if (_xls)
                     _wb = new HSSFWorkbook(_s);
                 else
                     _wb = new XSSFWorkbook(_s);
             }
             if (_datetime == null)
-                _datetime = new int[] { -8 };
+                _datetime = new SArray2<int, int>[0];
 
             DataSet _return = new DataSet("NPOI");
             for (int _i = 0; _i < _wb.NumberOfSheets; _i++)
@@ -263,7 +271,7 @@ namespace Codex.NPOI.Helper
 
                 foreach (ICell _item in _row)
                 {
-                    Type _type = _datetime.Contains(_ordinal) ? typeof(DateTime) : typeof(object);
+                    Type _type = _datetime.Contains(new SArray2<int, int>(_i, _ordinal)) ? typeof(DateTime) : typeof(object);
                     if (_columnnames)
                         _dc = new DataColumn(_item.StringCellValue, _type);
                     else
@@ -286,7 +294,7 @@ namespace Codex.NPOI.Helper
                     DataRow _newrow = _table.NewRow();
                     _newrow.ItemArray = _table.Columns
                         .Cast<DataColumn>()
-                        .Select(_s => Get_DBCellValue(_row.GetCell(_s.Ordinal), _datetime.Contains(_s.Ordinal)))
+                        .Select(_s => Get_DBCellValue(_row.GetCell(_s.Ordinal), _datetime.Contains(new SArray2<int, int>(_i, _s.Ordinal))))
                         .ToArray();
                     _table.Rows.Add(_newrow);
                 }
