@@ -4,6 +4,7 @@ using System.Data;
 
 using Codex.Enum;
 using Codex.Contract;
+using Codex.MySql.Extension;
 
 using MySql.Data.MySqlClient;
 

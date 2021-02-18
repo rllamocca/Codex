@@ -4,7 +4,7 @@ using Codex.Sql.UserModel;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 
-namespace Codex.Sql
+namespace Codex.Sql.Extension
 {
     public static class ISqlParameterExtension
     {

@@ -4,7 +4,7 @@ using System.Net.Mail;
 
 using System;
 
-namespace Codex
+namespace Codex.Extension
 {
     public static class PrimitiveExtension
     {

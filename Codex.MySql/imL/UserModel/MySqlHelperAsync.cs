@@ -6,6 +6,7 @@ using System.Data;
 
 using Codex.Enum;
 using Codex.Contract;
+using Codex.MySql.Extension;
 
 using MySql.Data.MySqlClient;
 
@@ -118,9 +119,9 @@ namespace Codex.MySql.UserModel
             }
         }
 
+#if (NET45 || NETSTANDARD2_0)
         public async Task<Return> Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null)
         {
-#if (NET45 || NETSTANDARD2_0)
             try
             {
                 Return _exe = await Execute(_query, _conn, _pmts, EExecute.Reader);
@@ -145,13 +146,10 @@ namespace Codex.MySql.UserModel
             {
                 return new Return(false, _ex);
             }
-#else
             throw new NotImplementedException();
-#endif
         }
         public async Task<Return> Get_DataTable(string _query, IConnection _conn, IParameter[] _pmts = null)
         {
-#if (NET45 || NETSTANDARD2_0)
             try
             {
                 Return _exe = await Execute(_query, _conn, _pmts, EExecute.Reader);
@@ -166,10 +164,18 @@ namespace Codex.MySql.UserModel
             {
                 return new Return(false, _ex);
             }
-#else
             throw new NotImplementedException();
-#endif
         }
+#else
+        public Task<Return> Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<Return> Get_DataTable(string _query, IConnection _conn, IParameter[] _pmts = null)
+        {
+            throw new NotImplementedException();
+        }
+#endif
     }
 }
 #endif

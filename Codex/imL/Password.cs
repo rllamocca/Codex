@@ -1,6 +1,7 @@
 ﻿#if (NET35 || NET40 || NET45 || NETSTANDARD1_3 || NETSTANDARD2_0)
 
 using Codex.Enum;
+using Codex.Extension;
 using Codex.Helper;
 
 using System;

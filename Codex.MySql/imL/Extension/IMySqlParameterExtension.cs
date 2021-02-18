@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 
 using System.Collections.Generic;
 
-namespace Codex.MySql
+namespace Codex.MySql.Extension
 {
     public static class IMySqlParameterExtension
     {

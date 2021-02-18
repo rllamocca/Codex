@@ -1,4 +1,4 @@
-﻿namespace Codex
+﻿namespace Codex.Extension
 {
     public static class ReturnExtension
     {

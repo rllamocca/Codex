@@ -4,6 +4,7 @@ using System.Data;
 
 using Codex.Enum;
 using Codex.Contract;
+using Codex.Sql.Extension;
 
 using System;
 using System.Data.SqlClient;
