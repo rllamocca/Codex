@@ -117,7 +117,9 @@ CTRL_CLOSE_EVENT
                 {
                     foreach (FileInfo _item in _list)
                     {
-                        if (_item.CreationTime.ToDate() != _nowdate)
+                        bool _ok = (_item.CreationTime.ToDate() != _nowdate) && (_item.Attributes.HasFlag(FileAttributes.Hidden) == false);
+
+                        if (_ok)
                         {
                             string _move = Path.Combine(_to,
                                 _item.CreationTime.Year.ToString("0000"),
@@ -142,7 +144,9 @@ CTRL_CLOSE_EVENT
             //################################################################
 
             Console.WriteLine("Good bye World!");
+#if (DEBUG)
             Console.ReadKey();
+#endif
         }
 
         public static void ProcessDirectory(ref List<FileInfo> _list, string _directory, bool _subs = false)
