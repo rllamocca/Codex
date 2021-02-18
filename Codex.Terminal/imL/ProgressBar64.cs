@@ -32,6 +32,9 @@ namespace Codex.Terminal
             this._COUNT = _count;
             this._PARENT = _parent;
 
+            if (this._COUNT == 0)
+                throw new ArgumentOutOfRangeException(nameof(_count), "_count == 0");
+
             if (this._PARENT == null)
             {
                 Console.CursorVisible = false;
