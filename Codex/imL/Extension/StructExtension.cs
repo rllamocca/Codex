@@ -13,6 +13,10 @@ namespace Codex.Extension
             return (_item.Year == 1899 && _item.Month == 12 && _item.Day == 31);
         }
 
+        public static DateTime ToDate(this DateTime _item)
+        {
+            return new DateTime(_item.Year, _item.Month, _item.Day);
+        }
         public static DateTime ToExcelTime(this DateTime _item)
         {
             TimeSpan _tmp = _item - new DateTime(1899, 12, 31);

@@ -21,6 +21,7 @@ namespace Codex.Terminal
         private readonly ProgressBarU64 _PARENT;
         private byte _BLOCKS = 50;
         private ulong _COUNT;
+        private ulong _VALUE = 0;
         private Point _BAR_START;
         private Point _BAR_END;
         private List<decimal> _BAR = new List<decimal>();
@@ -65,6 +66,11 @@ namespace Codex.Terminal
             this.Report(0);
         }
 
+        public void Report()
+        {
+            this._VALUE++;
+            this.Report(this._VALUE);
+        }
         public void Report(ulong _value)
         {
             decimal _per = (1.0m * _value / this._COUNT);
@@ -112,6 +118,7 @@ namespace Codex.Terminal
             {
                 this._BLOCKS = 0;
                 this._COUNT = 0;
+                this._VALUE = 0;
                 this._BAR_START = new Point(0, 0);
                 this._BAR_END = new Point(0, 0);
                 this._BAR.Clear();
