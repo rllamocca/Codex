@@ -7,13 +7,14 @@ using System.Data;
 using Codex.Enum;
 using Codex.Contract;
 
+using MySql.Data.MySqlClient;
+
 using System;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 
-namespace Codex.Sql.UserModel
+namespace Codex.MySql.UserModel
 {
-    public class SqlHelperAsync : IDBHelperAsync
+    public class MySqlHelperAsync : IDBHelperAsync
     {
         public async Task<Return> Execute(
             string _query,
@@ -24,10 +25,10 @@ namespace Codex.Sql.UserModel
         {
             try
             {
-                ISqlConnection _conn_raw = (ISqlConnection)_conn;
-                SqlParameter[] _pmts_raw = _pmts.GetSqlParameters().GetParameters();
+                IMySqlConnection _conn_raw = (IMySqlConnection)_conn;
+                MySqlParameter[] _pmts_raw = _pmts.GetSqlParameters().GetParameters();
 
-                using (SqlCommand _cmd = new SqlCommand(_query, _conn_raw.Connection))
+                using (MySqlCommand _cmd = new MySqlCommand(_query, _conn_raw.Connection))
                 {
                     _cmd.Transaction = _conn_raw.Transaction;
                     _cmd.CommandTimeout = _conn.TimeOut;
@@ -43,8 +44,6 @@ namespace Codex.Sql.UserModel
                             return new Return(true, await _cmd.ExecuteScalarAsync(_conn.Token));
                         case EExecute.Reader:
                             return new Return(true, await _cmd.ExecuteReaderAsync(_conn.Token));
-                        case EExecute.XmlReader:
-                            return new Return(true, await _cmd.ExecuteXmlReaderAsync(_conn.Token));
                         default:
                             return new Return(false);
                     }
@@ -64,13 +63,13 @@ namespace Codex.Sql.UserModel
         {
             try
             {
-                ISqlConnection _conn_raw = (ISqlConnection)_conn;
+                IMySqlConnection _conn_raw = (IMySqlConnection)_conn;
 
                 int _r = 0;
                 Return[] _returns = new Return[_pmts.Length];
-                SqlParameter[] _pmts_raw = _pmts[_r].GetSqlParameters().GetParameters();
+                MySqlParameter[] _pmts_raw = _pmts[_r].GetSqlParameters().GetParameters();
 
-                using (SqlCommand _cmd = new SqlCommand(_query, _conn_raw.Connection))
+                using (MySqlCommand _cmd = new MySqlCommand(_query, _conn_raw.Connection))
                 {
                     _cmd.Transaction = _conn_raw.Transaction;
                     _cmd.CommandTimeout = _conn.TimeOut;
@@ -98,9 +97,6 @@ namespace Codex.Sql.UserModel
                                     break;
                                 case EExecute.Reader:
                                     _returns[_r] = new Return(true, await _cmd.ExecuteReaderAsync(_conn.Token));
-                                    break;
-                                case EExecute.XmlReader:
-                                    _returns[_r] = new Return(true, await _cmd.ExecuteXmlReaderAsync(_conn.Token));
                                     break;
                                 default:
                                     _returns[_r] = new Return(false);
@@ -133,8 +129,7 @@ namespace Codex.Sql.UserModel
                 DataSet _return = new DataSet("DataSet_0");
                 _return.EnforceConstraints = _conn.Constraints;
                 byte _n = 0;
-
-                using (SqlDataReader _read = (SqlDataReader)_exe.Result)
+                using (MySqlDataReader _read = (MySqlDataReader)_exe.Result)
                 {
                     while (_read.IsClosed == false)
                     {
@@ -144,7 +139,6 @@ namespace Codex.Sql.UserModel
                         _n++;
                     }
                 }
-
                 return new Return(true, _return);
             }
             catch (Exception _ex)
@@ -164,10 +158,8 @@ namespace Codex.Sql.UserModel
                 _exe.TriggerErrorException();
 
                 DataTable _return = new DataTable("DataTable_0");
-
-                using (SqlDataReader _read = (SqlDataReader)_exe.Result)
+                using (MySqlDataReader _read = (MySqlDataReader)_exe.Result)
                     _return.Load(_read, LoadOption.OverwriteChanges);
-
                 return new Return(true, _return);
             }
             catch (Exception _ex)

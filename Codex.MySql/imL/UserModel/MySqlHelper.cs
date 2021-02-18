@@ -1,21 +1,19 @@
-﻿#if (NET45 || NETSTANDARD1_3 || NETSTANDARD2_0)
-
-#if (NET45 || NETSTANDARD2_0)
+﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
 using System.Data;
 #endif
 
 using Codex.Enum;
 using Codex.Contract;
 
-using System;
-using System.Data.SqlClient;
-using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
 
-namespace Codex.Sql.UserModel
+using System;
+
+namespace Codex.MySql.UserModel
 {
-    public class SqlHelperAsync : IDBHelperAsync
+    public class MySqlHelper : IDBHelper
     {
-        public async Task<Return> Execute(
+        public Return Execute(
             string _query,
             IConnection _conn,
             IParameter[] _pmts = null,
@@ -24,10 +22,10 @@ namespace Codex.Sql.UserModel
         {
             try
             {
-                ISqlConnection _conn_raw = (ISqlConnection)_conn;
-                SqlParameter[] _pmts_raw = _pmts.GetSqlParameters().GetParameters();
+                IMySqlConnection _conn_raw = (IMySqlConnection)_conn;
+                MySqlParameter[] _pmts_raw = _pmts.GetSqlParameters().GetParameters();
 
-                using (SqlCommand _cmd = new SqlCommand(_query, _conn_raw.Connection))
+                using (MySqlCommand _cmd = new MySqlCommand(_query, _conn_raw.Connection))
                 {
                     _cmd.Transaction = _conn_raw.Transaction;
                     _cmd.CommandTimeout = _conn.TimeOut;
@@ -38,13 +36,11 @@ namespace Codex.Sql.UserModel
                     switch (_exe)
                     {
                         case EExecute.NonQuery:
-                            return new Return(true, await _cmd.ExecuteNonQueryAsync(_conn.Token));
+                            return new Return(true, _cmd.ExecuteNonQuery());
                         case EExecute.Scalar:
-                            return new Return(true, await _cmd.ExecuteScalarAsync(_conn.Token));
+                            return new Return(true, _cmd.ExecuteScalar());
                         case EExecute.Reader:
-                            return new Return(true, await _cmd.ExecuteReaderAsync(_conn.Token));
-                        case EExecute.XmlReader:
-                            return new Return(true, await _cmd.ExecuteXmlReaderAsync(_conn.Token));
+                            return new Return(true, _cmd.ExecuteReader());
                         default:
                             return new Return(false);
                     }
@@ -55,7 +51,7 @@ namespace Codex.Sql.UserModel
                 return new Return(false, _ex);
             }
         }
-        public async Task<Return[]> Execute(
+        public Return[] Execute(
             string _query,
             IConnection _conn,
             IParameter[][] _pmts,
@@ -64,13 +60,13 @@ namespace Codex.Sql.UserModel
         {
             try
             {
-                ISqlConnection _conn_raw = (ISqlConnection)_conn;
+                IMySqlConnection _conn_raw = (IMySqlConnection)_conn;
 
                 int _r = 0;
                 Return[] _returns = new Return[_pmts.Length];
-                SqlParameter[] _pmts_raw = _pmts[_r].GetSqlParameters().GetParameters();
+                MySqlParameter[] _pmts_raw = _pmts[_r].GetSqlParameters().GetParameters();
 
-                using (SqlCommand _cmd = new SqlCommand(_query, _conn_raw.Connection))
+                using (MySqlCommand _cmd = new MySqlCommand(_query, _conn_raw.Connection))
                 {
                     _cmd.Transaction = _conn_raw.Transaction;
                     _cmd.CommandTimeout = _conn.TimeOut;
@@ -91,16 +87,13 @@ namespace Codex.Sql.UserModel
                             switch (_exe)
                             {
                                 case EExecute.NonQuery:
-                                    _returns[_r] = new Return(true, await _cmd.ExecuteNonQueryAsync(_conn.Token));
+                                    _returns[_r] = new Return(true, _cmd.ExecuteNonQuery());
                                     break;
                                 case EExecute.Scalar:
-                                    _returns[_r] = new Return(true, await _cmd.ExecuteScalarAsync(_conn.Token));
+                                    _returns[_r] = new Return(true, _cmd.ExecuteScalar());
                                     break;
                                 case EExecute.Reader:
-                                    _returns[_r] = new Return(true, await _cmd.ExecuteReaderAsync(_conn.Token));
-                                    break;
-                                case EExecute.XmlReader:
-                                    _returns[_r] = new Return(true, await _cmd.ExecuteXmlReaderAsync(_conn.Token));
+                                    _returns[_r] = new Return(true, _cmd.ExecuteReader());
                                     break;
                                 default:
                                     _returns[_r] = new Return(false);
@@ -122,19 +115,19 @@ namespace Codex.Sql.UserModel
             }
         }
 
-        public async Task<Return> Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null)
+        public virtual Return Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null)
         {
-#if (NET45 || NETSTANDARD2_0)
+#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
             try
             {
-                Return _exe = await Execute(_query, _conn, _pmts, EExecute.Reader);
+                Return _exe = Execute(_query, _conn, _pmts, EExecute.Reader);
                 _exe.TriggerErrorException();
 
                 DataSet _return = new DataSet("DataSet_0");
                 _return.EnforceConstraints = _conn.Constraints;
                 byte _n = 0;
 
-                using (SqlDataReader _read = (SqlDataReader)_exe.Result)
+                using (MySqlDataReader _read = (MySqlDataReader)_exe.Result)
                 {
                     while (_read.IsClosed == false)
                     {
@@ -155,17 +148,17 @@ namespace Codex.Sql.UserModel
             throw new NotImplementedException();
 #endif
         }
-        public async Task<Return> Get_DataTable(string _query, IConnection _conn, IParameter[] _pmts = null)
+        public virtual Return Get_DataTable(string _query, IConnection _conn, IParameter[] _pmts = null)
         {
-#if (NET45 || NETSTANDARD2_0)
+#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
             try
             {
-                Return _exe = await Execute(_query, _conn, _pmts, EExecute.Reader);
+                Return _exe = Execute(_query, _conn, _pmts, EExecute.Reader);
                 _exe.TriggerErrorException();
 
                 DataTable _return = new DataTable("DataTable_0");
 
-                using (SqlDataReader _read = (SqlDataReader)_exe.Result)
+                using (MySqlDataReader _read = (MySqlDataReader)_exe.Result)
                     _return.Load(_read, LoadOption.OverwriteChanges);
 
                 return new Return(true, _return);
@@ -180,4 +173,3 @@ namespace Codex.Sql.UserModel
         }
     }
 }
-#endif

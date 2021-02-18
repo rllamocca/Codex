@@ -130,6 +130,7 @@ namespace Codex.Sql.UserModel
                 DataSet _return = new DataSet("DataSet_0");
                 _return.EnforceConstraints = _conn.Constraints;
                 byte _n = 0;
+
                 using (SqlDataReader _read = (SqlDataReader)_exe.Result)
                 {
                     while (_read.IsClosed == false)
@@ -140,6 +141,7 @@ namespace Codex.Sql.UserModel
                         _n++;
                     }
                 }
+
                 return new Return(true, _return);
             }
             catch (Exception _ex)
@@ -159,10 +161,10 @@ namespace Codex.Sql.UserModel
                 _exe.TriggerErrorException();
 
                 DataTable _return = new DataTable("DataTable_0");
+
                 using (SqlDataReader _read = (SqlDataReader)_exe.Result)
-                {
                     _return.Load(_read, LoadOption.OverwriteChanges);
-                }
+
                 return new Return(true, _return);
             }
             catch (Exception _ex)
