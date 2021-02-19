@@ -5,9 +5,9 @@ namespace Codex.Extension
 {
     public static class IEnumerableExtension
     {
-        public static IEnumerable<T> DefaultOrEmpty<T>(this IEnumerable<T> _a)
+        public static IEnumerable<T> DefaultOrEmpty<T>(this IEnumerable<T> _array)
         {
-            return _a ?? Enumerable.Empty<T>();
+            return _array ?? Enumerable.Empty<T>();
         }
     }
 }

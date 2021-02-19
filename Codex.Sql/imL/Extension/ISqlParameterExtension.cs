@@ -21,12 +21,12 @@ namespace Codex.Sql.Extension
             return _return.ToArray();
         }
 
-        public static SqlParameter[] GetParameters(this ISqlParameter _item)
+        public static SqlParameter[] GetParameters(this ISqlParameter _this)
         {
-            if (_item == null)
+            if (_this == null)
                 return null;
 
-            return new SqlParameter[] { _item.Parameter };
+            return new SqlParameter[] { _this.Parameter };
         }
         public static SqlParameter[] GetParameters(this ISqlParameter[] _array)
         {

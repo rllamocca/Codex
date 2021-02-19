@@ -22,12 +22,12 @@ namespace Codex.MySql.Extension
             return _return.ToArray();
         }
 
-        public static MySqlParameter[] GetParameters(this IMySqlParameter _item)
+        public static MySqlParameter[] GetParameters(this IMySqlParameter _this)
         {
-            if (_item == null)
+            if (_this == null)
                 return null;
 
-            return new MySqlParameter[] { _item.Parameter };
+            return new MySqlParameter[] { _this.Parameter };
         }
         public static MySqlParameter[] GetParameters(this IMySqlParameter[] _array)
         {
