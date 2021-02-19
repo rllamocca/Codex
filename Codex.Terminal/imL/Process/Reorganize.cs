@@ -1,4 +1,4 @@
-﻿#if(NET35 == false)
+﻿#if (NET35 == false)
 
 using Codex.Extension;
 
@@ -25,7 +25,7 @@ namespace Codex.Terminal.Process
 
                 string __FROM = @"e:\Tmp2";
                 string __TO = @"e:\TestTmp2";
-                string __PATHFORMAT = "yyyy-MM-dd";
+                string __GROUPBY = "yyyy-MM-dd";
 
                 if (_args != null && _args.Length > 0)
                 {
@@ -37,59 +37,85 @@ namespace Codex.Terminal.Process
 
                     __FROM = _args.SkipWhile(_sw => _sw.ToUpper() != "--FROM").Skip(1).FirstOrDefault();
                     __TO = _args.SkipWhile(_sw => _sw.ToUpper() != "--TO").Skip(1).FirstOrDefault();
-                    __PATHFORMAT = _args.SkipWhile(_sw => _sw.ToUpper() != "__PATHFORMAT").Skip(1).FirstOrDefault();
+                    __GROUPBY = _args.SkipWhile(_sw => _sw.ToUpper() != "--GROUPBY").Skip(1).FirstOrDefault();
                 }
 
                 if (__TO == null)
                     __TO = __FROM;
-                switch (__PATHFORMAT)
+                switch (__GROUPBY)
                 {
-                    case "yyyy-MM-dd":
-                    case "yyyy-MM":
                     case "yyyy":
+                    case "yyyy-MM":
+                    case "yyyy-MM-dd":
                         break;
                     default:
-                        __PATHFORMAT = "yyyy-MM-dd";
+                        __GROUPBY = "yyyy-MM-dd";
                         break;
                 }
-                    
-
-                Console.WriteLine("__FROM: {0}", __FROM);
-                Console.WriteLine("__TO: {0}", __TO);
-                Console.WriteLine("__SUBDIRECTORY: {0}", _SUBDIRECTORY);
 
                 List<FileInfo> _list = new List<FileInfo>();
 
                 if (Directory.Exists(__FROM))
-                    //using (ElapsedTime _pb = new ElapsedTime())
+#if (NETSTANDARD1_3 == false)
+                    using (ElapsedTime _pb = new ElapsedTime())
+                        GetFiles(ref _list, __FROM, _SUBDIRECTORY);
+#else
                     GetFiles(ref _list, __FROM, _SUBDIRECTORY);
+#endif
                 else
                     throw new Exception("Directory.Exists == false");
 
                 Console.WriteLine("Count: {0}", _list.Count);
+
+                if (_list.Count == 0)
+                    return;
 
                 if (_OMIT_NOW)
                     _list.RemoveAll(_r => _r.CreationTime.ToDate() == _NOWDATE);
                 if (_OMIT_HIDDEN)
                     _list.RemoveAll(_r => _r.Attributes.HasFlag(FileAttributes.Hidden));
 
-                Console.WriteLine("Count after: {0}", _list.Count);
+                Console.WriteLine("Count after omit: {0}", _list.Count);
 
-                DateTime[] _datetimes = _list
-                    .Select(_s => _s.CreationTime.ToDate())
+                if (_list.Count == 0)
+                    return;
+
+                _list = _list.OrderBy(_o => _o.CreationTime).ToList();
+
+                DateTime[] _datetimes = _list.Select(_s => _s.CreationTime.ToDate())
                     .Distinct()
                     .ToArray();
 
-                using (ProgressBar64 _pb = new ProgressBar64(_datetimes.Length))
+                string[] _paths;
+                switch (__GROUPBY)
                 {
-                    foreach (DateTime _item in _datetimes)
+                    case "yyyy":
+                        _paths = _datetimes.Select(_s => Path.Combine(_s.Year.ToString("0000")))
+                            .Distinct()
+                            .ToArray();
+                        break;
+                    case "yyyy-MM":
+                        _paths = _datetimes.Select(_s => Path.Combine(_s.Year.ToString("0000"),
+                            _s.Month.ToString("00")
+                            ))
+                            .Distinct()
+                            .ToArray();
+                        break;
+                    default:
+                        _paths = _datetimes.Select(_s => Path.Combine(_s.Year.ToString("0000"),
+                            _s.Month.ToString("00"),
+                            _s.Day.ToString("00")
+                            ))
+                            .Distinct()
+                            .ToArray();
+                        break;
+                }
+
+                using (ProgressBar64 _pb = new ProgressBar64(_paths.Length))
+                {
+                    foreach (string _item in _paths)
                     {
-                        string _path = Path.Combine(__TO,
-                            _item.Year.ToString("0000"),
-                            _item.Month.ToString("00"),
-                            _item.Day.ToString("00")
-                            );
-                        Directory.CreateDirectory(_path);
+                        Directory.CreateDirectory(Path.Combine(__TO, _item));
 
                         _pb.Report();
                     }
@@ -99,14 +125,34 @@ namespace Codex.Terminal.Process
                 {
                     foreach (FileInfo _item in _list)
                     {
-                        string _path = Path.Combine(__TO,
-                                _item.CreationTime.Year.ToString("0000"),
-                                _item.CreationTime.Month.ToString("00"),
-                                _item.CreationTime.Day.ToString("00"),
-                                _item.Name
-                            );
+                        string _dest;
 
-                        _item.MoveTo(_path);
+                        switch (__GROUPBY)
+                        {
+                            case "yyyy":
+                                _dest = Path.Combine(__TO,
+                                    _item.CreationTime.Year.ToString("0000"),
+                                    _item.Name
+                                    );
+                                break;
+                            case "yyyy-MM":
+                                _dest = Path.Combine(__TO,
+                                    _item.CreationTime.Year.ToString("0000"),
+                                    _item.CreationTime.Month.ToString("00"),
+                                    _item.Name
+                                    );
+                                break;
+                            default:
+                                _dest = Path.Combine(__TO,
+                                    _item.CreationTime.Year.ToString("0000"),
+                                    _item.CreationTime.Month.ToString("00"),
+                                    _item.CreationTime.Day.ToString("00"),
+                                    _item.Name
+                                    );
+                                break;
+                        }
+
+                        _item.MoveTo(_dest);
 
                         _pb.Report();
                     }
@@ -117,20 +163,17 @@ namespace Codex.Terminal.Process
                 Console.WriteLine(_ex);
             }
         }
-        public static void GetFiles(ref List<FileInfo> _list, string _directory, bool _subs = false)
+        public static void GetFiles(ref List<FileInfo> _list, string _directory, bool _sub = false)
         {
             string[] _files = Directory.GetFiles(_directory);
             foreach (string _item in _files)
-            {
-                FileInfo _fi = new FileInfo(_item);
-                _list.Add(_fi);
-            }
+                _list.Add(new FileInfo(_item));
 
-            if (_subs)
+            if (_sub)
             {
                 string[] _subdirectory = Directory.GetDirectories(_directory);
                 foreach (string _item in _subdirectory)
-                    GetFiles(ref _list, _item, _subs);
+                    GetFiles(ref _list, _item, _sub);
             }
         }
     }
