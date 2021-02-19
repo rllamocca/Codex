@@ -15,6 +15,17 @@ namespace Codex.Terminal.Helper
         {
             Console.InputEncoding = Encoding.UTF8;
             Console.OutputEncoding = Encoding.UTF8;
+
+            Console.WriteLine(@" Start the magic trick ... ♪♫ ");
+        }
+
+        public static void Ends()
+        {
+            Console.WriteLine(@" ♫♪ ... ♥♦♣♠ ...");
+#if (DEBUG)
+            Console.WriteLine(@" (Press any key to exit) ");
+            Console.ReadKey();
+#endif
         }
 
         public static void Write(Point _xy, char _value)
