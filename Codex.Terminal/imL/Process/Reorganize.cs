@@ -1,6 +1,5 @@
-﻿#if (NET35 == false)
-
-using Codex.Extension;
+﻿using Codex.Extension;
+using Codex.Helper;
 
 using System;
 using System.Collections.Generic;
@@ -19,6 +18,7 @@ namespace Codex.Terminal.Process
                 DateTime _NOWDATE = new DateTime(_NOW.Year, _NOW.Month, _NOW.Day);
 
                 bool _HELP = false;
+
                 bool _SUBDIRECTORY = false;
                 bool _OMIT_NOW = false;
                 bool _OMIT_HIDDEN = false;
@@ -63,7 +63,7 @@ namespace Codex.Terminal.Process
                     GetFiles(ref _list, __FROM, _SUBDIRECTORY);
 #endif
                 else
-                    throw new Exception("Directory.Exists == false");
+                    throw new ArgumentException("Directory.Exists == false");
 
                 Console.WriteLine("Count: {0}", _list.Count);
 
@@ -90,19 +90,19 @@ namespace Codex.Terminal.Process
                 switch (__GROUPBY)
                 {
                     case "yyyy":
-                        _paths = _datetimes.Select(_s => Path.Combine(_s.Year.ToString("0000")))
+                        _paths = _datetimes.Select(_s => PathHelper.Combine(_s.Year.ToString("0000")))
                             .Distinct()
                             .ToArray();
                         break;
                     case "yyyy-MM":
-                        _paths = _datetimes.Select(_s => Path.Combine(_s.Year.ToString("0000"),
+                        _paths = _datetimes.Select(_s => PathHelper.Combine(_s.Year.ToString("0000"),
                             _s.Month.ToString("00")
                             ))
                             .Distinct()
                             .ToArray();
                         break;
                     default:
-                        _paths = _datetimes.Select(_s => Path.Combine(_s.Year.ToString("0000"),
+                        _paths = _datetimes.Select(_s => PathHelper.Combine(_s.Year.ToString("0000"),
                             _s.Month.ToString("00"),
                             _s.Day.ToString("00")
                             ))
@@ -115,7 +115,7 @@ namespace Codex.Terminal.Process
                 {
                     foreach (string _item in _paths)
                     {
-                        Directory.CreateDirectory(Path.Combine(__TO, _item));
+                        Directory.CreateDirectory(PathHelper.Combine(__TO, _item));
 
                         _pb.Report();
                     }
@@ -130,20 +130,20 @@ namespace Codex.Terminal.Process
                         switch (__GROUPBY)
                         {
                             case "yyyy":
-                                _dest = Path.Combine(__TO,
+                                _dest = PathHelper.Combine(__TO,
                                     _item.CreationTime.Year.ToString("0000"),
                                     _item.Name
                                     );
                                 break;
                             case "yyyy-MM":
-                                _dest = Path.Combine(__TO,
+                                _dest = PathHelper.Combine(__TO,
                                     _item.CreationTime.Year.ToString("0000"),
                                     _item.CreationTime.Month.ToString("00"),
                                     _item.Name
                                     );
                                 break;
                             default:
-                                _dest = Path.Combine(__TO,
+                                _dest = PathHelper.Combine(__TO,
                                     _item.CreationTime.Year.ToString("0000"),
                                     _item.CreationTime.Month.ToString("00"),
                                     _item.CreationTime.Day.ToString("00"),
@@ -178,4 +178,3 @@ namespace Codex.Terminal.Process
         }
     }
 }
-#endif

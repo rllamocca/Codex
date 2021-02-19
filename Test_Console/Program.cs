@@ -1,8 +1,6 @@
 ﻿using Codex.Terminal.Helper;
-using Codex.Terminal.Process;
 
 using System;
-using System.Linq;
 
 namespace Test_Console
 {
@@ -44,16 +42,6 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-
-            string[] _list = new string[] { "a", "b", "c", "d", "e", "f" };
-
-            string _skip = _list.SkipWhile(_sw => _sw.ToUpper() != "F").Skip(1).FirstOrDefault();
-
-            _skip = _skip == null ? "NULL" : _skip;
-
-            Console.WriteLine("_skip : {0}", _skip);
-
-            //Reorganize.Main(_args);
 
             //################################################################
 
