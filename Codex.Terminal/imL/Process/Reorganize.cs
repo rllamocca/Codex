@@ -29,15 +29,15 @@ namespace Codex.Terminal.Process
 
                 if (_args != null && _args.Length > 0)
                 {
-                    _HELP = _args.Count(_c => _c.ToUpper() == "-HELP" || _c.ToUpper() == "-H") > 0;
+                    _HELP = _args.ArgAppear("-HELP", "-H");
 
-                    _SUBDIRECTORY = _args.Count(_c => _c.ToUpper() == "-SUBDIRECTORY" || _c.ToUpper() == "-S") > 0;
-                    _OMIT_NOW = _args.Count(_c => _c.ToUpper() == "-OMIT-NOW" || _c.ToUpper() == "-O-N") > 0;
-                    _OMIT_HIDDEN = _args.Count(_c => _c.ToUpper() == "-OMIT-HIDDEN" || _c.ToUpper() == "-O-H") > 0;
+                    _SUBDIRECTORY = _args.ArgAppear("-SUBDIRECTORY", "-S");
+                    _OMIT_NOW = _args.ArgAppear("-OMIT-NOW", "-O-N");
+                    _OMIT_HIDDEN = _args.ArgAppear("-OMIT-HIDDEN", "-O-H");
 
-                    __FROM = _args.SkipWhile(_sw => _sw.ToUpper() != "--FROM").Skip(1).FirstOrDefault();
-                    __TO = _args.SkipWhile(_sw => _sw.ToUpper() != "--TO").Skip(1).FirstOrDefault();
-                    __GROUPBY = _args.SkipWhile(_sw => _sw.ToUpper() != "--GROUPBY").Skip(1).FirstOrDefault();
+                    __FROM = _args.ArgValue("--FROM");
+                    __TO = _args.ArgValue("--TO");
+                    __GROUPBY = _args.ArgValue("--GROUPBY");
                 }
 
                 if (__TO == null)

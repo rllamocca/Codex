@@ -8,13 +8,11 @@ namespace RichieSays
         static void Main(string[] args)
         {
             ConsoleHelper.InitEncoding();
-
             //################################################################
 
             if (args != null && args.Length > 0)
             {
-                string _switch = args[0];
-                _switch = _switch.ToUpper();
+                string _switch = args[0].ToUpper();
 
                 switch (_switch)
                 {
@@ -27,7 +25,6 @@ namespace RichieSays
             }
 
             //################################################################
-
             ConsoleHelper.Ends();
         }
     }

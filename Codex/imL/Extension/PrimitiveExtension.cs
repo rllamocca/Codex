@@ -3,6 +3,7 @@ using System.Net.Mail;
 #endif
 
 using System;
+using System.Linq;
 
 namespace Codex.Extension
 {
@@ -101,5 +102,34 @@ namespace Codex.Extension
             }
             return _this;
         }
+
+        public static bool ArgAppear(this string[] _array, params string[] _synonym)
+        {
+            bool _return = false;
+
+            foreach (string _item in _synonym)
+            {
+                //_return = _return || (_array.Count(_c => _c.CompareTo(_item) == 1) > 0);
+                _return = _return || (_array.Count(_c => _c.ToUpper() == _item.ToUpper()) > 0);
+
+                if (_return)
+                    return _return;
+            }
+
+            return _return;
+        }
+        public static string ArgValue(this string[] _array, params string[] _key)
+        {
+            foreach (string _item in _key)
+            {
+                string _return = _array.SkipWhile(_sw => _sw.ToUpper() != _item.ToUpper()).Skip(1).FirstOrDefault();
+
+                if (_return != null)
+                    return _return;
+            }
+
+            return null;
+        }
+
     }
 }
