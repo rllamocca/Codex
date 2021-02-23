@@ -1,31 +1,22 @@
 ﻿using Codex.Terminal.Helper;
 using Codex.Terminal.Process;
 
-namespace RichieSays
+ConsoleHelper.InitEncoding();
+//################################################################
+
+if (args != null && args.Length > 0)
 {
-    class Program
+    string _switch = args[0].ToUpper();
+
+    switch (_switch)
     {
-        static void Main(string[] args)
-        {
-            ConsoleHelper.InitEncoding();
-            //################################################################
-
-            if (args != null && args.Length > 0)
-            {
-                string _switch = args[0].ToUpper();
-
-                switch (_switch)
-                {
-                    case "REORGANIZE":
-                        Reorganize.Main(args);
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            //################################################################
-            ConsoleHelper.Ends();
-        }
+        case "REORGANIZE":
+            Reorganize.Main(args);
+            break;
+        default:
+            break;
     }
 }
+
+//################################################################
+ConsoleHelper.Ends();
