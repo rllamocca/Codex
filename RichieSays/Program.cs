@@ -1,4 +1,5 @@
-﻿using Codex.Terminal.Helper;
+﻿using Codex.Extension;
+using Codex.Terminal.Helper;
 using Codex.Terminal.Process;
 
 ConsoleHelper.InitEncoding();
@@ -6,16 +7,10 @@ ConsoleHelper.InitEncoding();
 
 if (args != null && args.Length > 0)
 {
-    string _switch = args[0].ToUpper();
+    bool _reorganize = args.ArgAppear("REORGANIZE");
 
-    switch (_switch)
-    {
-        case "REORGANIZE":
-            Reorganize.Main(args);
-            break;
-        default:
-            break;
-    }
+    if (_reorganize)
+        Reorganize.Main(args);
 }
 
 //################################################################
