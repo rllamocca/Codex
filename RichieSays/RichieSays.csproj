@@ -10,7 +10,7 @@
 		<Copyright>© 1984 - 8888</Copyright>
 		<PackageIcon>Richie.ico</PackageIcon>
 		<ApplicationIcon>NoInstall\Richie.ico</ApplicationIcon>
-		<StartupObject>RichieSays.Program</StartupObject>
+		<StartupObject></StartupObject>
 	</PropertyGroup>
 
 	<ItemGroup>
