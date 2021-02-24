@@ -23,7 +23,7 @@ namespace Codex.Helper
             return _create;
         }
 
-        public static FtpStatusCode From_ListDirectory(ref string[] _from, FtpConfig _config)
+        public static FtpStatusCode From_ListDirectory(out string[] _from, FtpConfig _config)
         {
             FtpWebRequest _ftp = FtpHelper.Create(_config);
             _ftp.Method = WebRequestMethods.Ftp.ListDirectory;
@@ -32,12 +32,10 @@ namespace Codex.Helper
             using (FtpWebResponse _response = (FtpWebResponse)_ftp.GetResponse())
             {
                 using (StreamReader _sr = new StreamReader(_response.GetResponseStream()))
-                {
                     while (_sr.EndOfStream == false)
                         _return.Add(_sr.ReadLine());
-
-                    _from = _return.ToArray();
-                }
+                
+                _from = _return.ToArray();
                 return _response.StatusCode;
             }
         }

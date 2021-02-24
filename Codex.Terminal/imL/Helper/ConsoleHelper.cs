@@ -11,21 +11,28 @@ namespace Codex.Terminal.Helper
 {
     public static class ConsoleHelper
     {
-        public static void InitEncoding()
+        public static void Init(bool _enc = true, string _title = null)
         {
-            Console.InputEncoding = Encoding.UTF8;
-            Console.OutputEncoding = Encoding.UTF8;
+            if (_enc)
+            {
+                Console.InputEncoding = Encoding.UTF8;
+                Console.OutputEncoding = Encoding.UTF8;
+            }
+            if (_title != null)
+                Console.Title = _title;
 
             Console.WriteLine(@" Start the magic trick ... ♪♫ ");
         }
 
-        public static void Ends()
+        public static void End(bool _rk = false)
         {
             Console.WriteLine(@" ♫♪ ... ♥♦♣♠ ...");
-#if (DEBUG)
-            Console.WriteLine(@" (Press any key to exit) ");
-            Console.ReadKey();
-#endif
+
+            if (_rk)
+            {
+                Console.WriteLine(@" (Press any key to exit) ");
+                Console.ReadKey();
+            }
         }
 
         public static void Write(Point _xy, char _value)

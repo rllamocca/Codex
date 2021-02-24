@@ -35,7 +35,7 @@ CTRL_CLOSE_EVENT
 
         static void Main(string[] _args)
         {
-            ConsoleHelper.InitEncoding();
+            ConsoleHelper.Init();
 
             Console.CancelKeyPress += new ConsoleCancelEventHandler(CancelKeyPress); //+C o +Pause
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ProcessExit);
@@ -44,7 +44,7 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            ConsoleHelper.Ends();
+            ConsoleHelper.End();
         }
     }
 

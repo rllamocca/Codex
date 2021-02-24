@@ -2,7 +2,7 @@
 using Codex.Terminal.Helper;
 using Codex.Terminal.Process;
 
-ConsoleHelper.InitEncoding();
+ConsoleHelper.Init();
 //################################################################
 
 if (args != null && args.Length > 0)
@@ -14,4 +14,4 @@ if (args != null && args.Length > 0)
 }
 
 //################################################################
-ConsoleHelper.Ends();
+ConsoleHelper.End();
