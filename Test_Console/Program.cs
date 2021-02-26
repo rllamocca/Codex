@@ -1,4 +1,6 @@
 ﻿using Codex.Terminal.Helper;
+using Codex;
+using Codex.Extension;
 
 using System;
 
@@ -41,6 +43,16 @@ CTRL_CLOSE_EVENT
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ProcessExit);
 
             //################################################################
+
+            int _int = 0;
+            string _string = "";
+            decimal _decimal = 0;
+            DateTime _datetime   = DateTime.Now;
+
+            _int.Between(0, 1);
+            //string.bet
+            _decimal.Between(0, 1);
+
 
             //################################################################
 

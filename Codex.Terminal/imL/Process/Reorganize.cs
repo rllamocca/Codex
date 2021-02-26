@@ -15,7 +15,7 @@ namespace Codex.Terminal.Process
             try
             {
                 DateTime _NOW = DateTime.Now;
-                DateTime _NOWDATE = new DateTime(_NOW.Year, _NOW.Month, _NOW.Day);
+                DateTime _NOWDATE = _NOW.Date;
 
                 bool _HELP = false;
 
@@ -71,7 +71,7 @@ namespace Codex.Terminal.Process
                     return;
 
                 if (_OMIT_NOW)
-                    _list.RemoveAll(_r => _r.CreationTime.ToDate() == _NOWDATE);
+                    _list.RemoveAll(_r => _r.CreationTime.Date == _NOWDATE);
                 if (_OMIT_HIDDEN)
                     _list.RemoveAll(_r => _r.Attributes.HasFlag(FileAttributes.Hidden));
 
@@ -82,7 +82,7 @@ namespace Codex.Terminal.Process
 
                 _list = _list.OrderBy(_o => _o.CreationTime).ToList();
 
-                DateTime[] _datetimes = _list.Select(_s => _s.CreationTime.ToDate())
+                DateTime[] _dates = _list.Select(_s => _s.CreationTime.Date)
                     .Distinct()
                     .ToArray();
 
@@ -90,19 +90,19 @@ namespace Codex.Terminal.Process
                 switch (__GROUPBY)
                 {
                     case "yyyy":
-                        _paths = _datetimes.Select(_s => PathHelper.Combine(_s.Year.ToString("0000")))
+                        _paths = _dates.Select(_s => PathHelper.Combine(_s.Year.ToString("0000")))
                             .Distinct()
                             .ToArray();
                         break;
                     case "yyyy-MM":
-                        _paths = _datetimes.Select(_s => PathHelper.Combine(_s.Year.ToString("0000"),
+                        _paths = _dates.Select(_s => PathHelper.Combine(_s.Year.ToString("0000"),
                             _s.Month.ToString("00")
                             ))
                             .Distinct()
                             .ToArray();
                         break;
                     default:
-                        _paths = _datetimes.Select(_s => PathHelper.Combine(_s.Year.ToString("0000"),
+                        _paths = _dates.Select(_s => PathHelper.Combine(_s.Year.ToString("0000"),
                             _s.Month.ToString("00"),
                             _s.Day.ToString("00")
                             ))
