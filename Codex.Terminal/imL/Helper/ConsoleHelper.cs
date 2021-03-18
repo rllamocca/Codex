@@ -13,6 +13,7 @@ namespace Codex.Terminal.Helper
     {
         public static void Init(bool _enc = true, string _title = null)
         {
+            Console.WriteLine();
             if (_enc)
             {
                 Console.InputEncoding = Encoding.UTF8;
@@ -35,6 +36,7 @@ namespace Codex.Terminal.Helper
                 Console.WriteLine(@" (Press any key to exit) ");
                 Console.ReadKey();
             }
+            Console.WriteLine();
         }
 
         public static void Write(Point _xy, char _value)
