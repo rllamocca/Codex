@@ -22,10 +22,12 @@ namespace Codex.Terminal.Helper
                 Console.Title = _title;
 
             Console.WriteLine(@" Start the magic trick ... ♪♫ ");
+            Console.WriteLine();
         }
 
         public static void End(bool _rk = false)
         {
+            Console.WriteLine();
             Console.WriteLine(@" ♫♪ ... ♥♦♣♠ ...");
 
             if (_rk)
