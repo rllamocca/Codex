@@ -34,12 +34,11 @@ namespace Codex
         public static string MyFortune()
         {
             Random _r = new Random();
-            int _n = _r.Next(0, 6);
-            _r = new Random(_n);
+            int _n = _r.Next(Bases._SUITS.Length + 1);
             string _fortune = Bases._SUITS[_n];
             if (_n.Between(0, 3))
             {
-                _n = _r.Next(0, 13);
+                _n = _r.Next(Bases._SQUAD.Length + 1);
                 _fortune = string.Format("{1} {0}", _fortune, Bases._SQUAD[_n]);
             }
 
