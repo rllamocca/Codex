@@ -6,7 +6,6 @@ using System.Drawing;
 
 using System;
 using System.Text;
-using Codex.Extension;
 
 namespace Codex.Terminal.Helper
 {
@@ -27,10 +26,13 @@ namespace Codex.Terminal.Helper
             Console.WriteLine();
         }
 
-        public static void End(bool _rk = false)
+        public static void End(bool _rk = false, bool _card = false)
         {
             Console.WriteLine();
-            Console.WriteLine(@" ♫♪ ... {0}", Return.MyFortune());
+            if (_card)
+                Console.WriteLine(@" ♫♪ ... {0}", Return.MyFortuneCard());
+            else
+                Console.WriteLine(@" ♫♪ ... {0}", Return.MyFortune());
 
             if (_rk)
             {

@@ -48,7 +48,7 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            ConsoleHelper.End();
+            ConsoleHelper.End(false, true);
         }
     }
 

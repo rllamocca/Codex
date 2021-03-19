@@ -44,6 +44,23 @@ namespace Codex
 
             return _fortune;
         }
+        public static string MyFortuneCard()
+        {
+            Random _r = new Random();
+            int _n = _r.Next(Bases._SUITS.Length);
+            string _suit = Bases._SUITS[_n];
+
+            if (_n.Between(0, 3))
+            {
+                _n = _r.Next(Bases._SQUAD.Length);
+                string _squad = Bases._SQUAD[_n];
+                _suit = string.Format(Bases._CARD, _suit, _squad);
+            }
+            else
+                _suit = string.Format(Bases._JCARD, _suit, _suit);
+
+            return _suit;
+        }
 
         public Return(bool _suc, object _res = null)
         {
