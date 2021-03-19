@@ -13,6 +13,8 @@ NETSTANDARD2_0
 NETSTANDARD2_1
 */
 
+using Codex.Extension;
+
 using System;
 
 namespace Codex
@@ -28,6 +30,21 @@ namespace Codex
         public object Result { get { return this._RES; } }
         public bool Exception { get { return this._EXC; } }
         public string Message { get { return this._MES; } }
+
+        public static string MyFortune()
+        {
+            Random _r = new Random();
+            int _n = _r.Next(0, 6);
+            _r = new Random(_n);
+            string _fortune = Bases._SUITS[_n];
+            if (_n.Between(0, 3))
+            {
+                _n = _r.Next(0, 13);
+                _fortune = string.Format("{1} {0}", _fortune, Bases._SQUAD[_n]);
+            }
+
+            return _fortune;
+        }
 
         public Return(bool _suc, object _res = null)
         {
