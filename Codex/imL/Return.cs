@@ -48,18 +48,16 @@ namespace Codex
         {
             Random _r = new Random();
             int _n = _r.Next(Bases._SUITS.Length);
-            string _suit = Bases._SUITS[_n];
-
+            string _fortune = Bases._SUITS[_n];
             if (_n.Between(0, 3))
             {
                 _n = _r.Next(Bases._SQUAD.Length);
-                string _squad = Bases._SQUAD[_n];
-                _suit = string.Format(Bases._CARD, _suit, _squad);
+                _fortune = string.Format(Bases._CARD, _fortune, Bases._SQUAD[_n]);
             }
             else
-                _suit = string.Format(Bases._JCARD, _suit, _suit);
+                _fortune = string.Format(Bases._JCARD, _fortune, _fortune);
 
-            return _suit;
+            return _fortune;
         }
 
         public Return(bool _suc, object _res = null)
