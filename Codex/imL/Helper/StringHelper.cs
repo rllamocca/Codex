@@ -10,7 +10,7 @@ namespace Codex.Helper
         {
             Random _r = new Random();
             int _n = _r.Next(ReadOnly._SUITS.Length);
-            string _fortune = ReadOnly._SUITS[_n];
+            string _fortune = Convert.ToString(ReadOnly._SUITS[_n]);
             if (_n.Between(0, 3))
             {
                 _n = _r.Next(ReadOnly._SQUAD.Length);
@@ -23,7 +23,7 @@ namespace Codex.Helper
         {
             Random _r = new Random();
             int _n = _r.Next(ReadOnly._SUITS.Length);
-            string _fortune = ReadOnly._SUITS[_n];
+            string _fortune = Convert.ToString(ReadOnly._SUITS[_n]);
             if (_n.Between(0, 3))
             {
                 _n = _r.Next(ReadOnly._SQUAD.Length);

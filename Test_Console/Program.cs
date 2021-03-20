@@ -1,4 +1,5 @@
 ﻿using Codex;
+using Codex.Enum;
 using Codex.Terminal.Helper;
 
 using System;
@@ -36,15 +37,14 @@ CTRL_CLOSE_EVENT
 
         static void Main(string[] _args)
         {
-            ConsoleHelper.Init();
+            //ConsoleHelper.Init();
 
             Console.CancelKeyPress += new ConsoleCancelEventHandler(CancelKeyPress); //+C o +Pause
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ProcessExit);
 
             //################################################################
 
-            using Password _p = new();
-            //_p.Sort = Codex.Enum.ERandomSort.Fisher_Yates;
+            using Password _p = new(_sort: ERandomSort.Fisher_Yates);
             for (byte _i = 4; _i < 35; _i++)
             {
                 _p.Generate(_i);

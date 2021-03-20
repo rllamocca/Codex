@@ -4,6 +4,7 @@ using Codex.Enum;
 using Codex.Extension;
 
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Codex
@@ -20,19 +21,19 @@ namespace Codex
         public bool UpperCase { set; get; } = true;
         public bool LowerCase { set; get; } = true;
         public bool Specials { set; get; } = false;
-        public string Aggregate { set; get; }
+        public char[] Aggregate { set; get; }
 
         public ERandomSort Sort { set; get; } = ERandomSort.None;
 
-        public string Base { get { return string.Join("", this._BASE.ConvertToString()); } }
-        public string Generated { get { return string.Join("", this._GENERATED.ConvertToString()); } }
+        public string Base { get { return new string(this._BASE); } }
+        public string Generated { get { return new string(this._GENERATED); } }
 
         public Password(
             bool _numbers = true,
             bool _uppercase = true,
             bool _lowercase = true,
             bool _specials = false,
-            string _aggregate = null,
+            char[] _aggregate = null,
             ERandomSort _sort = ERandomSort.None
             )
         {
@@ -43,15 +44,7 @@ namespace Codex
             this.Aggregate = _aggregate;
             this.Sort = _sort;
 
-            this._BASE = Password.Prepare(this.Numbers, this.UpperCase, this.LowerCase, this.Specials, this.Aggregate);
-            switch (this.Sort)
-            {
-                case ERandomSort.Fisher_Yates:
-                    this._BASE = this._BASE.Fisher_Yates();
-                    break;
-                default:
-                    break;
-            }
+            this._BASE = Password.Prepare(this.Numbers, this.UpperCase, this.LowerCase, this.Specials, this.Aggregate, this.Sort);
         }
         public char[] Generate(byte _largo = 8)
         {
@@ -59,18 +52,36 @@ namespace Codex
             return this._GENERATED;
         }
 
-        public static char[] Prepare(bool _nu, bool _uc, bool _lc, bool _sp, string _ag = null)
+        public static char[] Prepare(
+            bool _numbers = true,
+            bool _uppercase = true,
+            bool _lowercase = true,
+            bool _specials = false,
+            char[] _aggregate = null,
+            ERandomSort _sort = ERandomSort.None
+            )
         {
-            string _tmp = string.Empty;
-            if (_nu) _tmp += ReadOnly._NUMBERS;
-            if (_uc) _tmp += ReadOnly._UPPERCASE;
-            if (_lc) _tmp += ReadOnly._LOWERCASE;
-            if (_sp) _tmp += ReadOnly._SPECIALS;
-            if (_ag != null) _tmp += _ag;
+            List<char> _tmp = new List<char>(); ;
+            if (_numbers) _tmp.AddRange(ReadOnly._NUMBERS);
+            if (_uppercase) _tmp.AddRange(ReadOnly._UPPERCASE);
+            if (_lowercase) _tmp.AddRange(ReadOnly._LOWERCASE);
+            if (_specials) _tmp.AddRange(ReadOnly._SPECIALS);
+            if (_aggregate != null) _tmp.AddRange(_aggregate);
 
-            _tmp = _tmp.CleanTBLFCR();
+            //_tmp = _tmp.CleanTBLFCR();
 
-            return _tmp.ToArray().Distinct().ToArray();
+            char[] _tmp2 = _tmp.Distinct().ToArray();
+
+            switch (_sort)
+            {
+                case ERandomSort.Fisher_Yates:
+                    _tmp2 = _tmp2.Fisher_Yates();
+                    break;
+                default:
+                    break;
+            }
+
+            return _tmp2;
         }
         public static char[] Generate(char[] _base, byte _largo = 8)
         {
