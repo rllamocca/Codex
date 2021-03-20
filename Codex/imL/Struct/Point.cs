@@ -1,4 +1,6 @@
-﻿namespace Codex.Struct
+﻿using System;
+
+namespace Codex.Struct
 {
     public struct Point
     {
@@ -9,6 +11,26 @@
         {
             this.X = _x;
             this.Y = _y;
+        }
+
+        public override bool Equals(object obj)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override int GetHashCode()
+        {
+            throw new NotImplementedException();
+        }
+
+        public static bool operator ==(Point left, Point right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(Point left, Point right)
+        {
+            return !(left == right);
         }
     }
 }

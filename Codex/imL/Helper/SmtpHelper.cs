@@ -16,14 +16,16 @@ namespace Codex.Helper
             if (_enc == null)
                 _enc = Encoding.UTF8;
 
-            SmtpClient _sc = new SmtpClient();
-            _sc.UseDefaultCredentials = false;
-            _sc.DeliveryMethod = SmtpDeliveryMethod.Network;
+            SmtpClient _sc = new SmtpClient
+            {
+                UseDefaultCredentials = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
 
-            _sc.Host = _config.Host;
-            _sc.Port = _config.Port;
-            _sc.EnableSsl = _config.EnableSsl;
-            _sc.Credentials = new NetworkCredential(_config.UserName, _config.Password);
+                Host = _config.Host,
+                Port = _config.Port,
+                EnableSsl = _config.EnableSsl,
+                Credentials = new NetworkCredential(_config.UserName, _config.Password)
+            };
 
             foreach (MailConfig _item in _mails)
             {

@@ -4,6 +4,8 @@ using Codex.Struct;
 using System.Drawing;
 #endif
 
+using Codex.Helper;
+
 using System;
 using System.Text;
 
@@ -30,9 +32,9 @@ namespace Codex.Terminal.Helper
         {
             Console.WriteLine();
             if (_card)
-                Console.WriteLine(@" ♫♪ ... {0}", Return.MyFortuneCard());
+                Console.WriteLine(@" ♫♪ ... {0}", StringHelper.MyFortuneCard());
             else
-                Console.WriteLine(@" ♫♪ ... {0}", Return.MyFortune());
+                Console.WriteLine(@" ♫♪ ... {0}", StringHelper.MyFortune());
 
             if (_rk)
             {

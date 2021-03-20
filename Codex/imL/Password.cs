@@ -2,7 +2,6 @@
 
 using Codex.Enum;
 using Codex.Extension;
-using Codex.Helper;
 
 using System;
 using System.Linq;
@@ -27,7 +26,7 @@ namespace Codex
         public bool Especiales { set; get; } = true;
         public string Otros { set; get; } = "";
 
-        public char[] Base { get { return this._BASE; } }
+        //public char[] Base { get { return this._BASE; } }
         public ERandomSort ReOrdenamiento { set; get; } = ERandomSort.Fisher_Yates;
         public string Contrasena { get { return this._CONT; } }
 
@@ -62,7 +61,7 @@ namespace Codex
             switch (_s)
             {
                 case ERandomSort.Fisher_Yates:
-                    _T_Helper.Fisher_Yates(_data);
+                    _data = _data.Fisher_Yates();
                     break;
                 default:
                     break;
@@ -82,7 +81,7 @@ namespace Codex
 
             return string.Join("", _return);
         }
-        private static double aparicion(byte napa, byte nmax)
+        private static double Aparicion(byte napa, byte nmax)
         {
             if (napa > nmax)
                 napa = nmax;
@@ -93,13 +92,13 @@ namespace Codex
         /// </summary>
         /// <param name="password">Contraseña.</param>
         /// <returns></returns>
-        public static byte valorar(string password)
+        public static byte Valorar(string password)
         {
             double score = 0.0;
             if (password.Length != 0)
             {
                 Match m;
-                byte con = 0;
+                byte con;
                 byte por = (byte)(password.Length * 0.25 + 0.5);
                 if (por == 0)
                     por = 1;
@@ -120,28 +119,28 @@ namespace Codex
                     if (password.Contains(item))
                         con++;
                 }
-                score += Password.aparicion(con, por);
+                score += Password.Aparicion(con, por);
                 con = 0;
                 foreach (char item in _MA)
                 {
                     if (password.Contains(item))
                         con++;
                 }
-                score += Password.aparicion(con, por);
+                score += Password.Aparicion(con, por);
                 con = 0;
                 foreach (char item in _NU)
                 {
                     if (password.Contains(item))
                         con++;
                 }
-                score += Password.aparicion(con, por);
+                score += Password.Aparicion(con, por);
                 con = 0;
                 foreach (char item in _ES)
                 {
                     if (password.Contains(item))
                         con++;
                 }
-                score += Password.aparicion(con, por);
+                score += Password.Aparicion(con, por);
                 m = Regex.Match(password, "([a-z].*[A-Z])|([A-Z].*[a-z])");
                 if (m.Success)
                     score += 5;
