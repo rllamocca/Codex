@@ -34,7 +34,7 @@ namespace Codex.MySql.UserModel
         {
             this._CN = _conn;
         }
-        public IMySqlConnection(String _conn, Boolean _stat = false)
+        public IMySqlConnection(string _conn)
         {
             this._CN = new MySqlConnection(_conn);
         }

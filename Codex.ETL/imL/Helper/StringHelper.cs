@@ -10,15 +10,15 @@ namespace Codex.ETL.Helper
     {
         public static string To_Xml(object _data, Encoding _enc = null)
         {
-            if (_data == null) 
+            if (_data == null)
                 return null;
             if (_enc == null)
-            {
                 _enc = Encoding.UTF8;
-            }
 
-            XmlWriterSettings _s = new XmlWriterSettings();
-            _s.Encoding = _enc;
+            XmlWriterSettings _s = new XmlWriterSettings
+            {
+                Encoding = _enc
+            };
 
 #if (NET45 || NETSTANDARD2_0)
             _s.Async = true;

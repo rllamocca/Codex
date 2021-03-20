@@ -124,8 +124,10 @@ namespace Codex.MySql.UserModel
                 Return _exe = Execute(_query, _conn, _pmts, EExecute.Reader);
                 _exe.TriggerErrorException();
 
-                DataSet _return = new DataSet("DataSet_0");
-                _return.EnforceConstraints = _conn.Constraints;
+                DataSet _return = new DataSet("DataSet_0")
+                {
+                    EnforceConstraints = _conn.Constraints
+                };
                 byte _n = 0;
 
                 using (MySqlDataReader _read = (MySqlDataReader)_exe.Result)

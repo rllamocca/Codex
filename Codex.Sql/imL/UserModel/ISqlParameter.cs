@@ -33,14 +33,16 @@ namespace Codex.Sql.UserModel
             )
         {
             this.Source = _source;
-            this.Value = (_value == null) ? DBNull.Value : _value;
+            this.Value = _value ?? DBNull.Value;
             this.Affect = string.Format("@_{0}_", this.Source);
 
-            this.Parameter = new SqlParameter();
-            this.Parameter.ParameterName = this.Affect;
-            this.Parameter.Value = this.Value;
-            this.Parameter.SqlDbType = _dbtype;
-            this.Parameter.Direction = _direction;
+            this.Parameter = new SqlParameter
+            {
+                ParameterName = this.Affect,
+                Value = this.Value,
+                SqlDbType = _dbtype,
+                Direction = _direction
+            };
         }
         public ISqlParameter(
             string _source,
