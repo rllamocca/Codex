@@ -5,169 +5,111 @@ using Codex.Extension;
 
 using System;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Codex
 {
     public class Password : IDisposable
     {
-        private const string _MI = "abcdefghijklmnñopqrstuvwxyz";
-        private const string _MA = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
-        private const string _NU = "1234567890";
-        private const string _ES = " |°¬#$%&=',;.:¨*+~-_^`´()[]{}<>¡!¿?/\\\"";
         //؟
+        private bool _DISPOSED = false;
 
         private char[] _BASE;
-        private string _CONT = string.Empty;
+        private char[] _GENERATED;
 
-        public bool Minusculas { set; get; } = true;
-        public bool Mayusculas { set; get; } = true;
-        public bool Numeros { set; get; } = true;
-        public bool Especiales { set; get; } = true;
-        public string Otros { set; get; } = "";
+        public bool Numbers { set; get; } = true;
+        public bool UpperCase { set; get; } = true;
+        public bool LowerCase { set; get; } = true;
+        public bool Specials { set; get; } = false;
+        public string Aggregate { set; get; }
 
-        //public char[] Base { get { return this._BASE; } }
-        public ERandomSort ReOrdenamiento { set; get; } = ERandomSort.Fisher_Yates;
-        public string Contrasena { get { return this._CONT; } }
+        public ERandomSort Sort { set; get; } = ERandomSort.None;
 
-        public Return Generar(byte _largo = 8)
+        public string Base { get { return string.Join("", this._BASE.ConvertToString()); } }
+        public string Generated { get { return string.Join("", this._GENERATED.ConvertToString()); } }
+
+        public Password(
+            bool _numbers = true,
+            bool _uppercase = true,
+            bool _lowercase = true,
+            bool _specials = false,
+            string _aggregate = null,
+            ERandomSort _sort = ERandomSort.None
+            )
         {
-            try
-            {
-                this._BASE = Password.PrepararBase(this.Minusculas, this.Mayusculas, this.Numeros, this.Especiales, this.Otros);
-                this._BASE = Password.ReOrdenar(this._BASE, this.ReOrdenamiento);
-                this._CONT = Password.Generar(this._BASE, _largo);
-                return new Return(true, this._CONT);
-            }
-            catch (Exception _ex)
-            {
-                return new Return(false, _ex);
-            }
-        }
+            this.Numbers = _numbers;
+            this.UpperCase = _uppercase;
+            this.LowerCase = _lowercase;
+            this.Specials = _specials;
+            this.Aggregate = _aggregate;
+            this.Sort = _sort;
 
-        public static char[] PrepararBase(bool _mi, bool _ma, bool _nu, bool _es, string _otros = "")
-        {
-            string _return = string.Empty;
-            if (_mi) _return += Password._MI;
-            if (_ma) _return += Password._MA;
-            if (_nu) _return += Password._NU;
-            if (_es) _return += Password._ES;
-            if (_otros.Length > 0) _return += _otros;
-            _return = _return.CleanTBLFCR();
-            return _return.ToArray().Distinct().ToArray();
-        }
-        public static char[] ReOrdenar(char[] _data, ERandomSort _s = ERandomSort.Fisher_Yates)
-        {
-            switch (_s)
+            this._BASE = Password.Prepare(this.Numbers, this.UpperCase, this.LowerCase, this.Specials, this.Aggregate);
+            switch (this.Sort)
             {
                 case ERandomSort.Fisher_Yates:
-                    _data = _data.Fisher_Yates();
+                    this._BASE = this._BASE.Fisher_Yates();
                     break;
                 default:
                     break;
             }
-            return _data;
         }
-        public static string Generar(char[] _base, byte _largo = 8)
+        public char[] Generate(byte _largo = 8)
         {
-            char[] _tmp = new char[_largo];
-            Random _rdm = new Random();
-            for (byte _i = 0; _i < _largo; _i++)
-                _tmp[_i] = _base[_rdm.Next(0, _base.Length)];
-
-            string[] _return = new string[_largo];
-            for (byte _i = 0; _i < _largo; _i++)
-                _return[_i] = Convert.ToString(_tmp[_i]);
-
-            return string.Join("", _return);
+            this._GENERATED = Password.Generate(this._BASE, _largo);
+            return this._GENERATED;
         }
-        private static double Aparicion(byte napa, byte nmax)
+
+        public static char[] Prepare(bool _nu, bool _uc, bool _lc, bool _sp, string _ag = null)
         {
-            if (napa > nmax)
-                napa = nmax;
-            return 20.00 * napa / nmax;
+            string _tmp = string.Empty;
+            if (_nu) _tmp += ReadOnly._NUMBERS;
+            if (_uc) _tmp += ReadOnly._UPPERCASE;
+            if (_lc) _tmp += ReadOnly._LOWERCASE;
+            if (_sp) _tmp += ReadOnly._SPECIALS;
+            if (_ag != null) _tmp += _ag;
+
+            _tmp = _tmp.CleanTBLFCR();
+
+            return _tmp.ToArray().Distinct().ToArray();
         }
-        /// <summary>
-        /// Valora una contraseña de : 0 - 6.
-        /// </summary>
-        /// <param name="password">Contraseña.</param>
-        /// <returns></returns>
-        public static byte Valorar(string password)
+        public static char[] Generate(char[] _base, byte _largo = 8)
         {
-            double score = 0.0;
-            if (password.Length != 0)
-            {
-                Match m;
-                byte con;
-                byte por = (byte)(password.Length * 0.25 + 0.5);
-                if (por == 0)
-                    por = 1;
+            char[] _return = new char[_largo];
+            Random _r = new Random();
+            for (byte _i = 0; _i < _return.Length; _i++)
+                _return[_i] = _base[_r.Next(_base.Length)];
 
-                if (password.Length <= 4)
-                    score += 0;
-                else if (password.Length <= 8)
-                    score += 6;
-                else if (password.Length <= 12)
-                    score += 14;
-                else if (password.Length <= 16)
-                    score += 18;
-                else
-                    score += 20;
-                con = 0;
-                foreach (char item in _MI)
-                {
-                    if (password.Contains(item))
-                        con++;
-                }
-                score += Password.Aparicion(con, por);
-                con = 0;
-                foreach (char item in _MA)
-                {
-                    if (password.Contains(item))
-                        con++;
-                }
-                score += Password.Aparicion(con, por);
-                con = 0;
-                foreach (char item in _NU)
-                {
-                    if (password.Contains(item))
-                        con++;
-                }
-                score += Password.Aparicion(con, por);
-                con = 0;
-                foreach (char item in _ES)
-                {
-                    if (password.Contains(item))
-                        con++;
-                }
-                score += Password.Aparicion(con, por);
-                m = Regex.Match(password, "([a-z].*[A-Z])|([A-Z].*[a-z])");
-                if (m.Success)
-                    score += 5;
-                m = Regex.Match(password, "([a-zA-Z0-9])|([0-9A-Za-z])");
-                if (m.Success)
-                    score += 5;
-                m = Regex.Match(password, "([a-zA-Z0-9].*[|,°,¬,#,$,%,&,=,',,,;,.,:,¨,*,+,~,-,_,^,`,´,(,),[,],{,},<,>,¡,!,¿,?,/,\\,\",])|([|,°,¬,#,$,%,&,=,',,,;,.,:,¨,*,+,~,-,_,^,`,´,(,),[,],{,},<,>,¡,!,¿,?,/,\\,\",].*[a-zA-Z0-9])");
-                if (m.Success)
-                    score += 10;
-            }
-            score /= 20.00;
-            if (score > 6)
-                score = 6;
-            return Convert.ToByte(score);
+            return _return;
         }
 
+        ~Password()
+        {
+            this.Dispose(false);
+        }
         public void Dispose()
         {
-            this._BASE = null;
-            this._CONT = null;
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+        protected virtual void Dispose(bool _managed)
+        {
+            if (this._DISPOSED)
+                return;
 
-            this.Minusculas = false;
-            this.Mayusculas = false;
-            this.Numeros = false;
-            this.Especiales = false;
-            this.Otros = null;
-            this.ReOrdenamiento = ERandomSort.None;
+            if (_managed)
+            {
+                this._BASE = null;
+                this._GENERATED = null;
+
+                this.LowerCase = false;
+                this.UpperCase = false;
+                this.Numbers = false;
+                this.Specials = false;
+                this.Aggregate = null;
+                this.Sort = ERandomSort.None;
+            }
+
+            this._DISPOSED = true;
         }
     }
 }

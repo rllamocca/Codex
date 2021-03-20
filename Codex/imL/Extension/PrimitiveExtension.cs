@@ -133,7 +133,7 @@ namespace Codex.Extension
 
         public static DateTime TimeStampToDateTime(this double _this)
         {
-            return Bases._TIMESTAMP.AddSeconds(_this);
+            return ReadOnly._TIMESTAMP.AddSeconds(_this);
         }
 
         public static bool Between(this sbyte _this, sbyte _a, sbyte _z, bool _inclusive = true)
@@ -200,5 +200,18 @@ namespace Codex.Extension
         //{
         //    return a.ToDecimal(null) + b.ToDecimal(null);
         //}
+
+        public static string[] ConvertToString(this char[] _array)
+        {
+            if (_array == null)
+                return null;
+
+            string[] _return = new string[_array.Length];
+
+            for (int _i = 0; _i < _return.Length; _i++)
+                _return[_i] = Convert.ToString(_array[_i]);
+
+            return _return;
+        }
     }
 }

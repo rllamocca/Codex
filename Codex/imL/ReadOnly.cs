@@ -2,8 +2,13 @@
 
 namespace Codex
 {
-    public static class Bases
+    public static class ReadOnly
     {
+        public static readonly string _NUMBERS = "0123456789";
+        public static readonly string _UPPERCASE = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+        public static readonly string _LOWERCASE = "abcdefghijklmnñopqrstuvwxyz";
+        public static readonly string _SPECIALS = "|°¬#$%&=',;.:¨*+~-_^`´()[]{}<>¡!¿?/\\\"";
+
         public static readonly DateTime _TIMESTAMP = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
         public static readonly DateTime _ANVIZ = new DateTime(2000, 1, 2, 0, 0, 0, 0, DateTimeKind.Utc);
 

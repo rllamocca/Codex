@@ -41,7 +41,7 @@ namespace Codex.Extension
         }
         public static double ToTimeStamp(this DateTime _this)
         {
-            TimeSpan _diff = _this.ToUniversalTime() - Bases._TIMESTAMP;
+            TimeSpan _diff = _this.ToUniversalTime() - ReadOnly._TIMESTAMP;
             return _diff.TotalSeconds;
         }
 

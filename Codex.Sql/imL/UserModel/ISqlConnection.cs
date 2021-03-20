@@ -35,7 +35,7 @@ namespace Codex.Sql.UserModel
             this._STATISTICS = this._CN.StatisticsEnabled;
             this._CN = _conn;
         }
-        public ISqlConnection(String _conn, Boolean _stat = false)
+        public ISqlConnection(string _conn, bool _stat = false)
         {
             this._STATISTICS = _stat;
             this._CN = new SqlConnection(_conn)

@@ -50,6 +50,7 @@ namespace Codex.Helper
 }
 */
 
+
 /*
 using System;
 using System.Text;
@@ -149,3 +150,82 @@ public class ProgressBar : IDisposable, IProgress<double>
     }
 }
  */
+
+
+/*
+        private static double Aparicion(byte napa, byte nmax)
+        {
+            if (napa > nmax)
+                napa = nmax;
+            return 20.00 * napa / nmax;
+        }
+        /// <summary>
+        /// Valora una contraseña de : 0 - 6.
+        /// </summary>
+        /// <param name="password">Contraseña.</param>
+        /// <returns></returns>
+        public static byte Valorar(string password)
+        {
+            double score = 0.0;
+            if (password.Length != 0)
+            {
+                Match m;
+                byte con;
+                byte por = (byte)(password.Length * 0.25 + 0.5);
+                if (por == 0)
+                    por = 1;
+
+                if (password.Length <= 4)
+                    score += 0;
+                else if (password.Length <= 8)
+                    score += 6;
+                else if (password.Length <= 12)
+                    score += 14;
+                else if (password.Length <= 16)
+                    score += 18;
+                else
+                    score += 20;
+                con = 0;
+                foreach (char item in ReadOnly._LOWERCASE)
+                {
+                    if (password.Contains(item))
+                        con++;
+                }
+                score += Password.Aparicion(con, por);
+                con = 0;
+                foreach (char item in ReadOnly._UPPERCASE)
+                {
+                    if (password.Contains(item))
+                        con++;
+                }
+                score += Password.Aparicion(con, por);
+                con = 0;
+                foreach (char item in ReadOnly._NUMBERS)
+                {
+                    if (password.Contains(item))
+                        con++;
+                }
+                score += Password.Aparicion(con, por);
+                con = 0;
+                foreach (char item in ReadOnly._SPECIALS)
+                {
+                    if (password.Contains(item))
+                        con++;
+                }
+                score += Password.Aparicion(con, por);
+                m = Regex.Match(password, "([a-z].*[A-Z])|([A-Z].*[a-z])");
+                if (m.Success)
+                    score += 5;
+                m = Regex.Match(password, "([a-zA-Z0-9])|([0-9A-Za-z])");
+                if (m.Success)
+                    score += 5;
+                m = Regex.Match(password, "([a-zA-Z0-9].*[|,°,¬,#,$,%,&,=,',,,;,.,:,¨,*,+,~,-,_,^,`,´,(,),[,],{,},<,>,¡,!,¿,?,/,\\,\",])|([|,°,¬,#,$,%,&,=,',,,;,.,:,¨,*,+,~,-,_,^,`,´,(,),[,],{,},<,>,¡,!,¿,?,/,\\,\",].*[a-zA-Z0-9])");
+                if (m.Success)
+                    score += 10;
+            }
+            score /= 20.00;
+            if (score > 6)
+                score = 6;
+            return Convert.ToByte(score);
+        }
+*/

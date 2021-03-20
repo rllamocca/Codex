@@ -1,7 +1,5 @@
-﻿using Codex.Terminal.Helper;
-using Codex;
-using Codex.Extension;
-using Codex.Helper;
+﻿using Codex;
+using Codex.Terminal.Helper;
 
 using System;
 
@@ -45,11 +43,17 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-
+            using Password _p = new();
+            //_p.Sort = Codex.Enum.ERandomSort.Fisher_Yates;
+            for (byte _i = 4; _i < 35; _i++)
+            {
+                _p.Generate(_i);
+                Console.WriteLine("{0} : {1}", _p.Base, _p.Generated);
+            }
 
             //################################################################
 
-            ConsoleHelper.End(false, true);
+            ConsoleHelper.End(true, true);
         }
     }
 
