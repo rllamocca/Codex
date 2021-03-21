@@ -1,41 +1,59 @@
-﻿using System;
+﻿using Codex.Enum;
+
+using System;
 using System.Collections.Generic;
 
 namespace Codex.Extension
 {
     public static class GenericExtension
     {
-        public static T[] Fisher_Yates<T>(this T[] _array)
+        public static T[] RandomSort<T>(this T[] _array, ERandomSort _sort = ERandomSort.None)
         {
             if (_array == null)
                 return null;
 
             T[] _return = _array;
             Random _r = new Random();
-            for (int _k = _return.Length - 1; _k > 0; _k--)
+
+            switch (_sort)
             {
-                int _az = _r.Next(_k);
-                T _tmp = _return[_az];
-                _return[_az] = _return[_k];
-                _return[_k] = _tmp;
+                case ERandomSort.Fisher_Yates:
+                    for (int _k = _return.Length - 1; _k > 0; _k--)
+                    {
+                        int _az = _r.Next(_k);
+                        T _tmp = _return[_az];
+                        _return[_az] = _return[_k];
+                        _return[_k] = _tmp;
+                    }
+                    break;
+                default:
+                    break;
             }
 
             return _return;
         }
 
-        public static List<T> Fisher_Yates<T>(this List<T> _array)
+        public static List<T> RandomSort<T>(this List<T> _array, ERandomSort _sort = ERandomSort.None)
         {
             if (_array == null)
                 return null;
 
             List<T> _return = _array;
             Random _r = new Random();
-            for (int _k = _return.Count - 1; _k > 0; _k--)
+
+            switch (_sort)
             {
-                int _az = _r.Next(_k);
-                T _tmp = _return[_az];
-                _return[_az] = _return[_k];
-                _return[_k] = _tmp;
+                case ERandomSort.Fisher_Yates:
+                    for (int _k = _return.Count - 1; _k > 0; _k--)
+                    {
+                        int _az = _r.Next(_k);
+                        T _tmp = _return[_az];
+                        _return[_az] = _return[_k];
+                        _return[_k] = _tmp;
+                    }
+                    break;
+                default:
+                    break;
             }
 
             return _return;

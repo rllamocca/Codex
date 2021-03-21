@@ -44,7 +44,11 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            using Password _p = new(_sort: ERandomSort.Fisher_Yates);
+            using Password _p = new();
+            _p.Numbers = true;
+            _p.UpperCase = false;
+            _p.LowerCase = false;
+            _p.Specials = false;
             for (byte _i = 4; _i < 17; _i++)
             {
                 _p.Generate(_i);
