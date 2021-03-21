@@ -44,12 +44,15 @@ namespace Codex
             this.Aggregate = _aggregate;
             this.Sort = _sort;
 
+            this.Prepare();
+        }
+        public void Prepare()
+        {
             this._BASE = Password.Prepare(this.Numbers, this.UpperCase, this.LowerCase, this.Specials, this.Aggregate, this.Sort);
         }
-        public char[] Generate(byte _largo = 8)
+        public void Generate(byte _largo = 8)
         {
             this._GENERATED = Password.Generate(this._BASE, _largo);
-            return this._GENERATED;
         }
 
         public static char[] Prepare(
@@ -61,16 +64,15 @@ namespace Codex
             ERandomSort _sort = ERandomSort.None
             )
         {
-            List<char> _tmp = new List<char>(); ;
+            List<char> _tmp = new List<char>();
             if (_numbers) _tmp.AddRange(ReadOnly._NUMBERS);
             if (_uppercase) _tmp.AddRange(ReadOnly._UPPERCASE);
             if (_lowercase) _tmp.AddRange(ReadOnly._LOWERCASE);
             if (_specials) _tmp.AddRange(ReadOnly._SPECIALS);
             if (_aggregate != null) _tmp.AddRange(_aggregate);
 
-            //_tmp = _tmp.CleanTBLFCR();
-
-            char[] _tmp2 = _tmp.Distinct().ToArray();
+            List<char> _tmp2 = _tmp.Distinct().ToList();
+            _tmp2 = _tmp2.RemoveEndLine(EEndLine.All);
 
             switch (_sort)
             {
@@ -81,7 +83,7 @@ namespace Codex
                     break;
             }
 
-            return _tmp2;
+            return _tmp2.ToArray();
         }
         public static char[] Generate(char[] _base, byte _largo = 8)
         {

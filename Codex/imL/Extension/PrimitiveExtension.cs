@@ -4,6 +4,8 @@ using System.Net.Mail;
 
 using System;
 using System.Linq;
+using System.Collections.Generic;
+using Codex.Enum;
 
 namespace Codex.Extension
 {
@@ -38,7 +40,7 @@ namespace Codex.Extension
         }
 #endif
 
-        public static string CleanTB(this string _this)
+        public static string ReplaceEndLine(this string _this, EEndLine _re)
         {
             if (_this == null)
                 return null;
@@ -47,60 +49,43 @@ namespace Codex.Extension
             {
                 char _sp = (char)32;
 
-                char _tb = (char)9;
-
-                _this = _this.Replace(_tb, _sp);
-            }
-            return _this;
-        }
-        public static string CleanLF(this string _this)
-        {
-            if (_this == null)
-                return null;
-
-            if (_this.Length > 0)
-            {
-                char _sp = (char)32;
-
+                char _ht = (char)9;
                 char _lf = (char)10;
-
-                _this = _this.Replace(_lf, _sp);
-            }
-            return _this;
-        }
-        public static string CleanCR(this string _this)
-        {
-            if (_this == null)
-                return null;
-
-            if (_this.Length > 0)
-            {
-                char _sp = (char)32;
-
+                char _vt = (char)11;
+                char _ff = (char)12;
                 char _cr = (char)13;
 
-                _this = _this.Replace(_cr, _sp);
+                if (_re.HasFlag(EEndLine.HT)) _this = _this.Replace(_ht, _sp);
+                if (_re.HasFlag(EEndLine.LF)) _this = _this.Replace(_lf, _sp);
+                if (_re.HasFlag(EEndLine.VT)) _this = _this.Replace(_vt, _sp);
+                if (_re.HasFlag(EEndLine.FF)) _this = _this.Replace(_ff, _sp);
+                if (_re.HasFlag(EEndLine.CR)) _this = _this.Replace(_cr, _sp);
             }
+
             return _this;
         }
-        public static string CleanTBLFCR(this string _this)
+
+        public static List<char> RemoveEndLine(this List<char> _array, EEndLine _re)
         {
-            if (_this == null)
+            if (_array == null)
                 return null;
 
-            if (_this.Length > 0)
+            if (_array.Count > 0)
             {
-                char _sp = (char)32;
-
-                char _tb = (char)9;
+                char _ht = (char)9;
                 char _lf = (char)10;
+                char _vt = (char)11;
+                char _ff = (char)12;
                 char _cr = (char)13;
 
-                _this = _this.Replace(_tb, _sp);
-                _this = _this.Replace(_lf, _sp);
-                _this = _this.Replace(_cr, _sp);
+                if (_re.HasFlag(EEndLine.HT)) _array.Remove(_ht);
+                if (_re.HasFlag(EEndLine.LF)) _array.Remove(_lf);
+                if (_re.HasFlag(EEndLine.VT)) _array.Remove(_vt);
+                if (_re.HasFlag(EEndLine.FF)) _array.Remove(_ff);
+                if (_re.HasFlag(EEndLine.CR)) _array.Remove(_cr);
             }
-            return _this;
+
+            return _array;
         }
 
         public static bool ArgAppear(this string[] _array, params string[] _synonym)

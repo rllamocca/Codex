@@ -37,7 +37,7 @@ CTRL_CLOSE_EVENT
 
         static void Main(string[] _args)
         {
-            //ConsoleHelper.Init();
+            ConsoleHelper.Init();
 
             Console.CancelKeyPress += new ConsoleCancelEventHandler(CancelKeyPress); //+C o +Pause
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ProcessExit);
@@ -45,7 +45,7 @@ CTRL_CLOSE_EVENT
             //################################################################
 
             using Password _p = new(_sort: ERandomSort.Fisher_Yates);
-            for (byte _i = 4; _i < 35; _i++)
+            for (byte _i = 4; _i < 17; _i++)
             {
                 _p.Generate(_i);
                 Console.WriteLine("{0} : {1}", _p.Base, _p.Generated);
