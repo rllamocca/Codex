@@ -16,4 +16,8 @@
 
 	</PropertyGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Codex\Codex.csproj" />
+	</ItemGroup>
+
 </Project>

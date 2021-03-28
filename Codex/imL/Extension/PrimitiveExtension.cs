@@ -1,4 +1,4 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0 || NETSTANDARD2_1)
+﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
 using System.Net.Mail;
 #endif
 
@@ -23,7 +23,7 @@ namespace Codex.Extension
         {
             return (_this != null && _this.Trim().Length > 0);
         }
-#if (NET35 || NET40 || NET45 || NETSTANDARD2_0 || NETSTANDARD2_1)
+#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
         public static bool IsMail(this string _this)
         {
             if (_this == null)
@@ -198,5 +198,17 @@ namespace Codex.Extension
 
             return _return;
         }
+#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
+        public static string DBToString(this object _this, bool _empty = false)
+        {
+            if (_this == DBNull.Value || _this == null)
+            {
+                if (_empty)
+                    return string.Empty;
+                return null;
+            }
+            return Convert.ToString(_this);
+        }
+#endif
     }
 }

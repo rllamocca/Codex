@@ -1,8 +1,13 @@
 ﻿using Codex;
 using Codex.Enumeration;
+using Codex.Helper;
 using Codex.Terminal.Helper;
+using Codex.Extension;
 
 using System;
+using System.Runtime.CompilerServices;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace Test_Console
 {
@@ -46,20 +51,24 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            using Password _p = new();
-            _p.Numbers = true;
-            _p.UpperCase = false;
-            _p.LowerCase = false;
-            _p.Specials = false;
-            for (byte _i = 4; _i < 17; _i++)
-            {
-                _p.Generate(_i);
-                Console.WriteLine("{0} : {1}", _p.Base, _p.Generated);
-            }
+            TestPerson _test = new();
+            _test.FirstName = "FirstName1";
+            _test.LastName = "LastName2";
+            _test.Age = 8;
+
+            TestPerson2 _test2 = new();
+            _test2.FirstName = "FirstName2";
+            _test2.LastName = "LastName2";
+            _test2.Age = 16;
+
+            Console.WriteLine(_test.To_Xml());
+            Console.WriteLine();
+
+            _test.To_Xml("aqui2.xml");
+
+            //Program.EncodingInfo();
 
             //################################################################
-
-
 
 #if DEBUG
             ConsoleHelper.End(true, false);
@@ -67,6 +76,56 @@ CTRL_CLOSE_EVENT
             ConsoleHelper.End()
 #endif
         }
+
+
+        public static void EncodingInfo()
+        {
+            // Print the header.
+            Console.Write("Info.CodePage      ");
+            Console.Write("Info.Name                    ");
+            Console.Write("Info.DisplayName");
+            Console.WriteLine();
+
+            // Display the EncodingInfo names for every encoding, and compare with the equivalent Encoding names.
+            foreach (EncodingInfo ei in Encoding.GetEncodings())
+            {
+                Encoding e = ei.GetEncoding();
+
+                Console.Write("{0,-15}", ei.CodePage);
+                if (ei.CodePage == e.CodePage)
+                    Console.Write("    ");
+                else
+                    Console.Write("*** ");
+
+                Console.Write("{0,-25}", ei.Name);
+                if (ei.CodePage == e.CodePage)
+                    Console.Write("    ");
+                else
+                    Console.Write("*** ");
+
+                Console.Write("{0,-25}", ei.DisplayName);
+                if (ei.CodePage == e.CodePage)
+                    Console.Write("    ");
+                else
+                    Console.Write("*** ");
+
+                Console.WriteLine();
+            }
+        }
+    }
+
+    public class TestPerson
+    {
+        public string FirstName;
+        public string LastName;
+        public int Age;
+    }
+
+    public record TestPerson2
+    {
+        public string FirstName;
+        public string LastName;
+        public int Age;
     }
 
     //public class CachedTimeSource

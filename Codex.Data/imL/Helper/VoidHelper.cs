@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Codex.Extension;
+
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -11,7 +13,7 @@ namespace Codex.Data.Helper
         public static void To_Plain(DataTable _data, string _path, char _separator = '\0', bool _columnnames = true, Encoding _enc = null)
         {
             if (_enc == null)
-                _enc = Encoding.UTF8;
+                _enc = Encoding.Unicode;
 
             string _sep = Convert.ToString(_separator);
 
@@ -22,12 +24,7 @@ namespace Codex.Data.Helper
                 if (_columnnames)
                 {
                     foreach (DataColumn _item in _data.Columns)
-                    {
-                        if (_item.Caption == null)
-                            _line.Add(_item.ColumnName);
-                        else
-                            _line.Add(_item.Caption);
-                    }
+                        _line.Add(_item.Caption ?? _item.ColumnName);
 #if (NET35)
                     _sw.WriteLine(string.Join(_sep, _line.ToArray()));
 #else
@@ -40,7 +37,7 @@ namespace Codex.Data.Helper
                 {
                     _line.Clear();
                     foreach (object _item2 in _item.ItemArray)
-                        _line.Add((_item2 == DBNull.Value || _item2 == null) ? null : Convert.ToString(_item2));
+                        _line.Add(_item2.DBToString());
 
 #if (NET35)
                     _sw.WriteLine(string.Join(_sep, _line.ToArray()));
