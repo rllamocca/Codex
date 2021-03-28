@@ -131,8 +131,10 @@ namespace Codex.Sql.UserModel
                 Return _exe = await Execute(_query, _conn, _pmts, EExecute.Reader);
                 _exe.TriggerErrorException();
 
-                DataSet _return = new DataSet("DataSet_0");
-                _return.EnforceConstraints = _conn.Constraints;
+                DataSet _return = new DataSet("DataSet_0")
+                {
+                    EnforceConstraints = _conn.Constraints
+                };
                 byte _n = 0;
 
                 using (SqlDataReader _read = (SqlDataReader)_exe.Result)

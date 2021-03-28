@@ -296,8 +296,14 @@ namespace Codex.NPOI.Helper
                 else
                     _wb = new XSSFWorkbook(_s);
             }
+#if NETSTANDARD2_0
+            if (_datetime == null)
+                _datetime = Array.Empty<SArray2<int, int>>();
+#else
             if (_datetime == null)
                 _datetime = new SArray2<int, int>[0];
+#endif
+
 
             DataSet _return = new DataSet("NPOI");
 

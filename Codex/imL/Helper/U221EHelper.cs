@@ -104,11 +104,11 @@ namespace Codex.Helper
         }
         #endregion
 
-        public static sbyte Subtraction(sbyte _left, sbyte _right, sbyte _u221e = 0)
-        {
-            sbyte _tmp = (sbyte)(_left - _right);
-            if (_tmp >= _u221e) return _tmp;
-            return (sbyte)(_left - _u221e);
-        }
+        //public static sbyte Subtraction(sbyte _left, sbyte _right, sbyte _u221e = 0)
+        //{
+        //    sbyte _tmp = (sbyte)(_left - _right);
+        //    if (_tmp >= _u221e) return _tmp;
+        //    return (sbyte)(_left - _u221e);
+        //}
     }
 }
