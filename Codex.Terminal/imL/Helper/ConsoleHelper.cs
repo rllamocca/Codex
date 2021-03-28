@@ -28,7 +28,7 @@ namespace Codex.Terminal.Helper
             Console.WriteLine();
         }
 
-        public static void End(bool _rk = false, bool _card = false)
+        public static void End(bool _rk = false, bool _card = true)
         {
             Console.WriteLine();
             if (_card)

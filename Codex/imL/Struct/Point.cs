@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if (NETSTANDARD1_3)
+using System;
 
 namespace Codex.Struct
 {
@@ -34,3 +35,4 @@ namespace Codex.Struct
         }
     }
 }
+#endif

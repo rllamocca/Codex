@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Codex.ETL.Helper
+namespace Codex.Data.Helper
 {
     public static class StringHelper
     {

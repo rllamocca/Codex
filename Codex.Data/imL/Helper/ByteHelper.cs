@@ -4,7 +4,7 @@ using System.Data;
 using System.IO;
 using System.Text;
 
-namespace Codex.ETL.Helper
+namespace Codex.Data.Helper
 {
     public static class ByteHelper
     {

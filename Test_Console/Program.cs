@@ -35,7 +35,9 @@ CTRL_CLOSE_EVENT
             Console.WriteLine("ProcessExit ...");
         }
 
-        static void Main(string[] _args)
+        static void Main(
+            //string[] _args
+            )
         {
             ConsoleHelper.Init();
 
@@ -57,7 +59,13 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            ConsoleHelper.End(true, true);
+
+
+#if DEBUG
+            ConsoleHelper.End(true, false);
+#else
+            ConsoleHelper.End()
+#endif
         }
     }
 
