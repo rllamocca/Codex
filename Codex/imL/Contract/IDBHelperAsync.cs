@@ -1,6 +1,6 @@
 ﻿#if (NET45 || NETSTANDARD1_0 || NETSTANDARD1_1 || NETSTANDARD1_2 || NETSTANDARD1_3 || NETSTANDARD2_0)
 
-using Codex.Enum;
+using Codex.Enumeration;
 
 using System.Threading.Tasks;
 

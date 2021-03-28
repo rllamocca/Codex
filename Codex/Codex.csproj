@@ -18,6 +18,8 @@
 		<Description>Not so free tools.</Description>
 		<Copyright>© 1984 - 8888</Copyright>
 
+		<NoStandardLib>true</NoStandardLib>
+
 	</PropertyGroup>
 
 </Project>

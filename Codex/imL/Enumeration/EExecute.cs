@@ -1,6 +1,6 @@
-﻿namespace Codex.Enum
+﻿namespace Codex.Enumeration
 {
-    public enum EExecute : byte
+    public enum EExecute
     {
         NonQuery = 0,
         Scalar = 1,

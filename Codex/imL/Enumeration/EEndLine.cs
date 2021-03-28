@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Codex.Enum
+namespace Codex.Enumeration
 {
     [Flags]
-    public enum EEndLine : byte
+    public enum EEndLine
     {
         HT = 0, // 9 Horizontal Tab
         LF = 1, // 10 Line Feed

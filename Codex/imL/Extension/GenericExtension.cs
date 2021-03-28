@@ -1,4 +1,4 @@
-﻿using Codex.Enum;
+﻿using Codex.Enumeration;
 
 using System;
 using System.Collections.Generic;

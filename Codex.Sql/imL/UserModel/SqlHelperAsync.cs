@@ -4,7 +4,7 @@
 using System.Data;
 #endif
 
-using Codex.Enum;
+using Codex.Enumeration;
 using Codex.Contract;
 using Codex.Sql.Extension;
 

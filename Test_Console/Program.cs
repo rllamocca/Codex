@@ -1,5 +1,5 @@
 ﻿using Codex;
-using Codex.Enum;
+using Codex.Enumeration;
 using Codex.Terminal.Helper;
 
 using System;

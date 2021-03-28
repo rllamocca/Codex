@@ -1,6 +1,6 @@
-﻿namespace Codex.Enum
+﻿namespace Codex.Enumeration
 {
-    public enum ERandomSort : byte
+    public enum ERandomSort
     {
         None = 0,
         Fisher_Yates = 1

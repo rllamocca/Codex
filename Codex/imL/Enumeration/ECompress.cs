@@ -1,6 +1,6 @@
-﻿namespace Codex.Enum
+﻿namespace Codex.Enumeration
 {
-    public enum ECompress : byte
+    public enum ECompress
     {
         None = 0,
         Gzip = 1,

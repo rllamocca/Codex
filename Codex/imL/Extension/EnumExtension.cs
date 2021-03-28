@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NET35
+using System;
 
 namespace Codex.Extension
 {
@@ -7,9 +8,10 @@ namespace Codex.Extension
         public static bool HasFlag(this System.Enum _this, System.Enum _flag)
         {
             if (_this.GetType() == _flag.GetType())
-                return (Convert.ToUInt64(_this) == Convert.ToUInt64(_flag));
+                return (Convert.ToInt64(_this) == Convert.ToInt64(_flag));
 
             return false;
         }
     }
 }
+#endif

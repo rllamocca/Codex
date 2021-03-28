@@ -5,7 +5,7 @@ using System.Net.Mail;
 using System;
 using System.Linq;
 using System.Collections.Generic;
-using Codex.Enum;
+using Codex.Enumeration;
 
 namespace Codex.Extension
 {
