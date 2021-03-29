@@ -3,7 +3,7 @@
 #if (NET35 || NET40)
     public interface IProgress<in T>
     {
-        void Report(T value);
+        void Report(T _value);
     }
 #endif
 }

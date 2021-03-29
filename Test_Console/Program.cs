@@ -50,7 +50,7 @@ CTRL_CLOSE_EVENT
 
             IProgress<int> _pb = new ProgressBar32(100);
 
-            DataTable _dt = new DataTable();
+            DataTable _dt = new();
             _dt.To_Plain("", _progress: _pb);
 
             //################################################################
