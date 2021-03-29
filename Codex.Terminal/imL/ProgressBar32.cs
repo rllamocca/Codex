@@ -4,6 +4,8 @@ using Codex.Struct;
 using System.Drawing;
 #endif
 
+using Codex.Extension;
+using Codex.Enumeration;
 using Codex.Terminal.Helper;
 
 using System;
@@ -65,7 +67,6 @@ namespace Codex.Terminal
             this._BAR_END.X += 2;
 
             this._BAR.Add(0);
-            this.Report(0);
         }
 
         public void Report(int _value = 0)
@@ -85,7 +86,7 @@ namespace Codex.Terminal
 
             ConsoleHelper.Write(this._BAR_END, _text);
 
-            if (0 < _per && _per <= 1)
+            if (_per.Between(0, 1, EInterval.Until))
             {
                 decimal _f = Math.Round(_per * this._BLOCKS);
 
