@@ -11,26 +11,26 @@ using System.Collections.Generic;
 
 namespace Codex.Terminal
 {
-    public class ProgressBarU64 : IDisposable
+    public class ProgressBarU32 : IDisposable
 #if (NET35 || NET40)
-        , Contract.IProgress<ulong>
+        , Contract.IProgress<uint>
 #else
-        , IProgress<ulong>
+        , IProgress<uint>
 #endif
     {
         private bool _DISPOSED = false;
 
-        private readonly ProgressBarU64 _PARENT;
+        private readonly ProgressBarU32 _PARENT;
         private byte _BLOCKS = 50;
-        private ulong _LENGTH;
-        private ulong _VALUE = 0;
+        private uint _LENGTH;
+        private uint _VALUE = 0;
         private Point _BAR_START;
         private Point _BAR_END;
         private List<decimal> _BAR = new List<decimal>();
         private Point _LINE;
         private Point _NEW_LINE;
 
-        public ProgressBarU64(ulong _length, ProgressBarU64 _parent = null)
+        public ProgressBarU32(uint _length, ProgressBarU32 _parent = null)
         {
             this._LENGTH = _length;
             this._PARENT = _parent;
@@ -68,7 +68,7 @@ namespace Codex.Terminal
             this.Report(0);
         }
 
-        public void Report(ulong _value = 0)
+        public void Report(uint _value = 0)
         {
             if (_value == 0)
                 this._VALUE++;
@@ -102,7 +102,7 @@ namespace Codex.Terminal
             }
         }
 
-        ~ProgressBarU64()
+        ~ProgressBarU32()
         {
             this.Dispose(false);
         }

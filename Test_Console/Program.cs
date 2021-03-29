@@ -1,12 +1,9 @@
-﻿using Codex;
-using Codex.Enumeration;
-using Codex.Helper;
+﻿using Codex.Data.Extension;
+using Codex.Terminal;
 using Codex.Terminal.Helper;
-using Codex.Extension;
 
 using System;
-using System.Runtime.CompilerServices;
-using System.Security.Cryptography.X509Certificates;
+using System.Data;
 using System.Text;
 
 namespace Test_Console
@@ -51,22 +48,10 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            TestPerson _test = new();
-            _test.FirstName = "FirstName1";
-            _test.LastName = "LastName2";
-            _test.Age = 8;
+            IProgress<int> _pb = new ProgressBar32(100);
 
-            TestPerson2 _test2 = new();
-            _test2.FirstName = "FirstName2";
-            _test2.LastName = "LastName2";
-            _test2.Age = 16;
-
-            Console.WriteLine(_test.To_Xml());
-            Console.WriteLine();
-
-            _test.To_Xml("aqui2.xml");
-
-            //Program.EncodingInfo();
+            DataTable _dt = new DataTable();
+            _dt.To_Plain("", _progress: _pb);
 
             //################################################################
 

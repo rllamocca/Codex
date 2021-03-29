@@ -1,4 +1,6 @@
-﻿namespace Codex
+﻿using Codex.Helper;
+
+namespace Codex
 {
     public class UserState
     {
@@ -8,9 +10,7 @@
 
         public decimal Percentage()
         {
-            if (this.Distance != 0.0m)
-                return 1.0m * this.Position / this.Distance;
-            return 0.0m;
+            return U221EHelper.Division(1.0m * this.Position, this.Distance);
         }
         public string Proportion()
         {

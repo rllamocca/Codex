@@ -12,7 +12,9 @@ using System.Collections.Generic;
 namespace Codex.Terminal
 {
     public class ProgressBar64 : IDisposable
-#if (NET45 || NETSTANDARD1_3 || NETSTANDARD2_0)
+#if (NET35 || NET40)
+        , Contract.IProgress<long>
+#else
         , IProgress<long>
 #endif
     {
@@ -20,7 +22,7 @@ namespace Codex.Terminal
 
         private readonly ProgressBar64 _PARENT;
         private byte _BLOCKS = 50;
-        private long _COUNT;
+        private long _LENGTH;
         private long _VALUE = 0;
         private Point _BAR_START;
         private Point _BAR_END;
@@ -28,13 +30,13 @@ namespace Codex.Terminal
         private Point _LINE;
         private Point _NEW_LINE;
 
-        public ProgressBar64(long _count, ProgressBar64 _parent = null)
+        public ProgressBar64(long _length, ProgressBar64 _parent = null)
         {
-            this._COUNT = _count;
+            this._LENGTH = _length;
             this._PARENT = _parent;
 
-            if (this._COUNT == 0)
-                throw new ArgumentOutOfRangeException(nameof(_count), "_count == 0");
+            if (this._LENGTH == 0)
+                throw new ArgumentOutOfRangeException(nameof(_length), "_length == 0");
 
             if (this._PARENT == null)
             {
@@ -50,8 +52,8 @@ namespace Codex.Terminal
 
             this._BAR_START = new Point(this._LINE.X, this._LINE.Y);
 
-            if (this._COUNT < this._BLOCKS)
-                this._BLOCKS = Convert.ToByte(this._COUNT);
+            if (this._LENGTH < this._BLOCKS)
+                this._BLOCKS = Convert.ToByte(this._LENGTH);
 
             this._BAR_END = new Point(this._BAR_START.X + this._BLOCKS + 1, this._BAR_START.Y);
 
@@ -66,19 +68,19 @@ namespace Codex.Terminal
             this.Report(0);
         }
 
-        public void Report()
+        public void Report(long _value = 0)
         {
-            this._VALUE++;
-            this.Report(this._VALUE);
-        }
-        public void Report(long _value)
-        {
-            decimal _per = (1.0m * _value / this._COUNT);
+            if (_value == 0)
+                this._VALUE++;
+            else
+                this._VALUE = _value;
+
+            decimal _per = (1.0m * this._VALUE / this._LENGTH);
             string _text = string.Format(
                             "{0}  {1}/{2}",
                             _per.ToString("P"),
                             _value,
-                            this._COUNT
+                            this._LENGTH
                             );
 
             ConsoleHelper.Write(this._BAR_END, _text);
@@ -117,7 +119,7 @@ namespace Codex.Terminal
             if (_managed)
             {
                 this._BLOCKS = 0;
-                this._COUNT = 0;
+                this._LENGTH = 0;
                 this._VALUE = 0;
                 this._BAR_START = new Point(0, 0);
                 this._BAR_END = new Point(0, 0);
