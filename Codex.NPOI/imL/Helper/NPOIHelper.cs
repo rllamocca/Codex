@@ -1,5 +1,8 @@
-﻿using Codex.Extension;
+﻿#if NET35
 using Codex.Struct;
+#endif
+
+using Codex.Extension;
 
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
@@ -163,7 +166,7 @@ namespace Codex.NPOI.Helper
             _out = new MemoryStream();
             _wb.Write(_out);
         }
-        public static void To_Excel(out Stream _out, DataSet _ds, SArray3<string, string, string>[] _formats, bool _columnnames = true, bool _xls = true)
+        public static void To_Excel(out Stream _out, DataSet _ds, Tuple<string, string, string>[] _formats, bool _columnnames = true, bool _xls = true)
         {
             IWorkbook _wb;
             if (_xls) _wb = new HSSFWorkbook();
@@ -220,16 +223,16 @@ namespace Codex.NPOI.Helper
                 ICellStyle[] _t_styles = new ICellStyle[_item.Columns.Count];
                 foreach (DataColumn _dc in _item.Columns)
                 {
-                    SArray3<string, string, string> _f = _formats.Where(_w => _w.A == _item.TableName && _w.B == _dc.ColumnName).FirstOrDefault();
+                    Tuple<string, string, string> _f = _formats.Where(_w => _w.Item1 == _item.TableName && _w.Item2 == _dc.ColumnName).FirstOrDefault();
 
-                    if (_f.Equals(default(SArray3<string, string, string>)))
+                    if (_f.Equals(default(Tuple<string, string, string>)))
                         _t_styles[_col] = _sbasic;
                     else
                     {
                         _t_styles[_col] = _wb.CreateCellStyle();
                         _t_styles[_col].Alignment = HorizontalAlignment.Left;
                         _t_styles[_col].VerticalAlignment = VerticalAlignment.Center;
-                        _t_styles[_col].DataFormat = _wb.CreateDataFormat().GetFormat(_f.Value);
+                        _t_styles[_col].DataFormat = _wb.CreateDataFormat().GetFormat(_f.Item3);
                         _t_styles[_col].SetFont(_fbasic);
                     }
 
@@ -286,7 +289,7 @@ namespace Codex.NPOI.Helper
             _wb.Write(_out);
         }
 
-        public static DataSet To_DataSet(string _path, bool _xls = true, bool _columnnames = true, SArray2<int, int>[] _datetime = null)
+        public static DataSet To_DataSet(string _path, bool _xls = true, bool _columnnames = true, Tuple<int, int>[] _datetime = null)
         {
             IWorkbook _wb;
             using (FileStream _s = new FileStream(_path, FileMode.Open, FileAccess.Read))
@@ -298,10 +301,10 @@ namespace Codex.NPOI.Helper
             }
 #if NETSTANDARD2_0
             if (_datetime == null)
-                _datetime = Array.Empty<SArray2<int, int>>();
+                _datetime = Array.Empty<Tuple<int, int>>();
 #else
             if (_datetime == null)
-                _datetime = new SArray2<int, int>[0];
+                _datetime = new Tuple<int, int>[0];
 #endif
 
 
@@ -319,7 +322,7 @@ namespace Codex.NPOI.Helper
 
                 foreach (ICell _item in _row)
                 {
-                    Type _type = _datetime.Contains(new SArray2<int, int>(_i, _ordinal)) ? typeof(DateTime) : typeof(object);
+                    Type _type = _datetime.Contains(new Tuple<int, int>(_i, _ordinal)) ? typeof(DateTime) : typeof(object);
                     if (_columnnames)
                         _dc = new DataColumn(_item.StringCellValue, _type);
                     else
@@ -342,7 +345,7 @@ namespace Codex.NPOI.Helper
                     DataRow _newrow = _table.NewRow();
                     _newrow.ItemArray = _table.Columns
                         .Cast<DataColumn>()
-                        .Select(_s => DBCellValue(_row.GetCell(_s.Ordinal), _datetime.Contains(new SArray2<int, int>(_i, _s.Ordinal))))
+                        .Select(_s => DBCellValue(_row.GetCell(_s.Ordinal), _datetime.Contains(new Tuple<int, int>(_i, _s.Ordinal))))
                         .ToArray();
                     _table.Rows.Add(_newrow);
                 }

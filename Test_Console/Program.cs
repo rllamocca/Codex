@@ -1,11 +1,7 @@
-﻿using Codex.Data.Extension;
-using Codex.Terminal;
-using Codex.Terminal.Helper;
+﻿using Codex.Terminal.Helper;
 
 using System;
-using System.Data;
 using System.Text;
-using System.Threading;
 
 namespace Test_Console
 {
@@ -48,21 +44,8 @@ CTRL_CLOSE_EVENT
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ProcessExit);
 
             //################################################################
-            int _max = 100000;
 
-            DataTable _dt = new("lolo");
-            _dt.Columns.Add("columna1");
-            for (int _i = 1; _i <= _max; _i++)
-            {
-                DataRow _dr = _dt.NewRow();
-                _dr[0] = string.Format("string{0}", _i);
-                _dt.Rows.Add(_dr);
-            }
 
-            using (ProgressBar32 _pb = new(_dt.Rows.Count))
-            {
-                _dt.To_Plain("aqui.txt", _progress: _pb);
-            }
 
             //################################################################
 
