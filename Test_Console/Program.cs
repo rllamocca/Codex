@@ -50,7 +50,7 @@ CTRL_CLOSE_EVENT
             //################################################################
             int _max = 100000;
 
-            DataTable _dt = new DataTable("lolo");
+            DataTable _dt = new("lolo");
             _dt.Columns.Add("columna1");
             for (int _i = 1; _i <= _max; _i++)
             {
