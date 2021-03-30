@@ -34,7 +34,7 @@ namespace Codex.Terminal
                 _diff.ToString("hh':'mm':'ss'.'fff")
 #endif
                 );
-            ConsoleHelper.Write(this._BAR_START, new String(' ', 40));
+            ConsoleHelper.Write(this._BAR_START, new string(' ', 40));
             ConsoleHelper.Write(this._BAR_START, _text);
 
         }

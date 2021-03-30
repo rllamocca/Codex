@@ -49,24 +49,7 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            int _max = 60;
-            uint _max2 = 120;
 
-            using (ProgressBar32 _p32 = new(_max))
-            {
-                for (int _i = 0; _i <= _max; _i++)
-                {
-                    using (ProgressBarU32 _p32_2 = new(_max2, _p32))
-                    {
-                        for (uint _j = 0; _j <= _max2; _j++)
-                        {
-                            Thread.Sleep(10);
-                            _p32_2.Report(_j);
-                        }
-                    }
-                    _p32.Report(_i);
-                }
-            }
 
             //################################################################
 

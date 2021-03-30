@@ -18,7 +18,7 @@ namespace Codex.Terminal
         private ulong _LENGTH;
         private ulong _VALUE = 0;
 
-        public ProgressBarU64(ulong _length, ProgressBar _parent = null)
+        public ProgressBarU64(ulong _length = 50, ProgressBar _parent = null)
         {
             this._LENGTH = _length;
             base._PARENT = _parent;
@@ -36,28 +36,32 @@ namespace Codex.Terminal
             else
                 this._VALUE = _value;
 
-            decimal _per = (1.0m * this._VALUE / this._LENGTH);
-            string _text = string.Format(
-                            "{0}  {1}/{2}",
-                            _per.ToString("P"),
-                            _value,
-                            this._LENGTH
-                            );
+            decimal _per = 1.0m;
 
-            ConsoleHelper.Write(this._BAR_END, _text);
-
-            if (_per.Between(0, 1, EInterval.Until))
+            if (this._VALUE.Between(0, this._LENGTH))
             {
-                decimal _round = Math.Round(_per * this._BLOCKS);
+                _per = (1.0m * this._VALUE / this._LENGTH);
 
-                if (this._BAR.Contains(_round) == false)
+                if (_per.Between(0, 1, EInterval.Until))
                 {
-                    this._BAR.Add(_round);
+                    decimal _rou = Math.Round(_per * this._BLOCKS);
 
-                    ConsoleHelper.Write(this._BAR_START, '■');
-                    this._BAR_START.X += 1;
+                    if (this._BAR.Contains(_rou) == false)
+                    {
+                        this._BAR.Add(_rou);
+
+                        ConsoleHelper.Write(this._BAR_START, '■');
+                        this._BAR_START.X += 1;
+                    }
                 }
             }
+
+            string _text = string.Format("{0}  {1}/{2}",
+                _per.ToString("P"),
+                this._VALUE,
+                this._LENGTH);
+
+            ConsoleHelper.Write(this._BAR_END, _text);
         }
 
         protected override void Dispose(bool _managed)
