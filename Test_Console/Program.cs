@@ -48,7 +48,7 @@ CTRL_CLOSE_EVENT
             AppDomain.CurrentDomain.ProcessExit += new EventHandler(ProcessExit);
 
             //################################################################
-            int _max = 1000;
+            int _max = 100000;
 
             DataTable _dt = new DataTable("lolo");
             _dt.Columns.Add("columna1");
@@ -61,7 +61,7 @@ CTRL_CLOSE_EVENT
 
             using (ProgressBar32 _pb = new(_dt.Rows.Count))
             {
-                _dt.To_Plain("aqui.txt", _columnnames: false, _progress: _pb);
+                _dt.To_Plain("aqui.txt", _progress: _pb);
             }
 
             //################################################################
