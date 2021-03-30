@@ -31,11 +31,10 @@ namespace Codex.Data.Extension
                     foreach (DataColumn _item in _this.Columns)
                         _line.Add(_item.Caption ?? _item.ColumnName);
 #if (NET35)
-                    _sw.WriteLine(string.Join(_sep, _line.ToArray()));
+                    _sw.Write(string.Join(_sep, _line.ToArray()));
 #else
-                    _sw.WriteLine(string.Join(_sep, _line));
+                    _sw.Write(string.Join(_sep, _line));
 #endif
-
                 }
 
                 foreach (DataRow _item in _this.Rows)
@@ -44,15 +43,16 @@ namespace Codex.Data.Extension
                     foreach (object _item2 in _item.ItemArray)
                         _line.Add(_item2.DBToString());
 
+                    _sw.WriteLine();
 #if (NET35)
-                    _sw.WriteLine(string.Join(_sep, _line.ToArray()));
+                    _sw.Write(string.Join(_sep, _line.ToArray()));
 #else
-                    _sw.WriteLine(string.Join(_sep, _line));
+                    _sw.Write(string.Join(_sep, _line));
 #endif
-
                     if (_report)
                         _progress.Report(0);
                 }
+
                 _line.Clear();
             }
         }
@@ -94,6 +94,7 @@ namespace Codex.Data.Extension
                     if (_report)
                         _progress.Report(0);
                 }
+
                 _line.Clear();
             }
         }

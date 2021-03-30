@@ -26,7 +26,10 @@ namespace Codex.Terminal
             if (this._LENGTH == 0)
                 throw new ArgumentOutOfRangeException(nameof(_length), "_length == 0");
 
-            base.Init(Convert.ToByte(this._LENGTH));
+            if (this._LENGTH < 50)
+                base.Init(Convert.ToByte(this._LENGTH));
+            else
+                base.Init();
         }
 
         public void Report(ulong _value = 0)

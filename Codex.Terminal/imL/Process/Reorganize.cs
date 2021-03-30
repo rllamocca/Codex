@@ -111,7 +111,7 @@ namespace Codex.Terminal.Process
                         break;
                 }
 
-                using (ProgressBar64 _pb = new ProgressBar64(_paths.Length))
+                using (ProgressBar32 _pb = new ProgressBar32(_paths.Length))
                 {
                     foreach (string _item in _paths)
                     {
@@ -121,7 +121,7 @@ namespace Codex.Terminal.Process
                     }
                 }
 
-                using (ProgressBar64 _pb = new ProgressBar64(_list.Count))
+                using (ProgressBar32 _pb = new ProgressBar32(_list.Count))
                 {
                     foreach (FileInfo _item in _list)
                     {

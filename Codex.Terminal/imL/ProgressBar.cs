@@ -23,12 +23,12 @@ namespace Codex.Terminal
         protected Point _LINE;
         protected Point _NEW_LINE;
 
-        public void Init(byte _length)
+        public void Init(byte _blocks = 50)
         {
             this._BAR.Add(0);
 
-            if (_length < this._BLOCKS)
-                this._BLOCKS = _length;
+            if (_blocks < this._BLOCKS)
+                this._BLOCKS = _blocks;
 
             if (this._PARENT == null)
             {
