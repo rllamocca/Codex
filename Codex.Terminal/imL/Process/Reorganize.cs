@@ -10,7 +10,7 @@ namespace Codex.Terminal.Process
 {
     public static class Reorganize
     {
-        public static void Main(string[] _args)
+        public static void Main(string[] _args, bool _throw = false)
         {
             try
             {
@@ -160,6 +160,9 @@ namespace Codex.Terminal.Process
             }
             catch (Exception _ex)
             {
+                if (_throw)
+                    throw _ex;
+
                 Console.WriteLine(_ex);
             }
         }
