@@ -65,6 +65,7 @@ namespace Codex.Sql.UserModel
             IConnection _conn,
             IParameter[][] _pmts,
             EExecute _exe = EExecute.NonQuery,
+            IProgress<int> _progress = null,
             bool _throw = false
             )
         {
@@ -121,6 +122,7 @@ namespace Codex.Sql.UserModel
                             _returns[_r] = new Return(false, _ex);
                         }
                         _r++;
+                        _progress?.Report(0);
                     } while (_r < _c_r);
                 }
                 return _returns;
@@ -135,41 +137,6 @@ namespace Codex.Sql.UserModel
         }
 
 #if (NET45 || NETSTANDARD2_0)
-        public async Task<Return> Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null, bool _throw = false)
-        {
-            try
-            {
-                Return _exe = await Execute(_query, _conn, _pmts, EExecute.Reader);
-                _exe.TriggerErrorException();
-
-                DataSet _return = new DataSet("DataSet_0")
-                {
-                    EnforceConstraints = _conn.Constraints
-                };
-                byte _n = 0;
-
-                using (SqlDataReader _read = (SqlDataReader)_exe.Result)
-                {
-                    while (_read.IsClosed == false)
-                    {
-                        DataTable _dt = new DataTable("DataTable_" + Convert.ToString(_n));
-                        _dt.Load(_read, LoadOption.OverwriteChanges);
-                        _return.Tables.Add(_dt);
-                        _n++;
-                    }
-                }
-
-                return new Return(true, _return);
-            }
-            catch (Exception _ex)
-            {
-                if (_throw)
-                    throw _ex;
-
-                return new Return(false, _ex);
-            }
-            throw new NotImplementedException();
-        }
         public async Task<Return> Get_DataTable(string _query, IConnection _conn, IParameter[] _pmts = null, bool _throw = false)
         {
             try
@@ -193,8 +160,44 @@ namespace Codex.Sql.UserModel
             }
             throw new NotImplementedException();
         }
+        public async Task<Return> Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null, IProgress<int> _progress = null, bool _throw = false)
+        {
+            try
+            {
+                Return _exe = await Execute(_query, _conn, _pmts, EExecute.Reader);
+                _exe.TriggerErrorException();
+
+                DataSet _return = new DataSet("DataSet_0")
+                {
+                    EnforceConstraints = _conn.Constraints
+                };
+                byte _n = 0;
+
+                using (SqlDataReader _read = (SqlDataReader)_exe.Result)
+                {
+                    while (_read.IsClosed == false)
+                    {
+                        DataTable _dt = new DataTable("DataTable_" + Convert.ToString(_n));
+                        _dt.Load(_read, LoadOption.OverwriteChanges);
+                        _return.Tables.Add(_dt);
+                        _n++;
+                        _progress?.Report(0);
+                    }
+                }
+
+                return new Return(true, _return);
+            }
+            catch (Exception _ex)
+            {
+                if (_throw)
+                    throw _ex;
+
+                return new Return(false, _ex);
+            }
+            throw new NotImplementedException();
+        }
 #else
-        public Task<Return> Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null, bool _throw = false)
+        public Task<Return> Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null, IProgress<int> _progress = null, bool _throw = false)
         {
             throw new NotImplementedException();
         }

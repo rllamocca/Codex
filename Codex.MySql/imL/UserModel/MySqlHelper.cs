@@ -61,6 +61,7 @@ namespace Codex.MySql.UserModel
             IConnection _conn,
             IParameter[][] _pmts,
             EExecute _exe = EExecute.NonQuery,
+            IProgress<int> _progress = null,
             bool _throw = false
             )
         {
@@ -114,6 +115,7 @@ namespace Codex.MySql.UserModel
                             _returns[_r] = new Return(false, _ex);
                         }
                         _r++;
+                        _progress?.Report(0);
                     } while (_r < _c_r);
                 }
                 return _returns;
@@ -127,7 +129,33 @@ namespace Codex.MySql.UserModel
             }
         }
 
-        public virtual Return Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null, bool _throw = false)
+        public virtual Return Get_DataTable(string _query, IConnection _conn, IParameter[] _pmts = null, bool _throw = false)
+        {
+#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
+            try
+            {
+                Return _exe = Execute(_query, _conn, _pmts, EExecute.Reader);
+                _exe.TriggerErrorException();
+
+                DataTable _return = new DataTable("DataTable_0");
+
+                using (MySqlDataReader _read = (MySqlDataReader)_exe.Result)
+                    _return.Load(_read, LoadOption.OverwriteChanges);
+
+                return new Return(true, _return);
+            }
+            catch (Exception _ex)
+            {
+                if (_throw)
+                    throw _ex;
+
+                return new Return(false, _ex);
+            }
+#else
+            throw new NotImplementedException();
+#endif
+        }
+        public virtual Return Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null, IProgress<int> _progress = null, bool _throw = false)
         {
 #if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
             try
@@ -149,34 +177,9 @@ namespace Codex.MySql.UserModel
                         _dt.Load(_read, LoadOption.OverwriteChanges);
                         _return.Tables.Add(_dt);
                         _n++;
+                        _progress?.Report(0);
                     }
                 }
-
-                return new Return(true, _return);
-            }
-            catch (Exception _ex)
-            {
-                if (_throw)
-                    throw _ex;
-
-                return new Return(false, _ex);
-            }
-#else
-            throw new NotImplementedException();
-#endif
-        }
-        public virtual Return Get_DataTable(string _query, IConnection _conn, IParameter[] _pmts = null, bool _throw = false)
-        {
-#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
-            try
-            {
-                Return _exe = Execute(_query, _conn, _pmts, EExecute.Reader);
-                _exe.TriggerErrorException();
-
-                DataTable _return = new DataTable("DataTable_0");
-
-                using (MySqlDataReader _read = (MySqlDataReader)_exe.Result)
-                    _return.Load(_read, LoadOption.OverwriteChanges);
 
                 return new Return(true, _return);
             }

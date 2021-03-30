@@ -2,6 +2,7 @@
 
 using Codex.Enumeration;
 
+using System;
 using System.Threading.Tasks;
 
 namespace Codex.Contract
@@ -20,19 +21,21 @@ namespace Codex.Contract
             IConnection _conn,
             IParameter[][] _pmts,
             EExecute _exe = EExecute.NonQuery,
+            IProgress<int> _progress = null,
             bool _throw = false
             );
 
-        Task<Return> Get_DataSet(
-            string _query,
-            IConnection _conn,
-            IParameter[] _pmts = null,
-            bool _throw = false
-            );
         Task<Return> Get_DataTable(
             string _query,
             IConnection _conn,
             IParameter[] _pmts = null,
+            bool _throw = false
+            );
+        Task<Return> Get_DataSet(
+            string _query,
+            IConnection _conn,
+            IParameter[] _pmts = null,
+            IProgress<int> _progress = null,
             bool _throw = false
             );
     }
