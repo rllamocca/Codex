@@ -25,19 +25,22 @@ namespace Codex.Extension
             return (_this != null && _this.Trim().Length > 0);
         }
 #if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
-        public static bool IsMail(this string _this)
+        public static bool IsMail(this string _this, bool _throw = false)
         {
             if (_this == null)
                 return false;
+
             try
             {
                 new MailAddress(_this);
                 return true;
             }
-            catch (Exception)
+            catch (Exception _ex)
             {
-                return false;
+                if (_throw)
+                    throw _ex;
             }
+            return false;
         }
 #endif
 

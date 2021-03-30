@@ -5,7 +5,7 @@ namespace Codex.Helper
 {
     public static class CheckHelper
     {
-        public static bool Number(object _a)
+        public static bool IsNumber(object _a, bool _throw = false)
         {
             if (_a == null)
                 return false;
@@ -16,10 +16,12 @@ namespace Codex.Helper
                     return false;
                 return Regex.IsMatch(_b, @"^[-+]?[0-9]*\.?[0-9]+$");
             }
-            catch (Exception)
+            catch (Exception _ex)
             {
-                return false;
+                if (_throw)
+                    throw _ex;
             }
+            return false;
         }
     }
 }

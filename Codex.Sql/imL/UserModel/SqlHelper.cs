@@ -17,7 +17,8 @@ namespace Codex.Sql.UserModel
             string _query,
             IConnection _conn,
             IParameter[] _pmts = null,
-            EExecute _exe = EExecute.NonQuery
+            EExecute _exe = EExecute.NonQuery,
+            bool _throw = false
             )
         {
             try
@@ -50,6 +51,9 @@ namespace Codex.Sql.UserModel
             }
             catch (Exception _ex)
             {
+                if (_throw)
+                    throw _ex;
+
                 return new Return(false, _ex);
             }
         }
@@ -57,7 +61,8 @@ namespace Codex.Sql.UserModel
             string _query,
             IConnection _conn,
             IParameter[][] _pmts,
-            EExecute _exe = EExecute.NonQuery
+            EExecute _exe = EExecute.NonQuery,
+            bool _throw = false
             )
         {
             try
@@ -107,6 +112,9 @@ namespace Codex.Sql.UserModel
                         }
                         catch (Exception _ex)
                         {
+                            if (_throw)
+                                throw _ex;
+
                             _returns[_r] = new Return(false, _ex);
                         }
                         _r++;
@@ -116,11 +124,14 @@ namespace Codex.Sql.UserModel
             }
             catch (Exception _ex)
             {
+                if (_throw)
+                    throw _ex;
+
                 return new Return[] { new Return(false, _ex) };
             }
         }
 
-        public virtual Return Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null)
+        public virtual Return Get_DataSet(string _query, IConnection _conn, IParameter[] _pmts = null, bool _throw = false)
         {
 #if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
             try
@@ -149,13 +160,16 @@ namespace Codex.Sql.UserModel
             }
             catch (Exception _ex)
             {
+                if (_throw)
+                    throw _ex;
+
                 return new Return(false, _ex);
             }
 #else
             throw new NotImplementedException();
 #endif
         }
-        public virtual Return Get_DataTable(string _query, IConnection _conn, IParameter[] _pmts = null)
+        public virtual Return Get_DataTable(string _query, IConnection _conn, IParameter[] _pmts = null, bool _throw = false)
         {
 #if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
             try
@@ -172,6 +186,9 @@ namespace Codex.Sql.UserModel
             }
             catch (Exception _ex)
             {
+                if (_throw)
+                    throw _ex;
+
                 return new Return(false, _ex);
             }
 #else
