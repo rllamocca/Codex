@@ -27,6 +27,7 @@ namespace Codex.NPOI.Helper
                 else
                     _wb = new XSSFWorkbook(_s);
             }
+
 #if NETSTANDARD2_0
             if (_datetime == null)
                 _datetime = Array.Empty<Tuple<int, int>>();
@@ -34,7 +35,6 @@ namespace Codex.NPOI.Helper
             if (_datetime == null)
                 _datetime = new Tuple<int, int>[0];
 #endif
-
 
             DataSet _return = new DataSet("NPOI");
 
