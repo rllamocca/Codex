@@ -2,6 +2,7 @@
 using Codex.Terminal.Helper;
 
 using System;
+using System.Collections;
 using System.Text;
 using System.Threading;
 
@@ -47,43 +48,59 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            int _max = 10;
-            int _max2 = 20;
-
-            ProgressBar32 _pb = new(_max);
-
-            for (int _i = 1; _i <= _pb.Length; _i++)
-            {
-                ProgressBar32 _pb2 = new(_max2, _pb);
-                for (int _j = 1; _j <= _pb2.Length; _j++)
-                {
-                    Thread.Sleep(10);
-                    _pb2.Report(_j);
-                }
-                _pb2.Dispose();
-
-                _pb.Report(_i);
-            }
-            _pb.Dispose();
-
-            Console.WriteLine("####");
+            int _max = 20;
+            long _max2 = 30;
 
             ElapsedTime _et = new();
-            _pb = new(_max, _et);
-            ProgressBar32 _pb3 = new(_max2, _pb);
+            ProgressBar32 _pb = new(_max, _et);
+            ProgressBar64 _pb2 = new(_max2, _pb);
             for (int _i = 1; _i <= _pb.Length; _i++)
             {
                 Thread.Sleep(100);
                 _pb.Report(_i);
             }
-            for (int _j = 1; _j <= _pb3.Length; _j++)
+            for (long _j = 1; _j <= _pb2.Length; _j++)
             {
                 Thread.Sleep(100);
-                _pb3.Report(_j);
+                _pb2.Report(_j);
             }
-            _pb3.Dispose();
+            _pb2.Dispose();
             _pb.Dispose();
             _et.Dispose();
+
+            /*
+            // Creates and initializes a new Queue.
+            Queue myQ = new Queue();
+            myQ.Enqueue("The");
+            myQ.Enqueue("quick");
+            myQ.Enqueue("brown");
+            myQ.Enqueue("fox");
+
+            // Displays the Queue.
+            Console.Write("Queue values:");
+            PrintValues(myQ);
+
+            // Removes an element from the Queue.
+            Console.WriteLine("(Dequeue)\t{0}", myQ.Dequeue());
+
+            // Displays the Queue.
+            Console.Write("Queue values:");
+            PrintValues(myQ);
+
+            // Removes another element from the Queue.
+            Console.WriteLine("(Dequeue)\t{0}", myQ.Dequeue());
+
+            // Displays the Queue.
+            Console.Write("Queue values:");
+            PrintValues(myQ);
+
+            // Views the first element in the Queue but does not remove it.
+            Console.WriteLine("(Peek)   \t{0}", myQ.Peek());
+
+            // Displays the Queue.
+            Console.Write("Queue values:");
+            PrintValues(myQ);
+            */
 
             //################################################################
 
@@ -94,6 +111,12 @@ CTRL_CLOSE_EVENT
 #endif
         }
 
+        public static void PrintValues(IEnumerable myCollection)
+        {
+            foreach (object obj in myCollection)
+                Console.Write("    {0}", obj);
+            Console.WriteLine();
+        }
 
         public static void EncodingInfo()
         {

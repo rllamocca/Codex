@@ -24,15 +24,15 @@ namespace Codex.Terminal
         public ProgressBarU32(uint _length = 50, ProgressBar _parent = null)
         {
             this._LENGTH = _length;
-            base._PARENT = _parent;
+            this._PARENT = _parent;
 
             if (this._LENGTH == 0)
                 throw new ArgumentOutOfRangeException(nameof(_length), "_length == 0");
 
             if (this._LENGTH < 50)
-                base.Init(Convert.ToByte(this._LENGTH));
+                this.Init(Convert.ToByte(this._LENGTH));
             else
-                base.Init();
+                this.Init();
         }
 
         public void Report(uint _value = 0)
@@ -50,14 +50,14 @@ namespace Codex.Terminal
 
                 if (_per.Between(0, 1, EInterval.Until))
                 {
-                    decimal _rou = Math.Round(_per * base._BLOCKS);
+                    decimal _rou = Math.Round(_per * this._BLOCKS);
 
-                    if (base._BAR.Contains(_rou) == false)
+                    if (this._BAR.Contains(_rou) == false)
                     {
-                        base._BAR.Add(_rou);
+                        this._BAR.Add(_rou);
 
-                        ConsoleHelper.Write(base._BAR_START, '■');
-                        base._BAR_START.X += 1;
+                        ConsoleHelper.Write(this._BAR_START, '■');
+                        this._BAR_START.X += 1;
                     }
                 }
             }
@@ -67,7 +67,7 @@ namespace Codex.Terminal
                 this._VALUE,
                 this._LENGTH);
 
-            ConsoleHelper.Write(base._BAR_END, _text);
+            ConsoleHelper.Write(this._BAR_END, _text);
         }
 
         protected override void Dispose(bool _managed)

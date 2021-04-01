@@ -14,6 +14,9 @@ namespace Codex.NPOI.Extension
             else
                 _return = null;
 
+            if (_this == null)
+                return _return;
+
             switch (_this.CellType)
             {
                 case CellType.Unknown:

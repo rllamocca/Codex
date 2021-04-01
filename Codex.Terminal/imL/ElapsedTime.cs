@@ -1,5 +1,4 @@
 ﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
-
 using Codex.Terminal.Helper;
 
 using System;
@@ -18,6 +17,8 @@ namespace Codex.Terminal
 
         private void OnElapsedEvent(object _source, ElapsedEventArgs _e)
         {
+            this._TIMER.Stop();
+            //################################
             TimeSpan _diff = _e.SignalTime - this._START;
 
             string _text = string.Format(
@@ -29,18 +30,22 @@ namespace Codex.Terminal
                 _diff.ToString("hh':'mm':'ss'.'fff")
 #endif
                 );
-            ConsoleHelper.Write(base._BAR_START, new string(' ', 40));
-            ConsoleHelper.Write(base._BAR_START, _text);
+            ConsoleHelper.Write(this._BAR_START, new string(' ', 40));
+            ConsoleHelper.Write(this._BAR_START, _text);
+            //################################
+            this._TIMER.Start();
         }
 
         public ElapsedTime(ProgressBar _parent = null)
         {
-            base._PARENT = _parent;
+            this._PARENT = _parent;
 
-            base.Init(0);
+            this.Init(0);
 
             this._START = DateTime.Now;
-            this._TIMER = new Timer(200);
+
+            this._TIMER = new Timer();
+            this._TIMER.Interval = 500;
             this._TIMER.Elapsed += this.OnElapsedEvent;
             this._TIMER.Start();
         }
@@ -62,7 +67,7 @@ namespace Codex.Terminal
             }
             this._DISPOSED = true;
 
-            base.Dispose(_managed);
+            this.Dispose(_managed);
         }
     }
 }
