@@ -18,6 +18,9 @@ namespace Codex.Terminal
         private int _LENGTH;
         private int _VALUE = 0;
 
+        public int Length { get { return this._LENGTH; } }
+        public int Value { get { return this._VALUE; } }
+
         public ProgressBar32(int _length = 50, ProgressBar _parent = null)
         {
             this._LENGTH = _length;

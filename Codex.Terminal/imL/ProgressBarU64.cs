@@ -18,6 +18,9 @@ namespace Codex.Terminal
         private ulong _LENGTH;
         private ulong _VALUE = 0;
 
+        public ulong Length { get { return this._LENGTH; } }
+        public ulong Value { get { return this._VALUE; } }
+
         public ProgressBarU64(ulong _length = 50, ProgressBar _parent = null)
         {
             this._LENGTH = _length;
