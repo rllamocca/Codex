@@ -5,23 +5,6 @@ namespace Codex.Helper
 {
     public static class StringHelper
     {
-        public static String Clean_Sql(String _a)
-        {
-            if (_a == null) return null;
-
-            while (_a.Contains("[["))
-            {
-                _a = _a.Replace("[[", "[");
-            }
-            while (_a.Contains("]]"))
-            {
-                _a = _a.Replace("]]", "]");
-            }
-            _a = StringHelper.Clean_TBLFCR(_a);
-            return _a.Trim();
-        }
-
-
         private static String Formato_Rut(String _a)
         {
             if (_a == null) return null;

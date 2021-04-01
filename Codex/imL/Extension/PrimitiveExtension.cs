@@ -163,5 +163,30 @@ namespace Codex.Extension
 
             return _return.ToArray();
         }
+
+        public static string Replace(this string _this, char[] _old, char _new)
+        {
+            if (_this == null)
+                return null;
+
+            string _return = _this;
+            _old = _old.Distinct().ToArray();
+            foreach (char _item in _old)
+                _return = _return.Replace(_item, _new);
+
+            return _return;
+        }
+        public static string Replace(this string _this, string[] _old, string _new)
+        {
+            if (_this == null)
+                return null;
+
+            string _return = _this;
+            _old = _old.Distinct().ToArray();
+            foreach (string _item in _old)
+                _return = _return.Replace(_item, _new);
+
+            return _return;
+        }
     }
 }

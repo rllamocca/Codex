@@ -93,20 +93,6 @@ CTRL_CLOSE_EVENT
         }
     }
 
-    public class TestPerson
-    {
-        public string FirstName;
-        public string LastName;
-        public int Age;
-    }
-
-    public record TestPerson2
-    {
-        public string FirstName;
-        public string LastName;
-        public int Age;
-    }
-
     //public class CachedTimeSource
     //{
     //    private int _LTC = -1;
