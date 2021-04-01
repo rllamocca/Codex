@@ -20,6 +20,7 @@ namespace Codex.Extension
 #if (NET35 || NET40 || NET45 || NETSTANDARD1_3 || NETSTANDARD2_0)
         public static void FileCreate(this Stream _this, string _path)
         {
+            _this.Seek(0, SeekOrigin.Begin);
             using (FileStream _sw = File.Create(_path))
             {
 #if (NET35)
@@ -34,6 +35,7 @@ namespace Codex.Extension
 #if (NET45 || NETSTANDARD1_3 || NETSTANDARD2_0)
         public async static Task FileCreateAsync(this Stream _this, string _path, CancellationToken _token = default)
         {
+            _this.Seek(0, SeekOrigin.Begin);
             using (FileStream _sw = File.Create(_path, 1024, FileOptions.Asynchronous))
                 await _this.CopyToAsync(_sw, 1024, _token);
         }

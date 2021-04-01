@@ -11,6 +11,9 @@ namespace Codex.Data.Extension
     {
         public static string To_Xml<T>(this T _this, Encoding _enc = null)
         {
+            if (_enc == null)
+                _enc = Encoding.Unicode;
+
             if (_this is DataTable || _this is DataSet)
             {
                 XmlWriterSettings _se = new XmlWriterSettings
@@ -39,6 +42,9 @@ namespace Codex.Data.Extension
         }
         public static void To_Xml<T>(this T _this, string _path, Encoding _enc = null)
         {
+            if (_enc == null)
+                _enc = Encoding.Unicode;
+
             if (_this is DataTable || _this is DataSet)
             {
                 XmlWriterSettings _se = new XmlWriterSettings

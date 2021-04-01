@@ -21,40 +21,9 @@ namespace Codex.Data.Extension
             Encoding _enc = null,
             IProgress<int> _progress = null)
         {
-            if (_enc == null)
-                _enc = Encoding.Unicode;
-
-            string _sep = Convert.ToString(_separator);
-
-            using (StreamWriter _sw = new StreamWriter(_path, false, _enc))
-            {
-                bool _fw = false;
-
-                if (_columnnames)
-                {
-                    List<string> _line = new List<string>();
-                    foreach (DataColumn _item in _this.Columns)
-                        _line.Add(_item.Caption ?? _item.ColumnName);
-#if (NET35)
-                    _sw.Write(string.Join(_sep, _line.ToArray()));
-#else
-                    _sw.Write(string.Join(_sep, _line));
-#endif
-                    _fw = true;
-                }
-
-                foreach (DataRow _item in _this.Rows)
-                {
-                    if (_fw)
-                        _sw.WriteLine();
-                    _sw.Write(string.Join(_sep, _item.ItemArray.DBToString()));
-
-                    if (_fw == false)
-                        _fw = true;
-
-                    _progress?.Report(0);
-                }
-            }
+            _this.To_Plain(out Stream _out, _separator, _columnnames, _enc, _progress);
+            _out.FileCreate(_path);
+            _out.Dispose();
         }
 
         public static void To_Plain(this DataTable _this,
