@@ -47,11 +47,11 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            int _max = 20;
-            int _max2 = 40;
+            int _max = 10;
+            int _max2 = 20;
 
             ProgressBar32 _pb = new(_max);
-            
+
             for (int _i = 1; _i <= _pb.Length; _i++)
             {
                 ProgressBar32 _pb2 = new(_max2, _pb);
@@ -68,20 +68,22 @@ CTRL_CLOSE_EVENT
 
             Console.WriteLine("####");
 
-            _pb = new(_max);
+            ElapsedTime _et = new();
+            _pb = new(_max, _et);
             ProgressBar32 _pb3 = new(_max2, _pb);
             for (int _i = 1; _i <= _pb.Length; _i++)
             {
-                Thread.Sleep(10);
+                Thread.Sleep(100);
                 _pb.Report(_i);
             }
             for (int _j = 1; _j <= _pb3.Length; _j++)
             {
-                Thread.Sleep(10);
+                Thread.Sleep(100);
                 _pb3.Report(_j);
             }
             _pb3.Dispose();
             _pb.Dispose();
+            _et.Dispose();
 
             //################################################################
 

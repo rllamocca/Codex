@@ -50,14 +50,14 @@ namespace Codex.Terminal
 
                 if (_per.Between(0, 1, EInterval.Until))
                 {
-                    decimal _rou = Math.Round(_per * this._BLOCKS);
+                    decimal _rou = Math.Round(_per * base._BLOCKS);
 
-                    if (this._BAR.Contains(_rou) == false)
+                    if (base._BAR.Contains(_rou) == false)
                     {
-                        this._BAR.Add(_rou);
+                        base._BAR.Add(_rou);
 
-                        ConsoleHelper.Write(this._BAR_START, '■');
-                        this._BAR_START.X += 1;
+                        ConsoleHelper.Write(base._BAR_START, '■');
+                        base._BAR_START.X += 1;
                     }
                 }
             }
@@ -67,7 +67,7 @@ namespace Codex.Terminal
                 this._VALUE,
                 this._LENGTH);
 
-            ConsoleHelper.Write(this._BAR_END, _text);
+            ConsoleHelper.Write(base._BAR_END, _text);
         }
 
         protected override void Dispose(bool _managed)

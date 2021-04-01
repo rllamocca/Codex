@@ -43,14 +43,18 @@ namespace Codex.Terminal
             }
 
             this._BAR_START = new Point(this._LINE.X, this._LINE.Y);
-            this._BAR_END = new Point(this._BAR_START.X + this._BLOCKS + 1, this._BAR_START.Y);
 
-            ConsoleHelper.Write(this._BAR_START, new string(' ', 100));
-            ConsoleHelper.Write(this._BAR_START, '[');
-            ConsoleHelper.Write(this._BAR_END, ']');
+            if (this._BLOCKS > 0)
+            {
+                this._BAR_END = new Point(this._BAR_START.X + this._BLOCKS + 1, this._BAR_START.Y);
 
-            this._BAR_START.X += 1;
-            this._BAR_END.X += 2;
+                ConsoleHelper.Write(this._BAR_START, new string(' ', 100));
+                ConsoleHelper.Write(this._BAR_START, '[');
+                ConsoleHelper.Write(this._BAR_END, ']');
+
+                this._BAR_START.X += 1;
+                this._BAR_END.X += 2;
+            }
         }
 
         ~ProgressBar() => Dispose(false);
