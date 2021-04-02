@@ -15,11 +15,9 @@ namespace Codex.Terminal
         private byte _ANIMATIONINDEX = 0;
         private DateTime _START;
 
-        private void OnElapsedEvent(object _source, ElapsedEventArgs _e)
+        private void Report(DateTime _value)
         {
-            this._TIMER.Stop();
-            //################################
-            TimeSpan _diff = _e.SignalTime - this._START;
+            TimeSpan _diff = _value - this._START;
 
             string _text = string.Format(
                 "[{0}]  {1}",
@@ -27,26 +25,28 @@ namespace Codex.Terminal
 #if (NET35)
                 _diff.ToString()
 #else
-                _diff.ToString("hh':'mm':'ss'.'fff")
+                _diff.ToString("hh':'mm':'ss")
 #endif
                 );
-            ConsoleHelper.Write(this._BAR_START, new string(' ', 40));
+            //ConsoleHelper.Write(this._BAR_START, new string(' ', 40));
             ConsoleHelper.Write(this._BAR_START, _text);
-            //################################
-            this._TIMER.Start();
+        }
+        private void ElapsedEvent(object _source, ElapsedEventArgs _e)
+        {
+            this.Report(_e.SignalTime);
         }
 
         public ElapsedTime(ProgressBar _parent = null)
         {
+            this._START = DateTime.Now;
             this._PARENT = _parent;
 
             this.Init(0);
 
-            this._START = DateTime.Now;
+            this.Report(this._START);
 
-            this._TIMER = new Timer();
-            this._TIMER.Interval = 500;
-            this._TIMER.Elapsed += this.OnElapsedEvent;
+            this._TIMER = new Timer(1000);
+            this._TIMER.Elapsed += this.ElapsedEvent;
             this._TIMER.Start();
         }
 
