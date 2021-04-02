@@ -46,26 +46,22 @@ namespace Codex.Terminal.Helper
 
         public static void Write(Point _xy, char _value)
         {
-            Console.CursorLeft = _xy.X;
-            Console.CursorTop = _xy.Y;
+            Console.SetCursorPosition(_xy.X, _xy.Y);
             Console.Write(_value);
         }
         public static void Write(Point _xy, string _value)
         {
-            Console.CursorLeft = _xy.X;
-            Console.CursorTop = _xy.Y;
+            Console.SetCursorPosition(_xy.X, _xy.Y);
             Console.Write(_value);
         }
         public static void WriteLine(Point _xy, char _value)
         {
-            Console.CursorLeft = _xy.X;
-            Console.CursorTop = _xy.Y;
+            Console.SetCursorPosition(_xy.X, _xy.Y);
             Console.WriteLine(_value);
         }
         public static void WriteLine(Point _xy, string _value)
         {
-            Console.CursorLeft = _xy.X;
-            Console.CursorTop = _xy.Y;
+            Console.SetCursorPosition(_xy.X, _xy.Y);
             Console.WriteLine(_value);
         }
     }

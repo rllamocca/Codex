@@ -48,22 +48,48 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            int _max = 20;
-            long _max2 = 30;
+            int _max = 10;
+            int _max2 = 10;
+            int _max3 = 10;
+            int _max4 = 10;
+            int _max5 = 10;
 
             ElapsedTime _et = new();
             ProgressBar32 _pb = new(_max, _et);
-            ProgressBar64 _pb2 = new(_max2, _pb);
+            ProgressBar32 _pb2 = new(_max2, _pb);
+            ProgressBar32 _pb3 = new(_max3, _pb2);
+            ProgressBar32 _pb4 = new(_max4, _pb3);
+            ProgressBar32 _pb5 = new(_max5, _pb4);
+
             for (int _i = 1; _i <= _pb.Length; _i++)
             {
                 Thread.Sleep(100);
                 _pb.Report(_i);
             }
-            for (long _j = 1; _j <= _pb2.Length; _j++)
+            for (int _i = 1; _i <= _pb2.Length; _i++)
             {
                 Thread.Sleep(100);
-                _pb2.Report(_j);
+                _pb2.Report(_i);
             }
+            for (int _i = 1; _i <= _pb3.Length; _i++)
+            {
+                Thread.Sleep(100);
+                _pb3.Report(_i);
+            }
+            for (int _i = 1; _i <= _pb4.Length; _i++)
+            {
+                Thread.Sleep(100);
+                _pb4.Report(_i);
+            }
+            for (int _i = 1; _i <= _pb5.Length; _i++)
+            {
+                Thread.Sleep(100);
+                _pb5.Report(_i);
+            }
+
+            _pb5.Dispose();
+            _pb4.Dispose();
+            _pb3.Dispose();
             _pb2.Dispose();
             _pb.Dispose();
             _et.Dispose();

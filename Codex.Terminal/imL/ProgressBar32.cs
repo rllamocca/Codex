@@ -1,5 +1,4 @@
-﻿using Codex.Enumeration;
-using Codex.Extension;
+﻿using Codex.Extension;
 using Codex.Terminal.Helper;
 
 using System;
@@ -48,18 +47,7 @@ namespace Codex.Terminal
             {
                 _per = (1.0m * this._VALUE / this._LENGTH);
 
-                if (_per.Between(0, 1, EInterval.Until))
-                {
-                    decimal _rou = Math.Round(_per * this._BLOCKS);
-
-                    if (this._BAR.Contains(_rou) == false)
-                    {
-                        this._BAR.Add(_rou);
-
-                        ConsoleHelper.Write(this._BAR_START, '■');
-                        this._BAR_START.X += 1;
-                    }
-                }
+                this.DrawBar(_per);
             }
 
             string _text = string.Format("{0}  {1}/{2}",
@@ -67,7 +55,7 @@ namespace Codex.Terminal
                 this._VALUE,
                 this._LENGTH);
 
-            ConsoleHelper.Write(this._BAR_END, _text);
+            ConsoleHelper.Write(this._DRAW_END, _text);
         }
 
         /*

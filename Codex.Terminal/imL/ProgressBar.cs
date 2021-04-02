@@ -5,6 +5,8 @@ using System.Drawing;
 #endif
 
 using Codex.Terminal.Helper;
+using Codex.Extension;
+using Codex.Enumeration;
 
 using System;
 using System.Collections.Generic;
@@ -16,14 +18,17 @@ namespace Codex.Terminal
         private bool _DISPOSED = false;
 
         protected ProgressBar _PARENT;
-        protected byte _BLOCKS = 50;
-        protected Point _BAR_START;
-        protected Point _BAR_END;
-        protected List<decimal> _BAR = new List<decimal>();
-        protected Point _LINE;
-        protected Point _NEW_LINE;
+        protected Point _DRAW_END;
+        protected DateTime _START;
 
-        public void Init(byte _blocks = 50)
+        private const string _ANIMATION = @"+\|/";
+        private byte _BLOCKS = 50;
+        private Point _LINE;
+        private Point _NEW_LINE;
+        private Point _DRAW_START;
+        private List<decimal> _BAR = new List<decimal>();
+
+        protected void Init(byte _blocks = 50)
         {
             this._BAR.Add(0);
 
@@ -32,29 +37,57 @@ namespace Codex.Terminal
 
             if (this._PARENT == null)
             {
-                Console.CursorVisible = false;
                 this._LINE = new Point(Console.CursorLeft, Console.CursorTop);
-                this._NEW_LINE = new Point(this._LINE.X, this._LINE.Y + 1);
+                Console.CursorVisible = false;
             }
             else
-            {
                 this._LINE = new Point(this._PARENT._LINE.X, this._PARENT._LINE.Y + 1);
-                this._PARENT._NEW_LINE = new Point(this._LINE.X, this._LINE.Y + 1);
-            }
 
-            this._BAR_START = new Point(this._LINE.X, this._LINE.Y);
+            this._NEW_LINE = new Point(this._LINE.X, this._LINE.Y + 1);
+            this._DRAW_START = new Point(this._LINE.X, this._LINE.Y);
 
             if (this._BLOCKS > 0)
             {
-                this._BAR_END = new Point(this._BAR_START.X + this._BLOCKS + 1, this._BAR_START.Y);
+                this._DRAW_END = new Point(this._DRAW_START.X + this._BLOCKS + 1, this._DRAW_START.Y);
 
-                ConsoleHelper.Write(this._BAR_START, new string(' ', 100));
-                ConsoleHelper.Write(this._BAR_START, '[');
-                ConsoleHelper.Write(this._BAR_END, ']');
+                //ConsoleHelper.Write(this._DRAW_START, new string(' ', 100));
+                ConsoleHelper.Write(this._DRAW_START, '[');
+                ConsoleHelper.Write(this._DRAW_END, ']');
 
-                this._BAR_START.X += 1;
-                this._BAR_END.X += 2;
+                this._DRAW_START.X += 1;
+                this._DRAW_END.X += 2;
             }
+        }
+        protected void DrawBar(decimal _per)
+        {
+            if (_per.Between(0, 1, EInterval.Until))
+            {
+                decimal _rou = Math.Round(_per * this._BLOCKS);
+
+                if (this._BAR.Contains(_rou) == false)
+                {
+                    this._BAR.Add(_rou);
+
+                    ConsoleHelper.Write(this._DRAW_START, '■');
+                    this._DRAW_START.X += 1;
+                }
+            }
+        }
+        protected void DrawTime(DateTime _value)
+        {
+            TimeSpan _diff = _value - this._START;
+
+            string _text = string.Format(
+                "[{0}]  {1}",
+                _ANIMATION[this._BLOCKS++ % 4],
+#if (NET35)
+                _diff.ToString()
+#else
+                _diff.ToString("hh':'mm':'ss")
+#endif
+                );
+            //ConsoleHelper.Write(this._DRAW_START, new string(' ', 40));
+            ConsoleHelper.Write(this._DRAW_START, _text);
         }
 
         ~ProgressBar() => Dispose(false);
@@ -70,18 +103,23 @@ namespace Codex.Terminal
 
             if (_managed)
             {
-                this._BLOCKS = 0;
-                this._BAR_START = new Point(0, 0);
-                this._BAR_END = new Point(0, 0);
-                this._BAR.Clear();
-                this._BAR = null;
                 if (this._PARENT == null)
                 {
-                    ConsoleHelper.WriteLine(this._NEW_LINE, "");
                     Console.CursorVisible = true;
+                    ConsoleHelper.WriteLine(this._NEW_LINE, ' ');
                 }
+                else
+                    this._PARENT._NEW_LINE = new Point(this._NEW_LINE.X, this._NEW_LINE.Y);
+
+                this._DRAW_END = new Point(0, 0);
+                this._START = DateTime.MinValue;
+
+                this._BLOCKS = 0;
                 this._LINE = new Point(0, 0);
                 this._NEW_LINE = new Point(0, 0);
+                this._DRAW_START = new Point(0, 0);
+                this._BAR.Clear();
+                this._BAR = null;
             }
             this._DISPOSED = true;
         }
