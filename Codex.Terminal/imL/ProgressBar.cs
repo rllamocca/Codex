@@ -21,7 +21,8 @@ namespace Codex.Terminal
         protected Point _DRAW_END;
         protected DateTime _START;
 
-        private const string _ANIMATION = @"+\|/";
+        private const char _CHAR = '■';
+        private const string _BUCLE = @"+\|/";
         private byte _BLOCKS = 50;
         private Point _LINE;
         private Point _NEW_LINE;
@@ -30,33 +31,30 @@ namespace Codex.Terminal
 
         protected void Init(byte _blocks = 50)
         {
-            this._BAR.Add(0);
-
-            if (_blocks < this._BLOCKS)
-                this._BLOCKS = _blocks;
-
             if (this._PARENT == null)
             {
                 this._LINE = new Point(Console.CursorLeft, Console.CursorTop);
                 Console.CursorVisible = false;
             }
             else
-                this._LINE = new Point(this._PARENT._LINE.X, this._PARENT._LINE.Y + 1);
+                this._LINE = new Point(this._PARENT._LINE.X + 2, this._PARENT._LINE.Y + 1);
 
-            this._NEW_LINE = new Point(this._LINE.X, this._LINE.Y + 1);
             this._DRAW_START = new Point(this._LINE.X, this._LINE.Y);
+
+            if (_blocks < this._BLOCKS)
+                this._BLOCKS = _blocks;
 
             if (this._BLOCKS > 0)
             {
-                this._DRAW_END = new Point(this._DRAW_START.X + this._BLOCKS + 1, this._DRAW_START.Y);
+                this._DRAW_END = new Point(this._DRAW_START.X + this._BLOCKS + 4, this._DRAW_START.Y);
 
-                //ConsoleHelper.Write(this._DRAW_START, new string(' ', 100));
-                ConsoleHelper.Write(this._DRAW_START, '[');
-                ConsoleHelper.Write(this._DRAW_END, ']');
-
+                ConsoleHelper.Write(this._DRAW_START, string.Format("{0}{1}{2}", "[", new string(' ', this._BLOCKS), "]"));
                 this._DRAW_START.X += 1;
-                this._DRAW_END.X += 2;
+
+                this._BAR.Add(0);
             }
+
+            this._NEW_LINE = new Point(this._LINE.X, this._LINE.Y + 1);
         }
         protected void DrawBar(decimal _per)
         {
@@ -68,7 +66,7 @@ namespace Codex.Terminal
                 {
                     this._BAR.Add(_rou);
 
-                    ConsoleHelper.Write(this._DRAW_START, '■');
+                    ConsoleHelper.Write(this._DRAW_START, ProgressBar._CHAR);
                     this._DRAW_START.X += 1;
                 }
             }
@@ -79,14 +77,14 @@ namespace Codex.Terminal
 
             string _text = string.Format(
                 "[{0}]  {1}",
-                _ANIMATION[this._BLOCKS++ % 4],
+                ProgressBar._BUCLE[this._BLOCKS++ % 4],
 #if (NET35)
                 _diff.ToString()
 #else
                 _diff.ToString("hh':'mm':'ss")
 #endif
                 );
-            //ConsoleHelper.Write(this._DRAW_START, new string(' ', 40));
+
             ConsoleHelper.Write(this._DRAW_START, _text);
         }
 
