@@ -18,11 +18,11 @@ namespace Codex.Extension
         }
         public static bool HasValueLength(this string _this)
         {
-            return (_this != null && _this.Length > 0);
+            return (_this.HasValue() && _this.Length > 0);
         }
         public static bool HasValueTrimLength(this string _this)
         {
-            return (_this != null && _this.Trim().Length > 0);
+            return (_this.HasValue() && _this.Trim().Length > 0);
         }
 #if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
         public static bool IsMail(this string _this, bool _throw = false)
