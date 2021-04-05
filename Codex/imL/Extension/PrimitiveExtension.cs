@@ -12,6 +12,11 @@ namespace Codex.Extension
 {
     public static class PrimitiveExtension
     {
+        public static bool HasValue(this object _this)
+        {
+            return (_this != null);
+        }
+
         public static bool HasValue(this string _this)
         {
             return (_this != null);

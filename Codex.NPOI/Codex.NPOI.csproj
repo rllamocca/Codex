@@ -41,6 +41,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Codex.Data\Codex.Data.csproj" />
 	  <ProjectReference Include="..\Codex\Codex.csproj" />
 	</ItemGroup>
 

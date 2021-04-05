@@ -6,7 +6,7 @@ namespace Codex.NPOI.Extension
 {
     public static class NPOIExtension
     {
-        public static object DBCellValue(this ICell _this, bool _datetime = false, bool _dbnull = true)
+        public static object DBCellValue(this ICell _this, bool _dbnull = true)
         {
             object _return;
             if (_dbnull)
@@ -23,7 +23,7 @@ namespace Codex.NPOI.Extension
                     _return = Convert.ToString(_this);
                     break;
                 case CellType.Numeric:
-                    if (_datetime)
+                    if (DateUtil.IsCellDateFormatted(_this))
                         _return = _this.DateCellValue;
                     else
                         _return = _this.NumericCellValue;
