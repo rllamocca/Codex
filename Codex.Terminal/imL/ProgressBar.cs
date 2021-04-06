@@ -48,7 +48,7 @@ namespace Codex.Terminal
             {
                 this._DRAW_END = new Point(this._DRAW_START.X + this._BLOCKS + 4, this._DRAW_START.Y);
 
-                ConsoleHelper.Write(this._DRAW_START, string.Format("{0}{1}{2}", "[", new string(' ', this._BLOCKS), "]"));
+                ConsoleHelper.Write(this._DRAW_START, string.Format("[{0}]{1}", new string(' ', this._BLOCKS), new string(' ', 75)));
                 this._DRAW_START.X += 1;
 
                 this._BAR.Add(0);
