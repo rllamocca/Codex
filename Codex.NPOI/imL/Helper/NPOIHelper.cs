@@ -160,7 +160,7 @@ namespace Codex.NPOI.Helper
                 for (int _j = 0; _j < _row.LastCellNum; _j++)
                     _tmp[_j] = _row.GetCell(_j).DBCellValue(false);
 
-                _return.Add(_set.Populate<T>(_tmp));
+                _return.Add(_set.Instance<T>(_tmp));
 
                 _progress?.Report(0);
             }

@@ -11,7 +11,7 @@ namespace Codex.Data
     public class Settler
     {
         private PropertyInfo[] _PROPS;
-        private DataColumnCollection _DCS;
+        private string[] _KEYS;
 
         private void Init<T>()
         {
@@ -23,73 +23,87 @@ namespace Codex.Data
         }
         private void Init2(DataRow _dr)
         {
-            if (this._DCS == null)
-                this._DCS = _dr.Table.Columns;
+            if (this._KEYS == null)
+            {
+                List<string> _tmp = new List<string>();
+                foreach (DataColumn _item in _dr.Table.Columns)
+                    _tmp.Add(_item.ColumnName);
+                this._KEYS = _tmp.ToArray();
+            }
+        }
+        private T CreateInstance<T>()
+        {
+            this.Init<T>();
+            return Activator.CreateInstance<T>();
+        }
+        private T FactoryInstance<T>() where T : new()
+        {
+            this.Init<T>();
+            return new T();
         }
 
-        public T Populate<T>(params object[] _values)
+        public T Instance<T>(params object[] _values)
         {
             if (_values == null)
                 return default;
 
-            this.Init<T>();
-            T _return = Activator.CreateInstance<T>();
+            T _return = this.CreateInstance<T>();
 
             for (int _i = 0; _i < _values.Length; _i++)
             {
                 object _obj = _values[_i];
                 PropertyInfo _prop = this._PROPS[_i];
 
-                if (_obj.HasValue() && _prop.CanWrite)
-                    _prop.SetValue(_return, _obj, null);
-            }
-
-            return _return;
-        }
-
-        public T Populate<T>(params KeyValuePair<string, object>[] _values)
-        {
-            if (_values == null)
-                return default;
-
-            this.Init<T>();
-            T _return = Activator.CreateInstance<T>();
-
-            foreach (KeyValuePair<string, object> _item in _values)
-            {
-                PropertyInfo _prop = this._PROPS.Where(_w => _w.Name == _item.Key).FirstOrDefault();
-
-                if (_prop.HasValue())
+                if (_prop.HasValue() && _prop.CanWrite)
                 {
-                    if (_item.Value.HasValue() && _prop.CanWrite)
-                        _prop.SetValue(_return, _item.Value, null);
+                    if (_obj.HasValue())
+                        _prop.SetValue(_return, _obj, null);
                 }
             }
 
             return _return;
         }
-
-        public T Populate<T>(DataRow _values, bool _byindex = false)
+        public T Instance<T>(params KeyValuePair<string, object>[] _values)
         {
             if (_values == null)
                 return default;
 
-            this.Init<T>();
-            T _return = Activator.CreateInstance<T>();
+            T _return = this.CreateInstance<T>();
+
+            foreach (KeyValuePair<string, object> _item in _values)
+            {
+                object _obj = _item.Value;
+                PropertyInfo _prop = this._PROPS.Where(_w => _w.Name == _item.Key).FirstOrDefault();
+
+                if (_prop.HasValue() && _prop.CanWrite)
+                {
+                    if (_obj.HasValue())
+                        _prop.SetValue(_return, _obj, null);
+                }
+            }
+
+            return _return;
+        }
+        public T Instance<T>(DataRow _values, bool _byindex = false)
+        {
+            if (_values == null)
+                return default;
+
+            T _return = this.CreateInstance<T>();
 
             if (_byindex)
-                return this.Populate<T>(_values.ItemArray);
+                return this.Instance<T>(_values.ItemArray);
 
             this.Init2(_values);
 
-            foreach (DataColumn _item in this._DCS)
+            foreach (string _item in this._KEYS)
             {
-                object _obj = _values[_item.ColumnName];
-                PropertyInfo _prop = this._PROPS.Where(_w => _w.Name == _item.ColumnName).FirstOrDefault();
+                object _obj = _values[_item];
+                PropertyInfo _prop = this._PROPS.Where(_w => _w.Name == _item).FirstOrDefault();
 
-                if (_prop.HasValue())
+                if (_prop.HasValue() && _prop.CanWrite)
                 {
-                    if (_obj.HasValue() && _prop.CanWrite)
+                    if (_obj.HasValue())
                         _prop.SetValue(_return, _obj, null);
                 }
             }
@@ -98,28 +112,3 @@ namespace Codex.Data
         }
     }
 }
-/*
-        public static T Factory<T>() where T : new()
-        {
-            return new T();
-        }
-        public static T CreateInstance<T>(params object[] _args)
-        {
-            Type _type = typeof(T);
-            //T _return = (T)Activator.CreateInstance(_type);
-            T _return = (T)Activator.CreateInstance<T>();
-
-            PropertyInfo[] _props = _type.GetProperties();
-
-            for (int _i = 0; _i < _args.Length; _i++)
-            {
-                PropertyInfo _prop = _props[_i];
-                object _obj = _args[_i];
-
-                if (_obj.HasValue() && _prop.CanWrite)
-                    _prop.SetValue(_return, _obj, null);
-            }
-
-            return _return;
-        }
-*/
