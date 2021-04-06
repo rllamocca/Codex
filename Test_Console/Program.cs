@@ -1,12 +1,6 @@
-﻿using Codex.Terminal;
-using Codex.Terminal.Helper;
-using Codex.NPOI.Helper;
+﻿using Codex.Terminal.Helper;
 
 using System;
-using System.Collections;
-using System.Text;
-using System.Threading;
-using System.Data;
 
 namespace Test_Console
 {
@@ -50,14 +44,7 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            DataSet _ds = NPOIHelper.To_DataSet(@"F:\Tmp\_tmp.xlsx", _xls: false);
-            DataTable _dt = NPOIHelper.To_DataTable(@"F:\Tmp\_tmp.xlsx", _xls: false);
-            VO_RawFaraggi[] _tmp = NPOIHelper.To_Generic<VO_RawFaraggi>(@"F:\Tmp\_tmp.xlsx", _xls: false);
 
-            if (true)
-            {
-
-            }
 
             //################################################################
 
@@ -67,7 +54,5 @@ CTRL_CLOSE_EVENT
             ConsoleHelper.End()
 #endif
         }
-
-
     }
 }
