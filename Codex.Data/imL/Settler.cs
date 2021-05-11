@@ -8,12 +8,12 @@ using System.Reflection;
 
 namespace Codex.Data
 {
-    public class Settler
+    public class Settler<T>
     {
         private PropertyInfo[] _PROPS;
         private string[] _KEYS;
 
-        private void Init<T>()
+        private void Init()
         {
             if (this._PROPS == null)
             {
@@ -31,23 +31,23 @@ namespace Codex.Data
                 this._KEYS = _tmp.ToArray();
             }
         }
-        private T CreateInstance<T>()
+        private T CreateInstance()
         {
-            this.Init<T>();
+            this.Init();
             return Activator.CreateInstance<T>();
         }
-        private T FactoryInstance<T>() where T : new()
-        {
-            this.Init<T>();
-            return new T();
-        }
+        //private T FactoryInstance() where T : new()
+        //{
+        //    this.Init<T>();
+        //    return new T();
+        //}
 
-        public T Instance<T>(params object[] _values)
+        public T Instance(params object[] _values)
         {
             if (_values == null)
                 return default;
 
-            T _return = this.CreateInstance<T>();
+            T _return = this.CreateInstance();
 
             for (int _i = 0; _i < _values.Length; _i++)
             {
@@ -63,12 +63,12 @@ namespace Codex.Data
 
             return _return;
         }
-        public T Instance<T>(params KeyValuePair<string, object>[] _values)
+        public T Instance(params KeyValuePair<string, object>[] _values)
         {
             if (_values == null)
                 return default;
 
-            T _return = this.CreateInstance<T>();
+            T _return = this.CreateInstance();
 
             foreach (KeyValuePair<string, object> _item in _values)
             {
@@ -84,15 +84,15 @@ namespace Codex.Data
 
             return _return;
         }
-        public T Instance<T>(DataRow _values, bool _byindex = false)
+        public T Instance(DataRow _values, bool _byindex = false)
         {
             if (_values == null)
                 return default;
 
-            T _return = this.CreateInstance<T>();
+            T _return = this.CreateInstance();
 
             if (_byindex)
-                return this.Instance<T>(_values.ItemArray);
+                return this.Instance(_values.ItemArray);
 
             this.Init2(_values);
 

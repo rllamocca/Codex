@@ -144,7 +144,7 @@ namespace Codex.NPOI.Helper
         {
             IWorkbook _wb = OpenRead(_path, _xls);
             ISheet _sheet = _wb.GetSheetAt(_isheet);
-            Settler _set = new Settler();
+            Settler<T> _set = new Settler<T>();
             int _init = 0;
 
             if (_columnnames)
@@ -160,7 +160,7 @@ namespace Codex.NPOI.Helper
                 for (int _j = 0; _j < _row.LastCellNum; _j++)
                     _tmp[_j] = _row.GetCell(_j).DBCellValue(false);
 
-                _return.Add(_set.Instance<T>(_tmp));
+                _return.Add(_set.Instance(_tmp));
 
                 _progress?.Report(0);
             }
