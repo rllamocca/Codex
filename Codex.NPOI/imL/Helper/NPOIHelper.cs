@@ -30,63 +30,6 @@ namespace Codex.NPOI.Helper
             }
         }
 
-        public static DataSet To_DataSet(string _path,
-            bool _columnnames = true,
-            bool _xls = true,
-            IProgress<int> _dt_progress = null,
-            IProgress<int> _progress = null)
-        {
-            IWorkbook _wb = OpenRead(_path, _xls);
-            Type _type = typeof(object);
-            
-            DataSet _return = new DataSet("NPOI");
-
-            for (int _i = 0; _i < _wb.NumberOfSheets; _i++)
-            {
-                ISheet _sheet = _wb.GetSheetAt(_i);
-                DataTable _dt = new DataTable(_sheet.SheetName);
-                int _init = 0;
-                IRow _row = _sheet.GetRow(_init);
-
-                foreach (ICell _item in _row)
-                {
-                    DataColumn _dc = null;
-                    if (_columnnames)
-                        _dc = new DataColumn(_item.StringCellValue, _type);
-                    else
-                        _dc = new DataColumn("Column_" + Convert.ToString(_init), _type);
-
-                    _dc.DefaultValue = DBNull.Value;
-                    _dt.Columns.Add(_dc);
-
-                    _init++;
-                }
-
-                if (_columnnames)
-                    _init = 1;
-                else
-                    _init = 0;
-
-                for (int _j = _init; _j < _sheet.PhysicalNumberOfRows; _j++)
-                {
-                    _row = _sheet.GetRow(_j);
-                    DataRow _new = _dt.NewRow();
-                    _new.ItemArray = _dt.Columns
-                        .Cast<DataColumn>()
-                        .Select(_s => _row.GetCell(_s.Ordinal).DBCellValue())
-                        .ToArray();
-                    _dt.Rows.Add(_new);
-
-                    _progress?.Report(0);
-                }
-
-                _return.Tables.Add(_dt);
-                _dt_progress?.Report(0);
-            }
-
-            return _return;
-        }
-
         public static DataTable To_DataTable(string _path,
             int _isheet = 0,
             bool _columnnames = true,
@@ -131,6 +74,63 @@ namespace Codex.NPOI.Helper
                 _return.Rows.Add(_new);
 
                 _progress?.Report(0);
+            }
+
+            return _return;
+        }
+
+        public static DataSet To_DataSet(string _path,
+            bool _columnnames = true,
+            bool _xls = true,
+            IProgress<int> _dt_progress = null,
+            IProgress<int> _progress = null)
+        {
+            IWorkbook _wb = OpenRead(_path, _xls);
+            Type _type = typeof(object);
+
+            DataSet _return = new DataSet("NPOI");
+
+            for (int _i = 0; _i < _wb.NumberOfSheets; _i++)
+            {
+                ISheet _sheet = _wb.GetSheetAt(_i);
+                DataTable _dt = new DataTable(_sheet.SheetName);
+                int _init = 0;
+                IRow _row = _sheet.GetRow(_init);
+
+                foreach (ICell _item in _row)
+                {
+                    DataColumn _dc = null;
+                    if (_columnnames)
+                        _dc = new DataColumn(_item.StringCellValue, _type);
+                    else
+                        _dc = new DataColumn("Column_" + Convert.ToString(_init), _type);
+
+                    _dc.DefaultValue = DBNull.Value;
+                    _dt.Columns.Add(_dc);
+
+                    _init++;
+                }
+
+                if (_columnnames)
+                    _init = 1;
+                else
+                    _init = 0;
+
+                for (int _j = _init; _j < _sheet.PhysicalNumberOfRows; _j++)
+                {
+                    _row = _sheet.GetRow(_j);
+                    DataRow _new = _dt.NewRow();
+                    _new.ItemArray = _dt.Columns
+                        .Cast<DataColumn>()
+                        .Select(_s => _row.GetCell(_s.Ordinal).DBCellValue())
+                        .ToArray();
+                    _dt.Rows.Add(_new);
+
+                    _progress?.Report(0);
+                }
+
+                _return.Tables.Add(_dt);
+                _dt_progress?.Report(0);
             }
 
             return _return;

@@ -1,6 +1,17 @@
 ﻿using Codex.Terminal.Helper;
 
+using NPOI.OpenXmlFormats.Dml;
+using NPOI.OpenXmlFormats.Spreadsheet;
+using NPOI.Util;
+
 using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace Test_Console
 {
@@ -33,7 +44,7 @@ CTRL_CLOSE_EVENT
             Console.WriteLine("ProcessExit ...");
         }
 
-        static void Main(
+        async static Task Main(
             //string[] _args
             )
         {
@@ -45,14 +56,36 @@ CTRL_CLOSE_EVENT
             //################################################################
 
 
-
             //################################################################
 
 #if DEBUG
             ConsoleHelper.End(true, false);
 #else
-            ConsoleHelper.End()
+            ConsoleHelper.End();
 #endif
+        }
+
+        static string ToStringBits(byte[] _array)
+        {
+            if (_array == null)
+                return null;
+
+            string _return = null;
+            for (uint _i = 0; _i < _array.Length; _i++)
+                _return += string.Format("[{0}] -> {1}\n", _i, Convert.ToString(_array[_i], 2).PadLeft(8, '0'));
+
+            return _return;
+        }
+        static string ToStringBytes(byte[] _array)
+        {
+            if (_array == null)
+                return null;
+
+            string _return = null;
+            for (uint _i = 0; _i < _array.Length; _i++)
+                _return += string.Format("[{0}] -> {1}\n", _i, _array[_i]);
+
+            return _return;
         }
     }
 }

@@ -189,7 +189,14 @@ namespace Codex.NPOI.Extension
             }
 
             _out = new MemoryStream();
+#if NET35
             _wb.Write(_out);
+#else
+            if (_wb is XSSFWorkbook _wb2)
+                _wb2.Write(_out, true);
+            else
+                _wb.Write(_out);
+#endif
         }
 
         public static void To_Excel(this DataSet _this,
@@ -213,8 +220,10 @@ namespace Codex.NPOI.Extension
             IProgress<int> _progress = null)
         {
             IWorkbook _wb;
-            if (_xls) _wb = new HSSFWorkbook();
-            else _wb = new XSSFWorkbook();
+            if (_xls) 
+                _wb = new HSSFWorkbook();
+            else 
+                _wb = new XSSFWorkbook();
 
             IFont _fbasic = _wb.CreateFont();
             _fbasic.FontHeightInPoints = 10;
@@ -334,7 +343,14 @@ namespace Codex.NPOI.Extension
             }
 
             _out = new MemoryStream();
+#if NET35
             _wb.Write(_out);
+#else
+            if (_wb is XSSFWorkbook _wb2)
+                _wb2.Write(_out, true);
+            else
+                _wb.Write(_out);
+#endif
         }
     }
 }
