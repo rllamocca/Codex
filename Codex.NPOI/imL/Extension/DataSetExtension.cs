@@ -175,7 +175,7 @@ namespace Codex.NPOI.Extension
                     }
                     _row++;
 
-                    _progress.Report(0);
+                    _progress?.Report(0);
                 }
 
                 //_col = 0;
