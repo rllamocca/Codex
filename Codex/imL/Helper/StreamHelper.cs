@@ -30,7 +30,7 @@ namespace Codex.Helper
                 case ECompress.Gzip:
                 case ECompress.Deflate:
 #if (NET35)
-                    _s.OldCopy(_com);
+                    _s.OldCopyTo(_com);
 #else
                     _s.CopyTo(_com);
 #endif
@@ -61,7 +61,7 @@ namespace Codex.Helper
                 case ECompress.Gzip:
                 case ECompress.Deflate:
 #if (NET35)
-                    _dec.OldCopy(_ms);
+                    _dec.OldCopyTo(_ms);
 #else
                     _dec.CopyTo(_ms);
 #endif

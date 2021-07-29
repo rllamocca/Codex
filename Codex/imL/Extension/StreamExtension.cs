@@ -9,7 +9,7 @@ namespace Codex.Extension
 {
     public static class StreamExtension
     {
-        public static void OldCopy(this Stream _this, Stream _to)
+        public static void OldCopyTo(this Stream _this, Stream _to)
         {
             byte[] _buffer = new byte[1024];
             int _read;
@@ -24,7 +24,7 @@ namespace Codex.Extension
             using (FileStream _sw = File.Create(_path))
             {
 #if (NET35)
-                _this.OldCopy(_sw);
+                _this.OldCopyTo(_sw);
 #else
                 _this.CopyTo(_sw);
 #endif

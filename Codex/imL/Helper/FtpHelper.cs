@@ -67,7 +67,7 @@ namespace Codex.Helper
             using (Stream _s = _ftp.GetRequestStream())
             {
 #if (NET35)
-                _sub.OldCopy(_s);
+                _sub.OldCopyTo(_s);
 #else
                 _sub.CopyTo(_s);
 #endif
