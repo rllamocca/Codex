@@ -15,7 +15,7 @@ namespace Codex.Helper
         public static void To_Send(SmtpConfig _config, MailConfig[] _mails, Encoding _enc = null)
         {
             if (_enc == null)
-                _enc = Encoding.Default;
+                _enc = Encoding.UTF8;
 
             SmtpClient _sc = new SmtpClient
             {
