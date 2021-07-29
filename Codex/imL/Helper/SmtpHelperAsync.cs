@@ -1,4 +1,4 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
+﻿#if (NET45 || NETSTANDARD2_0)
 
 using Codex.Config;
 using Codex.Extension;
@@ -7,15 +7,16 @@ using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Codex.Helper
 {
-    public static class SmtpHelper
+    public static class SmtpHelperAsync
     {
-        public static void To_Send(SmtpConfig _config, MailConfig[] _mails, Encoding _enc = null)
+        public async static Task To_Send(SmtpConfig _config, MailConfig[] _mails, Encoding _enc = null)
         {
             if (_enc == null)
-                _enc = Encoding.Default;
+                _enc = Encoding.UTF8;
 
             SmtpClient _sc = new SmtpClient
             {
@@ -57,14 +58,11 @@ namespace Codex.Helper
                     _mm.Subject = _item.Subject;
                     _mm.Body = _item.Body;
 
-                    _sc.Send(_mm);
+                    await _sc.SendMailAsync(_mm);
                 }
             }
 
-#if (NET35 == false)
             _sc.Dispose();
-#endif
-
         }
     }
 }
