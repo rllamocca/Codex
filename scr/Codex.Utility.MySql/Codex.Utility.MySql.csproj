@@ -22,7 +22,7 @@
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net35'">
 		<Reference Include="MySql.Data">
-			<HintPath>dll\MySql.Data.dll</HintPath>
+			<HintPath>rsrc\dll\MySql.Data.dll</HintPath>
 		</Reference>
 	</ItemGroup>
 	<ItemGroup Condition="'$(TargetFramework)' == 'net40'">
