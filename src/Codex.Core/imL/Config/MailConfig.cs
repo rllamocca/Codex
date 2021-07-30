@@ -11,6 +11,7 @@
         public string[] CC { set; get; }
         public string[] CCO { set; get; }
         public string[] Attachments { set; get; }
+
         public string Subject { set; get; }
         public string Body { set; get; }
     }

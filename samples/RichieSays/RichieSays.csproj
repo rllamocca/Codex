@@ -14,14 +14,14 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\scr\Codex.Utility.Terminal\Codex.Utility.Terminal.csproj" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<None Include="rsrc\ico\Richie.ico">
 			<Pack>True</Pack>
 			<PackagePath></PackagePath>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Codex.Utility.Terminal\Codex.Utility.Terminal.csproj" />
 	</ItemGroup>
 
 </Project>

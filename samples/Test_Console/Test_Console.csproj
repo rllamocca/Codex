@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\scr\Codex.Utility.Terminal\Codex.Utility.Terminal.csproj" />
+    <ProjectReference Include="..\..\src\Codex.Utility.Terminal\Codex.Utility.Terminal.csproj" />
   </ItemGroup>
 
 </Project>
