@@ -1,27 +1,22 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
-
-using Codex.Config;
-using Codex.Utility;
-
-using System.IO;
+﻿using System.IO;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
 
-namespace Codex.Helper
+namespace Codex.Utility.Mail.Helper
 {
     public static class SmtpHelper
     {
         public static void To_Send(SmtpConfig _config, MailConfig[] _mails, Encoding _enc = null)
         {
             if (_enc == null)
-                _enc = Encoding.UTF8;
+                _enc = Encoding.Unicode;
 
             SmtpClient _sc = new SmtpClient
             {
                 Host = _config.Host,
                 Port = _config.Port,
-                Timeout = _config.Timeout,
+                Timeout = _config.Timeout.Value,
                 EnableSsl = _config.EnableSsl,
 
                 DeliveryMethod = SmtpDeliveryMethod.Network,
@@ -33,11 +28,16 @@ namespace Codex.Helper
             {
                 using (MailMessage _mm = new MailMessage())
                 {
+#if NET35 == false
+                    _mm.HeadersEncoding = _enc;
+#endif
                     _mm.SubjectEncoding = _enc;
                     _mm.BodyEncoding = _enc;
-                    _mm.IsBodyHtml = _item.IsBodyHtml;
 
-                    //_mm.Priority = MailPriority.High;
+                    _mm.IsBodyHtml = _item.IsBodyHtml;
+                    _mm.Priority = _item.Priority;
+                    //_mm.BodyTransferEncoding = _item.BodyTransferEncoding;
+                    _mm.DeliveryNotificationOptions = _item.DeliveryNotificationOptions;
 
                     _mm.From = new MailAddress(_item.FromAddress, _item.FromDisplayName, _enc);
 
@@ -68,4 +68,3 @@ namespace Codex.Helper
         }
     }
 }
-#endif

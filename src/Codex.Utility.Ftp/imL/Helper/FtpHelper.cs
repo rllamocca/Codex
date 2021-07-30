@@ -1,13 +1,8 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
-
-using Codex.Config;
-using Codex.Utility;
-
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Net;
 
-namespace Codex.Helper
+namespace Codex.Utility.Ftp.Helper
 {
     public static class FtpHelper
     {
@@ -92,4 +87,3 @@ namespace Codex.Helper
         }
     }
 }
-#endif

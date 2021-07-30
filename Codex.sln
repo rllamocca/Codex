@@ -27,6 +27,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.Utility.Sql", "src\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.Utility.Terminal", "src\Codex.Utility.Terminal\Codex.Utility.Terminal.csproj", "{BA2CC1D1-CA8F-44ED-B1AF-BDE9986D1D61}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.Utility.Ftp", "src\Codex.Utility.Ftp\Codex.Utility.Ftp.csproj", "{62820B15-B3AF-450F-B356-E57094D6D275}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -73,6 +75,10 @@ Global
 		{BA2CC1D1-CA8F-44ED-B1AF-BDE9986D1D61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA2CC1D1-CA8F-44ED-B1AF-BDE9986D1D61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA2CC1D1-CA8F-44ED-B1AF-BDE9986D1D61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{62820B15-B3AF-450F-B356-E57094D6D275}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62820B15-B3AF-450F-B356-E57094D6D275}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62820B15-B3AF-450F-B356-E57094D6D275}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62820B15-B3AF-450F-B356-E57094D6D275}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +94,7 @@ Global
 		{9D5CA8EC-F3E4-430C-BDAF-AB11BD88CDAF} = {AC26C8D3-F849-4531-94D9-9D97CAF9ED2C}
 		{DF0BB2D0-9D4C-442A-80F5-C8FF5CB97832} = {AC26C8D3-F849-4531-94D9-9D97CAF9ED2C}
 		{BA2CC1D1-CA8F-44ED-B1AF-BDE9986D1D61} = {AC26C8D3-F849-4531-94D9-9D97CAF9ED2C}
+		{62820B15-B3AF-450F-B356-E57094D6D275} = {AC26C8D3-F849-4531-94D9-9D97CAF9ED2C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {79D02891-0F57-4072-AD0D-CC377403E220}

@@ -1,4 +1,4 @@
-﻿namespace Codex.Config
+﻿namespace Codex.Utility.Ftp
 {
     public class FtpConfig
     {

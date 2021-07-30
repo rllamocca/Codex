@@ -1,12 +1,10 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
+﻿using System.Net.Mail;
 
-using System.Net.Mail;
-
-namespace Codex.Config
+namespace Codex.Utility.Mail
 {
     public class SmtpConfig
     {
-        public int Timeout { set; get; }
+        public int? Timeout { set; get; }
         public string TargetName { set; get; }
         public int Port { set; get; }
         public string PickupDirectoryLocation { set; get; }
@@ -18,9 +16,8 @@ namespace Codex.Config
 #endif
         public bool UseDefaultCredentials { set; get; }
 
+
         public string UserName { set; get; }
         public string Password { set; get; }
     }
 }
-
-#endif
