@@ -14,7 +14,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Codex.Terminal\Codex.Terminal.csproj" />
+		<ProjectReference Include="..\..\scr\Codex.Utility.Terminal\Codex.Utility.Terminal.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
