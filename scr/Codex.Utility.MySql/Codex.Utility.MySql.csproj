@@ -1,0 +1,49 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<Version>0.0.0.1</Version>
+		<Authors>rllamocca@outlook.com</Authors>
+		<Company>imL</Company>
+		<Description>Not so free tools.</Description>
+		<Copyright>© 1984 - 8888</Copyright>
+
+		<TargetFrameworks>
+			net35
+			;net40
+			;net45
+			;netstandard1.3
+			;netstandard2.0
+		</TargetFrameworks>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Codex.Core\Codex.Core.csproj" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(TargetFramework)' == 'net35'">
+		<Reference Include="MySql.Data">
+			<HintPath>dll\MySql.Data.dll</HintPath>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+		<PackageReference Include="MySql.Data">
+			<Version>6.9.12</Version>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+		<PackageReference Include="MySql.Data">
+			<Version>6.9.12</Version>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+		<PackageReference Include="MySql.Data">
+			<Version>6.10.9</Version>
+		</PackageReference>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+		<PackageReference Include="MySql.Data">
+			<Version>8.0.23</Version>
+		</PackageReference>
+	</ItemGroup>
+
+</Project>
