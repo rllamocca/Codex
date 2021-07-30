@@ -19,6 +19,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.Utility.Sql", "scr\Co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codex.Utility.Terminal", "scr\Codex.Utility.Terminal\Codex.Utility.Terminal.csproj", "{126EF2AD-59F5-47D0-A80F-A917ED868674}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{B726D154-6EBB-4DAE-90D1-AAD43F7638F7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test_Console", "samples\Test_Console\Test_Console.csproj", "{68275C88-8A59-4104-94AC-0C44545B02AB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +57,10 @@ Global
 		{126EF2AD-59F5-47D0-A80F-A917ED868674}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{126EF2AD-59F5-47D0-A80F-A917ED868674}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{126EF2AD-59F5-47D0-A80F-A917ED868674}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68275C88-8A59-4104-94AC-0C44545B02AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68275C88-8A59-4104-94AC-0C44545B02AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68275C88-8A59-4104-94AC-0C44545B02AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68275C88-8A59-4104-94AC-0C44545B02AB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -65,6 +73,7 @@ Global
 		{A3DC9FB3-C368-4D8F-A885-FBAC135473FC} = {AC26C8D3-F849-4531-94D9-9D97CAF9ED2C}
 		{440BB180-BFEC-4E66-9724-5CB8FF647C69} = {AC26C8D3-F849-4531-94D9-9D97CAF9ED2C}
 		{126EF2AD-59F5-47D0-A80F-A917ED868674} = {AC26C8D3-F849-4531-94D9-9D97CAF9ED2C}
+		{68275C88-8A59-4104-94AC-0C44545B02AB} = {B726D154-6EBB-4DAE-90D1-AAD43F7638F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {79D02891-0F57-4072-AD0D-CC377403E220}
