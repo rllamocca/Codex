@@ -4,7 +4,7 @@ using System;
 using System.IO;
 using System.Text;
 
-namespace Codex.Helper
+namespace Codex
 {
     public static class EncodingHelper
     {

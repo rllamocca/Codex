@@ -6,7 +6,7 @@ using Codex.Utility;
 using System.IO;
 using System.IO.Compression;
 
-namespace Codex.Helper
+namespace Codex
 {
     public static class StreamHelper
     {

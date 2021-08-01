@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace Codex.Helper
+namespace Codex
 {
     public static class CheckHelper
     {

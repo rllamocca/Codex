@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net;
 
-namespace Codex.Utility.Ftp.Helper
+namespace Codex.Utility.Ftp
 {
     public static class FtpHelper
     {

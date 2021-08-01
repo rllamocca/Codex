@@ -1,6 +1,4 @@
-﻿using Codex.Utility.Http.Helper;
-
-using System.Net.Http;
+﻿using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 

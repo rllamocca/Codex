@@ -1,5 +1,4 @@
 ﻿using Codex.Enumeration;
-using Codex.Helper;
 
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +6,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 
-namespace Codex.Utility.Http.Helper
+namespace Codex.Utility.Http
 {
     public static class HttpHelper
     {

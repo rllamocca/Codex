@@ -1,18 +1,10 @@
-﻿using Codex.Utility.Terminal.Helper;
+﻿using Codex.Utility;
+using Codex.Utility.Ftp;
+using Codex.Utility.Terminal;
 
 using System;
-using System.Threading.Tasks;
-
-using Codex.Utility.Mail;
-using Codex.Utility.Mail.Helper;
-
-using Codex.Utility.Ftp;
-using Codex.Utility.Ftp.Helper;
-using Codex.Utility;
-
 using System.IO;
-
-using Codex.Utility.Terminal;
+using System.Threading.Tasks;
 
 namespace Test_Console
 {

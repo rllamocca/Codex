@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Codex.Helper
+namespace Codex
 {
     public static class IntHelper
     {

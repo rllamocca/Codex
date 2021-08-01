@@ -1,6 +1,4 @@
-﻿using Codex.Utility.Terminal.Helper;
-
-using System;
+﻿using System;
 
 namespace Codex.Utility.Terminal
 {

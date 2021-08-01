@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
 
-namespace Codex.Utility.Data.Helper
+namespace Codex.Utility.Data
 {
     public static class DataHelper
     {

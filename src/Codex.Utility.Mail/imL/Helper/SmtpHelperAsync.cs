@@ -4,7 +4,7 @@ using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Codex.Utility.Mail.Helper
+namespace Codex.Utility.Mail
 {
     public static class SmtpHelperAsync
     {

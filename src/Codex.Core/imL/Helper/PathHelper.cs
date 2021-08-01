@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 
-namespace Codex.Helper
+namespace Codex
 {
     public static class PathHelper
     {

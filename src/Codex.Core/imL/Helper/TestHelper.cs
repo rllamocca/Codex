@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System;
 using System.Threading;
 
-namespace Codex.Helper
+namespace Codex
 {
     public static class TestHelper
     {

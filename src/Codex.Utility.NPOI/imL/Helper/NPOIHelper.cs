@@ -14,7 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace Codex.Utility.NPOI.Helper
+namespace Codex.Utility.NPOI
 {
     public static class NPOIHelper
     {

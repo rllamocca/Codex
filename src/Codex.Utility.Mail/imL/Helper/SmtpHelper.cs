@@ -1,9 +1,10 @@
 ﻿using System.IO;
 using System.Net;
 using System.Net.Mail;
+using System.Net.Mime;
 using System.Text;
 
-namespace Codex.Utility.Mail.Helper
+namespace Codex.Utility.Mail
 {
     public static class SmtpHelper
     {
@@ -38,6 +39,13 @@ namespace Codex.Utility.Mail.Helper
             _ref.BodyTransferEncoding = _conf.BodyTransferEncoding;
 #endif
             _ref.DeliveryNotificationOptions = _conf.DeliveryNotificationOptions;
+
+            if (_ref.IsBodyHtml)
+            {
+                ContentType _mime = new ContentType("text/html");
+                AlternateView _aw = AlternateView.CreateAlternateViewFromString(_conf.Body, _mime);
+                _ref.AlternateViews.Add(_aw);
+            }
 
             _ref.From = new MailAddress(_conf.FromAddress, _conf.FromDisplayName, _enc);
             _ref.Sender = _ref.From;

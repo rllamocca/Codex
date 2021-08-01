@@ -16,7 +16,7 @@ decimal
 
 */
 
-namespace Codex.Helper
+namespace Codex
 {
     public static class U221EHelper
     {

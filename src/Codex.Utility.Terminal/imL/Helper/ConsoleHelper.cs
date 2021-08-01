@@ -4,12 +4,10 @@ using Codex.Struct;
 using System.Drawing;
 #endif
 
-using Codex.Helper;
-
 using System;
 using System.Text;
 
-namespace Codex.Utility.Terminal.Helper
+namespace Codex.Utility.Terminal
 {
     public static class ConsoleHelper
     {

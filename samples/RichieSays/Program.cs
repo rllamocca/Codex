@@ -1,5 +1,5 @@
 ﻿using Codex.Utility;
-using Codex.Utility.Terminal.Helper;
+using Codex.Utility.Terminal;
 using Codex.Utility.Terminal.Process;
 
 ConsoleHelper.Init();

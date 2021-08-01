@@ -4,7 +4,6 @@ using Codex.Struct;
 using System.Drawing;
 #endif
 
-using Codex.Utility.Terminal.Helper;
 using Codex.Enumeration;
 
 using System;

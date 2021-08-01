@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Codex.Helper
+namespace Codex
 {
     public static class StringHelper
     {

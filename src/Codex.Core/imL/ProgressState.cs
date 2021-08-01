@@ -1,6 +1,4 @@
-﻿using Codex.Helper;
-
-namespace Codex
+﻿namespace Codex
 {
     public class ProgressState
     {
