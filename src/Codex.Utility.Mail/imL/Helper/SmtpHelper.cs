@@ -71,14 +71,14 @@ namespace Codex.Utility.Mail
             }
         }
 
-        public static void Send(FormatSmtp _format, FormatMailMessage[] _formats, Encoding _enc = null)
+        public static void Send(FormatSmtp _smtp, FormatMailMessage[] _messages, Encoding _enc = null)
         {
             EncodingUtility.SolutionDefault(ref _enc);
 
             SmtpClient _sc = new SmtpClient();
-            SmtpHelper.Init_SmtpClient(ref _sc, _format);
+            SmtpHelper.Init_SmtpClient(ref _sc, _smtp);
 
-            foreach (FormatMailMessage _item in _formats)
+            foreach (FormatMailMessage _item in _messages)
             {
                 MailMessage _mm = new MailMessage();
                 SmtpHelper.Init_MailMessage(ref _mm, _item, _enc);
