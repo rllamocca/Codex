@@ -16,7 +16,7 @@ namespace Codex
             {
                 string _a = Convert.ToString(_number);
 
-                if (_a.HasValueTrimLength() == false)
+                if (_a.HasValueTrim() == false)
                     return false;
 
                 return Regex.IsMatch(_a, @"^[-+]?[0-9]*\.?[0-9]+$");
