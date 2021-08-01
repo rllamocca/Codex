@@ -7,6 +7,8 @@
         <Description>Not so free tools.</Description>
         <Copyright>© 1984 - 8888</Copyright>
 
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+
         <TargetFrameworks>
             net35
             ;net40
