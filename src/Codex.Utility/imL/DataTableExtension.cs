@@ -8,7 +8,7 @@ using System.Data;
 using System.IO;
 using System.Text;
 
-namespace Codex.Utility.Data
+namespace Codex.Utility
 {
     public static class DataTableExtension
     {

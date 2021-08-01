@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data;
 
-namespace Codex.Utility.Data
+namespace Codex.Utility
 {
     public static class DataHelper
     {

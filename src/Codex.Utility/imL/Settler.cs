@@ -4,7 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 
-namespace Codex.Utility.Data
+namespace Codex.Utility
 {
     public class Settler<T>
     {

@@ -48,9 +48,9 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
-            using (ElapsedTime _time = new ElapsedTime())
+            using (ElapsedTime _time = new())
             {
-                FormatFtp _tmp3 = new FormatFtp();
+                FormatFtp _tmp3 = new();
                 _tmp3.Timeout = Convert.ToInt32(TimeSpan.FromSeconds(40).TotalMilliseconds);
                 _tmp3.Host = "ftp://ftp1.microexpertos.cl";
                 _tmp3.Path = "/CV_BCI_RDA_20210729.csv";
@@ -68,29 +68,6 @@ CTRL_CLOSE_EVENT
 #else
             ConsoleHelper.End();
 #endif
-        }
-
-        static string ToStringBits(byte[] _array)
-        {
-            if (_array == null)
-                return null;
-
-            string _return = null;
-            for (uint _i = 0; _i < _array.Length; _i++)
-                _return += string.Format("[{0}] -> {1}\n", _i, Convert.ToString(_array[_i], 2).PadLeft(8, '0'));
-
-            return _return;
-        }
-        static string ToStringBytes(byte[] _array)
-        {
-            if (_array == null)
-                return null;
-
-            string _return = null;
-            for (uint _i = 0; _i < _array.Length; _i++)
-                _return += string.Format("[{0}] -> {1}\n", _i, _array[_i]);
-
-            return _return;
         }
     }
 }

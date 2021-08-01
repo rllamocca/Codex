@@ -1,6 +1,29 @@
 ﻿/*
 ESTO NO DEBERIA ESTAR AQUI
 
+        static string ToStringBits(byte[] _array)
+        {
+            if (_array == null)
+                return null;
+
+            string _return = null;
+            for (uint _i = 0; _i < _array.Length; _i++)
+                _return += string.Format("[{0}] -> {1}\n", _i, Convert.ToString(_array[_i], 2).PadLeft(8, '0'));
+
+            return _return;
+        }
+        static string ToStringBytes(byte[] _array)
+        {
+            if (_array == null)
+                return null;
+
+            string _return = null;
+            for (uint _i = 0; _i < _array.Length; _i++)
+                _return += string.Format("[{0}] -> {1}\n", _i, _array[_i]);
+
+            return _return;
+        }
+
 namespace Codex.Helper
 {
     public static class StringHelper

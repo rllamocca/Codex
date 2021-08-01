@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System;
 using System.Threading;
 
-namespace Codex
+namespace Codex.Utility
 {
     public static class TestHelper
     {
@@ -30,7 +30,6 @@ namespace Codex
             return _max;
         }
 
-#if (NETSTANDARD1_0 || NETSTANDARD1_1 || NETSTANDARD1_2 || NETSTANDARD1_3) == false
         public static void RandomSleep(int _max)
         {
             _max = MAX_INT(_max);
@@ -45,7 +44,6 @@ namespace Codex
             if (_max > 0)
                 Thread.Sleep(new TimeSpan(_max));
         }
-#endif
 
 #if (NET35 || NET40) == false
         public async static Task RandomDelay(int _max, CancellationToken _token = default)

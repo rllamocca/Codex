@@ -17,7 +17,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Codex.Core\Codex.Core.csproj" />
-		<ProjectReference Include="..\Codex.Utility.Data\Codex.Utility.Data.csproj" />
+		<ProjectReference Include="..\Codex.Utility\Codex.Utility.csproj" />
 	</ItemGroup>
 
 	<ItemGroup Condition="'$(TargetFramework)' == 'net35'">

@@ -1,8 +1,4 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
-using System.Net.Mail;
-#endif
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Collections.Generic;
 
@@ -29,25 +25,6 @@ namespace Codex.Utility
         {
             return (_this.HasValue() && _this.Trim().Length > 0);
         }
-#if (NET35 || NET40 || NET45 || NETSTANDARD2_0)
-        public static bool IsMail(this string _this, bool _throw = false)
-        {
-            if (_this == null)
-                return false;
-
-            try
-            {
-                new MailAddress(_this);
-                return true;
-            }
-            catch (Exception _ex)
-            {
-                if (_throw)
-                    throw _ex;
-            }
-            return false;
-        }
-#endif
 
         public static string ReplaceEndLine(this string _this, EEndLine _re)
         {

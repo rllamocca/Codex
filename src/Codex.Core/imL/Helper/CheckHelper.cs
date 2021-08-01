@@ -1,21 +1,25 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
+using Codex.Utility;
+
 namespace Codex
 {
     public static class CheckHelper
     {
-        public static bool IsNumber(object _a, bool _throw = false)
+        public static bool IsNumber(object _number, bool _throw = false)
         {
-            if (_a == null)
+            if (_number == null)
                 return false;
+
             try
             {
-                string _b = _a.ToString().Trim();
-                if (_b.Length == 0)
+                string _a = Convert.ToString(_number);
+
+                if (_a.HasValueTrimLength() == false)
                     return false;
 
-                return Regex.IsMatch(_b, @"^[-+]?[0-9]*\.?[0-9]+$");
+                return Regex.IsMatch(_a, @"^[-+]?[0-9]*\.?[0-9]+$");
             }
             catch (Exception _ex)
             {
