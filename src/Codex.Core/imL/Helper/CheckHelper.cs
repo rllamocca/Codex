@@ -14,6 +14,7 @@ namespace Codex.Helper
                 string _b = _a.ToString().Trim();
                 if (_b.Length == 0)
                     return false;
+
                 return Regex.IsMatch(_b, @"^[-+]?[0-9]*\.?[0-9]+$");
             }
             catch (Exception _ex)
@@ -21,6 +22,7 @@ namespace Codex.Helper
                 if (_throw)
                     throw _ex;
             }
+
             return false;
         }
     }

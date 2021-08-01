@@ -3,6 +3,17 @@
 using System;
 using System.Threading.Tasks;
 
+using Codex.Utility.Mail;
+using Codex.Utility.Mail.Helper;
+
+using Codex.Utility.Ftp;
+using Codex.Utility.Ftp.Helper;
+using Codex.Utility;
+
+using System.IO;
+
+using Codex.Utility.Terminal;
+
 namespace Test_Console
 {
     class Program
@@ -45,7 +56,19 @@ CTRL_CLOSE_EVENT
 
             //################################################################
 
+            using (ElapsedTime _time = new ElapsedTime())
+            {
+                FtpConfig _tmp3 = new FtpConfig();
+                _tmp3.Timeout = Convert.ToInt32(TimeSpan.FromSeconds(40).TotalMilliseconds);
+                _tmp3.Host = "ftp://ftp1.microexpertos.cl";
+                _tmp3.Path = "/CV_BCI_RDA_20210729.csv";
+                _tmp3.UserName = "cruzverde";
+                _tmp3.Password = "CruzVerde2016.";
 
+                Stream _ms = new MemoryStream();
+                FtpHelper.From_DownloadFile(ref _ms, _tmp3);
+                _ms.FileCreate("C:\\tmp\\CV_BCI_RDA_20210729.csv");
+            }
             //################################################################
 
 #if DEBUG

@@ -71,8 +71,8 @@ namespace Codex.Utility
         {
             if (_this == null)
                 return null;
-            if (_enc == null)
-                _enc = Encoding.Unicode;
+
+            EncodingUtility.SolutionDefault(ref _enc);
 
             XmlWriterSettings _se = new XmlWriterSettings
             {
@@ -95,8 +95,8 @@ namespace Codex.Utility
         {
             if (_this == null)
                 return;
-            if (_enc == null)
-                _enc = Encoding.Unicode;
+
+            EncodingUtility.SolutionDefault(ref _enc);
 
             XmlWriterSettings _se = new XmlWriterSettings
             {

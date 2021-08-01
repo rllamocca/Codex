@@ -9,6 +9,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Codex.Utility.Ftp\Codex.Utility.Ftp.csproj" />
+    <ProjectReference Include="..\..\src\Codex.Utility.Mail\Codex.Utility.Mail.csproj" />
     <ProjectReference Include="..\..\src\Codex.Utility.Terminal\Codex.Utility.Terminal.csproj" />
   </ItemGroup>
 

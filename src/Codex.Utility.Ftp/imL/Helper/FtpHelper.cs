@@ -6,19 +6,27 @@ namespace Codex.Utility.Ftp.Helper
 {
     public static class FtpHelper
     {
-        private static FtpWebRequest Create(FtpConfig _config)
+        public static void Init_FtpWebRequest(ref FtpWebRequest _ref, FtpConfig _conf)
         {
-            FtpWebRequest _create = (FtpWebRequest)FtpWebRequest.Create(_config.Uri + "/" + _config.FileName);
-            _create.UseBinary = _config.UseBinary;
-            _create.KeepAlive = _config.KeepAlive;
-            _create.UsePassive = _config.UsePassive;
-            _create.EnableSsl = _config.EnableSsl;
-            _create.Credentials = new NetworkCredential(_config.UserName, _config.Password);
+            _ref.UseBinary = _conf.UseBinary ?? _ref.UseBinary;
+            _ref.Timeout = _conf.Timeout ?? _ref.Timeout;
+            _ref.ReadWriteTimeout = _conf.ReadWriteTimeout ?? _ref.ReadWriteTimeout;
+            _ref.KeepAlive = _conf.KeepAlive ?? _ref.KeepAlive;
+            _ref.EnableSsl = _conf.EnableSsl ?? _ref.EnableSsl;
+            _ref.UsePassive = _conf.UsePassive ?? _ref.UsePassive;
 
-            return _create;
+            _ref.Credentials = new NetworkCredential(_conf.UserName, _conf.Password);
         }
 
-        public static FtpStatusCode From_ListDirectory(out string[] _from, FtpConfig _config)
+        private static FtpWebRequest Create(FtpConfig _config)
+        {
+            FtpWebRequest _fwr = (FtpWebRequest)FtpWebRequest.Create(_config.Host + _config.Path);
+            FtpHelper.Init_FtpWebRequest(ref _fwr, _config);
+
+            return _fwr;
+        }
+
+        public static FtpStatusCode From_ListDirectory(out string[] _list, FtpConfig _config)
         {
             FtpWebRequest _ftp = FtpHelper.Create(_config);
             _ftp.Method = WebRequestMethods.Ftp.ListDirectory;
@@ -29,8 +37,8 @@ namespace Codex.Utility.Ftp.Helper
                 using (StreamReader _sr = new StreamReader(_response.GetResponseStream()))
                     while (_sr.EndOfStream == false)
                         _return.Add(_sr.ReadLine());
-                
-                _from = _return.ToArray();
+
+                _list = _return.ToArray();
                 return _response.StatusCode;
             }
         }
@@ -44,11 +52,9 @@ namespace Codex.Utility.Ftp.Helper
             {
                 using (StreamReader _sr = new StreamReader(_response.GetResponseStream()))
                 {
-                    using (StreamWriter _sw = new StreamWriter(_rec))
-                    {
-                        _sw.Write(_sr.ReadToEnd());
-                        _sw.Flush();
-                    }
+                    StreamWriter _sw = new StreamWriter(_rec);
+                    _sw.Write(_sr.ReadToEnd());
+                    _sw.Flush();
                 }
                 return _response.StatusCode;
             }

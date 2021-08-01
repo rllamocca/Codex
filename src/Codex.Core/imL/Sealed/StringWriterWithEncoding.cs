@@ -1,4 +1,6 @@
-﻿using System.IO;
+﻿using Codex.Utility;
+
+using System.IO;
 using System.Text;
 
 namespace Codex.Sealed
@@ -9,8 +11,8 @@ namespace Codex.Sealed
 
         public StringWriterWithEncoding(Encoding _enc = null)
         {
-            if (_enc == null)
-                _enc = Encoding.Unicode;
+            EncodingUtility.SolutionDefault(ref _enc);
+
             this._ENCODING = _enc;
         }
 

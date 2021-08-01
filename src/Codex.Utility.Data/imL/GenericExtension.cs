@@ -11,8 +11,7 @@ namespace Codex.Utility.Data
     {
         public static string To_Xml<T>(this T _this, Encoding _enc = null)
         {
-            if (_enc == null)
-                _enc = Encoding.Unicode;
+            EncodingUtility.SolutionDefault(ref _enc);
 
             if (_this is DataTable || _this is DataSet)
             {
@@ -42,8 +41,7 @@ namespace Codex.Utility.Data
         }
         public static void To_Xml<T>(this T _this, string _path, Encoding _enc = null)
         {
-            if (_enc == null)
-                _enc = Encoding.Unicode;
+            EncodingUtility.SolutionDefault(ref _enc);
 
             if (_this is DataTable || _this is DataSet)
             {

@@ -31,8 +31,7 @@ namespace Codex.Utility.Data
             Encoding _enc = null,
             IProgress<int> _progress = null)
         {
-            if (_enc == null)
-                _enc = Encoding.Unicode;
+            EncodingUtility.SolutionDefault(ref _enc);
 
             string _sep = Convert.ToString(_separator);
 
