@@ -35,7 +35,7 @@ namespace Codex.Utility.MySql.UserModel
         {
             this.Source = _source;
             this.Value = _value ?? DBNull.Value;
-            this.Affect = string.Format("@_{0}_", this.Source);
+            this.Affect = "@" + this.Source;
 
             this.Parameter = new MySqlParameter
             {

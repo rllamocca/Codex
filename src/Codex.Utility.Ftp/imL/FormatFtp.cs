@@ -1,6 +1,6 @@
 ﻿namespace Codex.Utility.Ftp
 {
-    public class FtpConfig
+    public class FormatFtp
     {
         public bool? UseBinary { get; set; }
         public int? Timeout { get; set; }

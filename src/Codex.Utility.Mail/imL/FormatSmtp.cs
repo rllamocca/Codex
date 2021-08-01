@@ -2,7 +2,7 @@
 
 namespace Codex.Utility.Mail
 {
-    public class SmtpConfig
+    public class FormatSmtp
     {
         public int? Timeout { set; get; }
         public string TargetName { set; get; }

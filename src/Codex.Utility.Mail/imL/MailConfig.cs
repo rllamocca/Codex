@@ -4,7 +4,7 @@ using System.Net.Mime;
 
 namespace Codex.Utility.Mail
 {
-    public class MailConfig
+    public class FormatMailMessage
     {
         public string Subject { set; get; }
         public MailPriority Priority { set; get; }
