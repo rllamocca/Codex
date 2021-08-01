@@ -1,4 +1,4 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD1_1 || NETSTANDARD1_2 || NETSTANDARD1_3 || NETSTANDARD2_0)
+﻿#if (NETSTANDARD1_0  == false)
 
 using Codex.Enumeration;
 using Codex.Utility;
@@ -74,4 +74,5 @@ namespace Codex
         }
     }
 }
+
 #endif

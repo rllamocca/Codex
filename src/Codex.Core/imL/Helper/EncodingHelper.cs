@@ -1,6 +1,5 @@
-﻿#if (NET35 || NET40 || NET45 || NETSTANDARD1_3 || NETSTANDARD2_0)
+﻿#if ((NETSTANDARD1_0 || NETSTANDARD1_1 || NETSTANDARD1_2)  == false)
 
-using System;
 using System.IO;
 using System.Text;
 
@@ -10,7 +9,7 @@ namespace Codex
     {
         public static Encoding Get_Encoding(string _path)
         {
-            Byte[] _b = new Byte[5];
+            byte[] _b = new byte[5];
             using (FileStream _fs = new FileStream(_path, FileMode.Open, FileAccess.Read))
                 _fs.Read(_b, 0, 5);
 

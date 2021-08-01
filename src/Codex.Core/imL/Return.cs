@@ -19,33 +19,30 @@ namespace Codex
 {
     public class Return
     {
-        private readonly bool _SUC;
-        private readonly object _RES = null;
-        private readonly bool _EXC;
-        private readonly string _MES = "NO PROCESADO";
+        private readonly bool _SUCCESS;
+        private readonly object _RESULT;
+        private readonly bool _EXCEPTION;
+        private readonly string _MESSAGE;
 
-        public bool Success { get { return this._SUC; } }
-        public object Result { get { return this._RES; } }
-        public bool Exception { get { return this._EXC; } }
-        public string Message { get { return this._MES; } }
+        public bool Success { get { return this._SUCCESS; } }
+        public object Result { get { return this._RESULT; } }
+        public bool Exception { get { return this._EXCEPTION; } }
+        public string Message { get { return this._MESSAGE; } }
 
-        public Return(bool _suc, object _res = null)
+        public Return(bool _success, object _result = null)
         {
-            this._SUC = _suc;
-            this._RES = _res;
-            this._EXC = (this._RES is Exception);
-            if (this._EXC)
-                this._MES = ((Exception)this._RES).Message;
-            else
+            this._SUCCESS = _success;
+            this._RESULT = _result;
+
+            if (this._RESULT is Exception _ex)
             {
-                if (this._SUC)
-                    this._MES = "PROCESADO";
-                else
-                {
-                    if (this._RES is string _tmp)
-                        this._MES = _tmp;
-                }
+                this._SUCCESS = false;
+                this._EXCEPTION = true;
+                this._MESSAGE = _ex.Message;
             }
+
+            if (this._SUCCESS)
+                this._MESSAGE = "Undefined";
         }
         public void TriggerError()
         {
@@ -65,7 +62,7 @@ namespace Codex
 
         public override string ToString()
         {
-            return string.Format("Exito: {0}, {1}", (this.Success ? "SI" : "NO"), this.Message);
+            return string.Format("Success: {0}, {1}", (this.Success ? "YES" : "NO"), this.Message);
         }
     }
 }

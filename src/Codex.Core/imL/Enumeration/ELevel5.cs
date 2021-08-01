@@ -3,10 +3,10 @@
     public enum ELevel5
     {
         None = 0,
-        Lower = 1,
-        A = 2,
-        Middle = 3,
-        B = 4,
-        Top = 5,
+        Physiological = 1,
+        Security = 2,
+        Social = 3,
+        Esteem = 4,
+        Self = 5,
     }
 }
